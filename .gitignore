@@ -1,0 +1,26 @@
+# Secrets : ne jamais les versionner
+.env
+*.pem
+*.key
+*.keystore
+*.jks
+secrets.*
+
+# Système et éditeurs
+.DS_Store
+Thumbs.db
+.idea/
+.vs/
+.vscode/
+
+# Dépendances et sorties de compilation
+node_modules/
+build/
+dist/
+out/
+target/
+bin/
+obj/
+__pycache__/
+*.pyc
+.gradle/
