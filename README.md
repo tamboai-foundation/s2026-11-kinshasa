@@ -22,6 +22,6 @@ git checkout develop
 git pull
 git checkout -b objectif-1/<prénom>-<tâche>
 ```
-
+Test Git : Melvine Mokam
 ## Aide
 Posez vos questions à votre Team Lead, puis à la formation (contact@tamboai.co).
