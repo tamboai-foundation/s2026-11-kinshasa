@@ -19,3 +19,4 @@ Le détail et l'état de vos tâches sont sur le site Foundation, dans « Mes t�
 ## Test git
 - Mahaliana Fitiavana
 - Mokam Melvine
+- Benjamin Kasereka Vinyatsi
