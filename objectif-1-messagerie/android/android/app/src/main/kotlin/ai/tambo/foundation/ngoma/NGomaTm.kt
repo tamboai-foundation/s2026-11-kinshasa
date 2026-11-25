@@ -1,6 +1,7 @@
 package ai.tambo.foundation.ngoma
 
-import ai.tambo.foundation.ngoma.models.Note
+import ai.tambo.foundation.ngoma.models.users.Login
+import ai.tambo.foundation.ngoma.models.users.User
 import ai.tambo.tmodeler.db.Tcontext
 import ai.tambo.tmodeler.db.Tdb
 import ai.tambo.tmodeler.modeler.TModeler
@@ -29,10 +30,11 @@ object NGomaTm {
                     .context(Tcontext(app))
                     .dbDir("db/")
                     .dbName("ngoma-$DB_VERSION")
-                    .accept(Note().clazz().getPackage())
+                    .accept(User().clazz().getPackage())
                     .start()!!
             )
 
-        Note.tms.commit()
+        User.tms.commit()
+        Login.tms.commit()
     }
 }
