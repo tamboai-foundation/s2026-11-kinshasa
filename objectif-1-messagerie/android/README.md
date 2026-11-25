@@ -23,3 +23,4 @@ Pour passer à TModeler : implémenter `AccountBridge` / `MessagingBridge` avec 
 ## Charte
 Rouge principal `#E0262D` : `packages/wouanda_design/lib/src/foundations/wouanda_colors.dart`.
 `WouandaMvpMode` doit rester à `false`.
+- Test Git : Merci-Ramah-BOLEBANTOU
