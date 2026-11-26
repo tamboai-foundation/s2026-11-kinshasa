@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 
 import 'package:ngoma/core/platform/messaging/messaging_models.dart';
 import 'package:ngoma/core/theme.dart';
@@ -260,7 +260,7 @@ class _PollResult extends StatelessWidget {
     final accent = context.palette.accent;
     final share = total == 0 ? 0.0 : option.votes / total;
     return ClipRRect(
-      borderRadius: BorderRadius.circular(WouandaSpacing.radiusSmall),
+      borderRadius: BorderRadius.circular(NgomaSpacing.radiusSmall),
       child: Stack(
         children: [
           Positioned.fill(

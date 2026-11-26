@@ -1,17 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Complete internationalization system for Wouanda
+/// Complete internationalization system for NGoma
 /// Supports FR (default), EN, and extensible to African languages
 
-class WouandaLocale {
+class NgomaLocale {
   final String name;
   final String code;
   final String flag;
   final String nativeName;
   final Map<String, String> translations;
 
-  const WouandaLocale({
+  const NgomaLocale({
     required this.name,
     required this.code,
     required this.flag,
@@ -23,9 +23,9 @@ class WouandaLocale {
 }
 
 /// All supported languages
-final supportedLocales = <WouandaLocale>[_frLocale, _enLocale];
+final supportedLocales = <NgomaLocale>[_frLocale, _enLocale];
 
-const _frLocale = WouandaLocale(
+const _frLocale = NgomaLocale(
   name: 'Français',
   code: 'fr',
   flag: 'FR',
@@ -52,7 +52,7 @@ const _frLocale = WouandaLocale(
     'auth_retry': 'Réessayer',
     'auth_register': 'Inscription',
     'auth_access': 'Accédez à votre écosystème',
-    'auth_join': 'Rejoignez Wouanda',
+    'auth_join': 'Rejoignez NGoma',
     'auth_email': 'Email',
     'auth_password': 'Mot de passe',
     'auth_forgot': 'Mot de passe oublié ?',
@@ -76,7 +76,7 @@ const _frLocale = WouandaLocale(
     'logout': 'Déconnexion',
 
     // --- Hub ---
-    'hub_services': 'Services Wouanda',
+    'hub_services': 'Services NGoma',
     'hub_subtitle': 'Tout ce dont vous avez besoin, en un clic.',
     'hub_search': 'Rechercher un service, lieu, produit...',
     'hub_offers': 'Offres & Promotions',
@@ -151,13 +151,13 @@ const _frLocale = WouandaLocale(
     'onboarding_3_desc': 'Achetez et vendez des créations faites main.',
     'onboarding_4_title': 'Événements Exclusifs',
     'onboarding_4_desc': 'Découvrez les meilleurs événements près de vous.',
-    'onboarding_5_title': 'Rencontres Wouanda',
+    'onboarding_5_title': 'Rencontres NGoma',
     'onboarding_5_desc': 'Rencontrez des personnes qui partagent vos passions.',
 
     // --- Profile menu ---
     'profile_history': 'Historique & Activité',
     'profile_payments': 'Moyens de paiement',
-    'profile_wallet_payments': 'Wouanda Pay & Paiements',
+    'profile_wallet_payments': 'NGoma Pay & Paiements',
     'profile_promos': 'Code Promo & Coupons',
     'profile_addresses': 'Adresses',
     'profile_dock': 'Personnaliser le Dock',
@@ -190,7 +190,7 @@ const _frLocale = WouandaLocale(
 
     // --- Scanner extended ---
     'scanner_scan_qr': 'Scannez un QR code ou code-barres',
-    'scanner_pay_desc': 'Scannez pour payer via Wouanda Pay',
+    'scanner_pay_desc': 'Scannez pour payer via NGoma Pay',
     'scanner_ticket_desc': "Validez votre ticket d'événement",
     'scanner_profile_desc': 'Scannez pour ajouter un contact',
     'scanner_product_desc': 'Scannez un produit pour voir les détails',
@@ -239,7 +239,7 @@ const _frLocale = WouandaLocale(
   },
 );
 
-const _enLocale = WouandaLocale(
+const _enLocale = NgomaLocale(
   name: 'English',
   code: 'en',
   flag: 'US',
@@ -266,7 +266,7 @@ const _enLocale = WouandaLocale(
     'auth_retry': 'Try again',
     'auth_register': 'Sign Up',
     'auth_access': 'Access your ecosystem',
-    'auth_join': 'Join Wouanda',
+    'auth_join': 'Join NGoma',
     'auth_email': 'Email',
     'auth_password': 'Password',
     'auth_forgot': 'Forgot password?',
@@ -288,7 +288,7 @@ const _enLocale = WouandaLocale(
     'logout': 'Logout',
 
     // --- Hub ---
-    'hub_services': 'Wouanda Services',
+    'hub_services': 'NGoma Services',
     'hub_subtitle': 'Everything you need, in one tap.',
     'hub_search': 'Search for a service, place, product...',
     'hub_offers': 'Offers & Promotions',
@@ -361,13 +361,13 @@ const _enLocale = WouandaLocale(
     'onboarding_3_desc': 'Buy and sell authentic handcrafted items.',
     'onboarding_4_title': 'Exclusive Events',
     'onboarding_4_desc': 'Discover the best events near you.',
-    'onboarding_5_title': 'Wouanda Dating',
+    'onboarding_5_title': 'NGoma Dating',
     'onboarding_5_desc': 'Meet people who share your passions.',
 
     // --- Profile menu ---
     'profile_history': 'History & Activity',
     'profile_payments': 'Payment Methods',
-    'profile_wallet_payments': 'Wouanda Pay & Payments',
+    'profile_wallet_payments': 'NGoma Pay & Payments',
     'profile_promos': 'Promo Code & Coupons',
     'profile_addresses': 'Addresses',
     'profile_dock': 'Customize Dock',
@@ -402,7 +402,7 @@ const _enLocale = WouandaLocale(
 
     // --- Scanner extended ---
     'scanner_scan_qr': 'Scan a QR code or barcode',
-    'scanner_pay_desc': 'Scan to pay via Wouanda Pay',
+    'scanner_pay_desc': 'Scan to pay via NGoma Pay',
     'scanner_ticket_desc': 'Validate your event ticket',
     'scanner_profile_desc': 'Scan to add a contact',
     'scanner_product_desc': 'Scan a product for details',
@@ -452,11 +452,11 @@ const _enLocale = WouandaLocale(
 );
 
 /// Language notifier with persistence
-class LanguageNotifier extends Notifier<WouandaLocale> {
-  static const String _langKey = 'wouanda_language';
+class LanguageNotifier extends Notifier<NgomaLocale> {
+  static const String _langKey = 'ngoma_language';
 
   @override
-  WouandaLocale build() {
+  NgomaLocale build() {
     _loadSavedLanguage();
     // Most mounted screens are French-first until their translations land.
     // A language explicitly chosen in Settings still takes precedence.
@@ -475,7 +475,7 @@ class LanguageNotifier extends Notifier<WouandaLocale> {
     }
   }
 
-  Future<void> setLanguage(WouandaLocale locale) async {
+  Future<void> setLanguage(NgomaLocale locale) async {
     state = locale;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_langKey, locale.code);
@@ -493,6 +493,6 @@ class LanguageNotifier extends Notifier<WouandaLocale> {
   String t(String key) => state.t(key);
 }
 
-final languageProvider = NotifierProvider<LanguageNotifier, WouandaLocale>(() {
+final languageProvider = NotifierProvider<LanguageNotifier, NgomaLocale>(() {
   return LanguageNotifier();
 });

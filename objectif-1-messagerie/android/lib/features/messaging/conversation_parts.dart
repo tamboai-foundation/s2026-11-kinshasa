@@ -9,12 +9,12 @@ import 'package:intl/intl.dart';
 import 'package:ngoma/core/formatting/day_format.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 
 import 'package:ngoma/core/platform/messaging/messaging_models.dart';
 import 'package:ngoma/core/theme.dart';
-import 'package:ngoma/core/widgets/wouanda_conversation.dart';
-import 'package:ngoma/core/widgets/wouanda_symbols.dart';
+import 'package:ngoma/core/widgets/ngoma_conversation.dart';
+import 'package:ngoma/core/widgets/ngoma_symbols.dart';
 import 'package:ngoma/features/messaging/messaging_document_viewer.dart';
 import 'package:ngoma/features/messaging/messaging_media_viewer.dart';
 
@@ -106,14 +106,14 @@ class ConversationContextBanner extends StatelessWidget {
     ];
     final brightness = Theme.of(context).brightness;
     return Material(
-      color: WouandaColors.surface(brightness),
+      color: NgomaColors.surface(brightness),
       child: InkWell(
         onTap: onOpen,
         child: Container(
           padding: const EdgeInsets.fromLTRB(16, 10, 8, 10),
           decoration: BoxDecoration(
             border: Border(
-              bottom: BorderSide(color: WouandaColors.border(brightness)),
+              bottom: BorderSide(color: NgomaColors.border(brightness)),
             ),
           ),
           child: Row(
@@ -136,7 +136,7 @@ class ConversationContextBanner extends StatelessWidget {
                       style: AppTheme.font(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: WouandaColors.textPrimary(brightness),
+                        color: NgomaColors.textPrimary(brightness),
                       ),
                     ),
                     if (status != null)
@@ -144,7 +144,7 @@ class ConversationContextBanner extends StatelessWidget {
                         status,
                         key: ValueKey('context-status-${living!.status}'),
                         style: AppTheme.caption(
-                          color: WouandaColors.textSecondary(brightness),
+                          color: NgomaColors.textSecondary(brightness),
                         ),
                       ),
                   ],
@@ -184,13 +184,13 @@ class DaySeparator extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 12),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         decoration: BoxDecoration(
-          color: WouandaColors.surfaceMuted(brightness),
-          borderRadius: BorderRadius.circular(WouandaSpacing.radiusPill),
+          color: NgomaColors.surfaceMuted(brightness),
+          borderRadius: BorderRadius.circular(NgomaSpacing.radiusPill),
         ),
         child: Text(
           label(day),
           style: AppTheme.caption(
-            color: WouandaColors.textSecondary(brightness),
+            color: NgomaColors.textSecondary(brightness),
           ),
         ),
       ),
@@ -244,8 +244,8 @@ class SystemMessagePill extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 8),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: WouandaColors.surfaceMuted(brightness),
-          borderRadius: BorderRadius.circular(WouandaSpacing.radiusPill),
+          color: NgomaColors.surfaceMuted(brightness),
+          borderRadius: BorderRadius.circular(NgomaSpacing.radiusPill),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -257,7 +257,7 @@ class SystemMessagePill extends StatelessWidget {
                   ? LucideIcons.phone
                   : LucideIcons.info,
               size: 13,
-              color: WouandaColors.textSecondary(brightness),
+              color: NgomaColors.textSecondary(brightness),
             ),
             const SizedBox(width: 6),
             Flexible(
@@ -265,7 +265,7 @@ class SystemMessagePill extends StatelessWidget {
                 '$words · '
                 '${DateFormat('HH:mm').format(message.createdAt)}',
                 style: AppTheme.caption(
-                  color: WouandaColors.textSecondary(brightness),
+                  color: NgomaColors.textSecondary(brightness),
                 ),
               ),
             ),
@@ -289,13 +289,13 @@ class _TypingIndicatorBubbleState extends State<TypingIndicatorBubble>
     with SingleTickerProviderStateMixin {
   late final _controller = AnimationController(
     vsync: this,
-    duration: WouandaMotion.activity,
+    duration: NgomaMotion.activity,
   );
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    WouandaMotion.isReduced(context)
+    NgomaMotion.isReduced(context)
         ? _controller.stop()
         : _controller.repeat();
   }
@@ -315,7 +315,7 @@ class _TypingIndicatorBubbleState extends State<TypingIndicatorBubble>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          WouandaMessageBubbleFrame(
+          NgomaMessageBubbleFrame(
             isMine: false,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
@@ -425,7 +425,7 @@ class _SwipeToReplyState extends State<SwipeToReply> {
           ),
           AnimatedContainer(
             duration: _dx == 0
-                ? WouandaMotion.duration(context, WouandaMotion.fast)
+                ? NgomaMotion.duration(context, NgomaMotion.fast)
                 : Duration.zero,
             transform: Matrix4.translationValues(_dx, 0, 0),
             child: widget.child,
@@ -488,19 +488,19 @@ class MessageBubble extends StatelessWidget {
     final mine = message.isMine;
     final post = message.isPost && !message.isDeleted;
     final poll = message.isPoll && !message.isDeleted;
-    final fg = WouandaMessageBubbleFrame.inkOf(context);
-    final meta = WouandaMessageBubbleFrame.metaOf(context);
+    final fg = NgomaMessageBubbleFrame.inkOf(context);
+    final meta = NgomaMessageBubbleFrame.metaOf(context);
     final media = message.attachments.where(isVisualAttachment).toList();
     final others = message.attachments.where((a) => !media.contains(a));
     final failed = message.delivery == MessageDelivery.failed;
     final queued = message.delivery == MessageDelivery.queued;
 
-    final bubble = WouandaMessageBubbleFrame(
+    final bubble = NgomaMessageBubbleFrame(
       isMine: mine,
       firstOfGroup: firstOfGroup,
       lastOfGroup: lastOfGroup,
       child: AnimatedContainer(
-        duration: WouandaMotion.duration(context, WouandaMotion.standard),
+        duration: NgomaMotion.duration(context, NgomaMotion.standard),
         foregroundDecoration: BoxDecoration(
           color: highlighted
               ? context.palette.accent.withValues(alpha: .18)
@@ -684,7 +684,7 @@ class MessageBubble extends StatelessWidget {
             child: InkWell(
               key: ValueKey('messaging-retry-${message.clientMessageId}'),
               onTap: onRetry,
-              borderRadius: BorderRadius.circular(WouandaSpacing.radiusSmall),
+              borderRadius: BorderRadius.circular(NgomaSpacing.radiusSmall),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                 child: Row(
@@ -693,7 +693,7 @@ class MessageBubble extends StatelessWidget {
                     const Icon(
                       LucideIcons.circleAlert,
                       size: 14,
-                      color: WouandaColors.negative,
+                      color: NgomaColors.negative,
                     ),
                     const SizedBox(width: 4),
                     Flexible(
@@ -701,7 +701,7 @@ class MessageBubble extends StatelessWidget {
                         'Non envoyé · Réessayer',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTheme.caption(color: WouandaColors.negative),
+                        style: AppTheme.caption(color: NgomaColors.negative),
                       ),
                     ),
                   ],
@@ -725,12 +725,12 @@ class _ReplyQuote extends StatelessWidget {
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     final bar = context.palette.accent;
-    final text = WouandaColors.textSecondary(brightness);
+    final text = NgomaColors.textSecondary(brightness);
     return Material(
       color: mine
           ? context.palette.surface.withValues(alpha: .6)
-          : WouandaColors.surfaceMuted(brightness),
-      borderRadius: BorderRadius.circular(WouandaSpacing.radiusSmall),
+          : NgomaColors.surfaceMuted(brightness),
+      borderRadius: BorderRadius.circular(NgomaSpacing.radiusSmall),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
@@ -795,12 +795,12 @@ class _ReactionsRow extends StatelessWidget {
             child: Material(
               color: reaction.isMine
                   ? context.palette.accent.withValues(alpha: .12)
-                  : WouandaColors.surface(brightness),
+                  : NgomaColors.surface(brightness),
               shape: StadiumBorder(
                 side: BorderSide(
                   color: reaction.isMine
                       ? context.palette.accent.withValues(alpha: .5)
-                      : WouandaColors.border(brightness),
+                      : NgomaColors.border(brightness),
                 ),
               ),
               child: InkWell(
@@ -819,14 +819,14 @@ class _ReactionsRow extends StatelessWidget {
                         size: 15,
                         color: reaction.isMine
                             ? context.palette.accent
-                            : WouandaColors.textSecondary(brightness),
+                            : NgomaColors.textSecondary(brightness),
                       ),
                       if (reaction.count > 1) ...[
                         const SizedBox(width: 4),
                         Text(
                           '${reaction.count}',
                           style: AppTheme.caption(
-                            color: WouandaColors.textSecondary(brightness),
+                            color: NgomaColors.textSecondary(brightness),
                           ),
                         ),
                       ],
@@ -850,8 +850,8 @@ class ReactionGlyph extends StatelessWidget {
   final Color? color;
 
   @override
-  Widget build(BuildContext context) => WouandaSymbols.has(reaction)
-      ? WouandaSymbol(reaction, size: size, color: color)
+  Widget build(BuildContext context) => NgomaSymbols.has(reaction)
+      ? NgomaSymbol(reaction, size: size, color: color)
       : Text(reaction, style: AppTheme.font(fontSize: size, height: 1.1));
 }
 
@@ -984,7 +984,7 @@ class _DeliveryTick extends StatelessWidget {
       MessageDelivery.failed => const Icon(
         LucideIcons.circleAlert,
         size: 14,
-        color: WouandaColors.negative,
+        color: NgomaColors.negative,
       ),
     },
   );
@@ -1019,7 +1019,7 @@ class _AttachmentRow extends StatelessWidget {
           : 'Ouvrir le document ${attachment.label}',
       child: Material(
         color: context.palette.surface.withValues(alpha: .6),
-        borderRadius: BorderRadius.circular(WouandaSpacing.radiusSmall),
+        borderRadius: BorderRadius.circular(NgomaSpacing.radiusSmall),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onTap,
@@ -1034,7 +1034,7 @@ class _AttachmentRow extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: context.palette.accent.withValues(alpha: .12),
                     borderRadius: BorderRadius.circular(
-                      WouandaSpacing.radiusSmall,
+                      NgomaSpacing.radiusSmall,
                     ),
                   ),
                   child: Icon(
@@ -1061,7 +1061,7 @@ class _AttachmentRow extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTheme.caption(
-                            color: WouandaColors.textSecondary(
+                            color: NgomaColors.textSecondary(
                               Theme.of(context).brightness,
                             ),
                           ),
@@ -1074,7 +1074,7 @@ class _AttachmentRow extends StatelessWidget {
                   Icon(
                     LucideIcons.chevronRight,
                     size: 16,
-                    color: WouandaColors.textSecondary(
+                    color: NgomaColors.textSecondary(
                       Theme.of(context).brightness,
                     ),
                   ),

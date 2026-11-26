@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'wouanda_error_code.dart';
+import 'ngoma_error_code.dart';
 
 /// One native TFlow batch. The controller retains the cursor; Flutter appends
 /// only these items and renders placebo rows while the next call is pending.
@@ -19,7 +19,7 @@ class BridgeBatch<T> {
   ) {
     if (raw['items'] is! List || raw['hasMore'] is! bool) {
       throw PlatformException(
-        code: WouandaErrorCode.serverError,
+        code: NgomaErrorCode.serverError,
         message: 'Invalid batch snapshot',
       );
     }

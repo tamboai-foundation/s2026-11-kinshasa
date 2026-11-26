@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 import 'package:ngoma/core/i18n/translations.dart';
 import 'package:ngoma/core/providers/user_provider.dart';
 import 'package:ngoma/core/theme.dart';
 import 'package:ngoma/core/widgets/account_setup_progress.dart';
-import 'package:ngoma/core/widgets/wouanda_brand_mark.dart';
+import 'package:ngoma/core/widgets/ngoma_brand_mark.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -69,7 +69,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           fit: StackFit.expand,
           children: [
             // Matches the native full-window centre and artwork width.
-            const Center(child: WouandaBrandMark(width: 104)),
+            const Center(child: NgomaBrandMark(width: 104)),
             Align(
               alignment: Alignment.bottomCenter,
               child: SafeArea(
@@ -88,11 +88,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                     SizedBox(
                       height: 8,
                       child: _isRestoring
-                          ? const WouandaBusyBar(color: AppTheme.primary)
+                          ? const NgomaBusyBar(color: AppTheme.primary)
                           : null,
                     ),
                     // Hybride : la restauration affiche la progression du
-                    // setup Wouanda (TModeler) quand il tourne.
+                    // setup NGoma (TModeler) quand il tourne.
                     if (_isRestoring) ...[
                       const SizedBox(height: 16),
                       const AccountSetupProgress(fullScreen: false),

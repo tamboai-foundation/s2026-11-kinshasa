@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// Progress of the Wouanda setup that Kotlin runs while a sign-in is in flight.
+/// Progress of the NGoma setup that Kotlin runs while a sign-in is in flight.
 ///
-/// The home needs the Wouanda data (services, user directory), so `login`,
+/// The home needs the NGoma data (services, user directory), so `login`,
 /// `register` and `restoreSession` only answer once it is installed. While the
 /// call is pending, this polls `setupStatus` and, once the setup runs, covers
 /// the screen with its progress. Nothing is drawn outside a setup, and without
@@ -21,7 +21,7 @@ class AccountSetupProgress extends StatefulWidget {
 }
 
 class _AccountSetupProgressState extends State<AccountSetupProgress> {
-  static const _channel = MethodChannel('com.wouanda/account');
+  static const _channel = MethodChannel('com.ngoma/account');
   Timer? _poll;
   bool _running = false;
   double _progress = 0;
@@ -67,7 +67,7 @@ class _AccountSetupProgressState extends State<AccountSetupProgress> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Installation de votre espace Wouanda',
+            'Installation de votre espace NGoma',
             style: theme.textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),

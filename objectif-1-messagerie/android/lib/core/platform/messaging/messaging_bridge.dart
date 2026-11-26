@@ -36,7 +36,7 @@ abstract interface class MessagingPaginationBridge {
   bool hasMoreMessages(int conversationId);
 }
 
-/// Contract `com.wouanda/messaging`.
+/// Contract `com.ngoma/messaging`.
 abstract class MessagingBridge {
   Stream<String> get eventsStream;
 

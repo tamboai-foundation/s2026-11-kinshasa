@@ -1,16 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:ngoma/core/widgets/wouanda_loading_state.dart';
+import 'package:ngoma/core/widgets/ngoma_loading_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ngoma/core/theme.dart';
 import 'package:ngoma/core/providers/user_provider.dart';
-import 'package:ngoma/core/superapp/wouanda_permissions.dart';
-import 'package:ngoma/core/superapp/wouanda_service_registry.dart';
+import 'package:ngoma/core/superapp/ngoma_permissions.dart';
+import 'package:ngoma/core/superapp/ngoma_service_registry.dart';
 import 'package:ngoma/core/widgets/auth_required_sheet.dart';
-import 'package:ngoma/core/widgets/wouanda_settings_kit.dart';
+import 'package:ngoma/core/widgets/ngoma_settings_kit.dart';
 
 /// Helper function to execute an action only if the user is authenticated.
 /// If the user is an anonymous/guest user, it shows a modern BottomSheet
@@ -21,7 +21,7 @@ void executeWithAuth(
   WidgetRef ref,
   VoidCallback action, {
   String actionName = "continuer",
-  WouandaAction superAction = WouandaAction.manageService,
+  NgomaAction superAction = NgomaAction.manageService,
 }) {
   final sessionStatus = ref.read(userSessionStatusProvider);
   if (sessionStatus == UserSessionStatus.restoring) {
@@ -35,7 +35,7 @@ void executeWithAuth(
   }
 
   final user = ref.read(userProvider);
-  final decision = WouandaPermissions.can(user, superAction);
+  final decision = NgomaPermissions.can(user, superAction);
 
   if (decision.allowed) {
     action();
@@ -44,7 +44,7 @@ void executeWithAuth(
 
   // No decision from the account authority: read the session again rather
   // than guessing a right.
-  if (decision.blocker == WouandaAccessBlocker.unavailable) {
+  if (decision.blocker == NgomaAccessBlocker.unavailable) {
     unawaited(
       ref
           .read(userProvider.notifier)
@@ -76,7 +76,7 @@ void executeWithAuth(
       title: decision.title,
       message: decision.message,
       primaryRoute: decision.resolutionRoute,
-      primaryLabel: WouandaPermissions.resolutionLabel(decision.blocker),
+      primaryLabel: NgomaPermissions.resolutionLabel(decision.blocker),
     );
   }
 }
@@ -85,32 +85,32 @@ class AuthGate extends ConsumerWidget {
   final Widget child;
   final String actionName;
   final String? returnTo;
-  final WouandaAction superAction;
+  final NgomaAction superAction;
 
   const AuthGate({
     super.key,
     required this.child,
     this.actionName = 'continuer',
     this.returnTo,
-    this.superAction = WouandaAction.manageService,
+    this.superAction = NgomaAction.manageService,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sessionStatus = ref.watch(userSessionStatusProvider);
     if (sessionStatus == UserSessionStatus.restoring) {
-      return const Scaffold(body: WouandaPageLoading());
+      return const Scaffold(body: NgomaPageLoading());
     }
 
     final user = ref.watch(userProvider);
-    final decision = WouandaPermissions.can(user, superAction);
+    final decision = NgomaPermissions.can(user, superAction);
     if (decision.allowed) return child;
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = AppTheme.getTextPrimary(isDark);
     final mutedColor = AppTheme.getTextSecondary(isDark);
-    final service = WouandaServiceRegistry.byId(
-      WouandaPermissions.policyFor(superAction).service,
+    final service = NgomaServiceRegistry.byId(
+      NgomaPermissions.policyFor(superAction).service,
     );
 
     return Scaffold(
@@ -173,7 +173,7 @@ class AuthGate extends ConsumerWidget {
                         child: ElevatedButton.icon(
                           onPressed: () {
                             if (decision.blocker ==
-                                WouandaAccessBlocker.unavailable) {
+                                NgomaAccessBlocker.unavailable) {
                               unawaited(
                                 ref
                                     .read(userProvider.notifier)
@@ -188,10 +188,10 @@ class AuthGate extends ConsumerWidget {
                           },
                           icon: const Icon(LucideIcons.badgeCheck, size: 19),
                           label: Text(
-                            decision.blocker == WouandaAccessBlocker.role &&
-                                    service.id == WouandaServiceId.events
+                            decision.blocker == NgomaAccessBlocker.role &&
+                                    service.id == NgomaServiceId.events
                                 ? 'Créer mon organisation'
-                                : WouandaPermissions.resolutionLabel(
+                                : NgomaPermissions.resolutionLabel(
                                     decision.blocker,
                                   ),
                             textAlign: TextAlign.center,

@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ngoma/core/theme.dart';
 import 'package:ngoma/features/messaging/messaging_input_service.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 
 /// Voice message recorded where the text field was, as in WhatsApp: one tap
 /// on the microphone starts recording, the bin throws it away, the arrow
@@ -136,7 +136,7 @@ class _VoiceRecorderBarState extends State<VoiceRecorderBar> {
             padding: const EdgeInsets.only(left: 4, right: 14),
             decoration: BoxDecoration(
               color: palette.surface,
-              borderRadius: BorderRadius.circular(WouandaSpacing.radiusLarge),
+              borderRadius: BorderRadius.circular(NgomaSpacing.radiusLarge),
               border: Border.all(color: palette.border),
             ),
             child: Row(
@@ -212,13 +212,13 @@ class _RecordingDotState extends State<_RecordingDot>
     with SingleTickerProviderStateMixin {
   late final _controller = AnimationController(
     vsync: this,
-    duration: WouandaMotion.activity,
+    duration: NgomaMotion.activity,
   );
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    WouandaMotion.isReduced(context)
+    NgomaMotion.isReduced(context)
         ? _controller.value = 1
         : _controller.repeat(reverse: true);
   }

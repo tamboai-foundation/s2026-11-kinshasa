@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:ngoma/core/i18n/l10n.dart';
 
-import 'wouanda_service_registry.dart';
+import 'ngoma_service_registry.dart';
 
 /// The words of a service in the app language (French or English). Every
 /// screen that names a service asks here; the French fields of the registry
 /// are only the fallback for a service that has no translation yet.
-extension WouandaServiceText on WouandaServiceDefinition {
+extension NgomaServiceText on NgomaServiceDefinition {
   String labelOf(BuildContext context) {
     final l10n = context.l10n;
     return switch (key) {

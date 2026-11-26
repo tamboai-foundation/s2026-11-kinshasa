@@ -17,17 +17,17 @@ Future<void> main() async {
   } catch (_) {
     // Widgets can still start with the platform locale if locale data is absent.
   }
-  runApp(const ProviderScope(child: WouandaApp()));
+  runApp(const ProviderScope(child: NgomaApp()));
 }
 
-class WouandaApp extends ConsumerWidget {
-  const WouandaApp({super.key});
+class NgomaApp extends ConsumerWidget {
+  const NgomaApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentLanguage = ref.watch(languageProvider);
     return MaterialApp.router(
-      title: 'Wouanda Chat',
+      title: 'NGoma',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

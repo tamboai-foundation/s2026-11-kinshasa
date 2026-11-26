@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ngoma/core/widgets/wouanda_image.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma/core/widgets/ngoma_image.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -39,7 +39,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
           Positioned.fill(
             child: Opacity(
               opacity: 0.3,
-              child: WouandaImage(
+              child: NgomaImage(
                 "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&w=1200&q=80",
                 fallback: const SizedBox.shrink(),
               ),
@@ -171,7 +171,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                             color: (context.palette.border),
                           ),
                           borderRadius: BorderRadius.circular(
-                            WouandaSpacing.radiusLarge,
+                            NgomaSpacing.radiusLarge,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -180,7 +180,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(
-                            WouandaSpacing.radiusLarge,
+                            NgomaSpacing.radiusLarge,
                           ),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
@@ -216,7 +216,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                                   : context.palette.onAccent),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
-                            WouandaSpacing.radiusLarge,
+                            NgomaSpacing.radiusLarge,
                           ),
                           side: BorderSide(
                             color: context.palette.border.withValues(

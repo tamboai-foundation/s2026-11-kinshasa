@@ -1,4 +1,4 @@
-/// Durations the Wouanda way: « 4:05 », then « 1:02:09 » beyond an hour.
+/// Durations the NGoma way: « 4:05 », then « 1:02:09 » beyond an hour.
 ///
 /// Countdowns, waiting times, calls and voice notes share this one clock
 /// format; a negative duration reads as « 0:00 ».

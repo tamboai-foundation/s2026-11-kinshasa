@@ -1,7 +1,7 @@
-import 'package:ngoma/core/widgets/wouanda_choice.dart';
+import 'package:ngoma/core/widgets/ngoma_choice.dart';
 import 'package:flutter/material.dart';
-import 'wouanda_min_size.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'ngoma_min_size.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ngoma/core/i18n/translations.dart';
 
@@ -38,13 +38,13 @@ class LanguageSelector extends ConsumerWidget {
 
     void onPressed() {
       () async {
-        final code = await showWouandaChoices<String>(
+        final code = await showNgomaChoices<String>(
           context,
           title: currentLanguage.t('choose_language'),
           selected: currentLanguage.code,
           choices: [
             for (final lang in supportedLocales)
-              WouandaChoice(
+              NgomaChoice(
                 value: lang.code,
                 label: '${lang.flag}  ${lang.nativeName}',
               ),
@@ -59,9 +59,9 @@ class LanguageSelector extends ConsumerWidget {
     if (transparent) {
       return InkWell(
         onTap: onPressed,
-        borderRadius: BorderRadius.circular(WouandaSpacing.radiusLarge),
+        borderRadius: BorderRadius.circular(NgomaSpacing.radiusLarge),
         // 48 dp tall tap area around a small label.
-        child: WouandaMinSize(
+        child: NgomaMinSize(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
             child: Row(mainAxisSize: MainAxisSize.min, children: children),
@@ -77,7 +77,7 @@ class LanguageSelector extends ConsumerWidget {
         style: TextButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(WouandaSpacing.radiusLarge),
+            borderRadius: BorderRadius.circular(NgomaSpacing.radiusLarge),
             side: BorderSide(
               color: (color ?? context.palette.onMedia).withValues(alpha: 0.3),
             ),

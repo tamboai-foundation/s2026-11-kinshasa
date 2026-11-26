@@ -94,7 +94,7 @@ class AccountBridgeNative implements AccountBridge, AccountSessionEventsBridge {
 
   const AccountBridgeNative();
   static final _events = const EventChannel(
-    'com.wouanda/account/events',
+    'com.ngoma/account/events',
   ).receiveBroadcastStream().cast<String>();
   @override
   Stream<String> get events => _events;
@@ -183,7 +183,7 @@ class AccountBridgeNative implements AccountBridge, AccountSessionEventsBridge {
   @override
   Future<List<AccountProSpaceDto>> getProfessionalSpaces() async {
     final items = await const MethodChannel(
-      'com.wouanda/account',
+      'com.ngoma/account',
     ).invokeListMethod<Object?>('getProfessionalSpaces');
     if (items == null) {
       throw PlatformException(code: 'ACCOUNT_INVALID_RESPONSE');
@@ -202,7 +202,7 @@ final accountBridgeProvider = Provider<AccountBridge>(
 /// Account address wire port. IDs and pagination are allocated by Kotlin.
 class AccountAddressesBridge {
   const AccountAddressesBridge();
-  static const _channel = MethodChannel('com.wouanda/account');
+  static const _channel = MethodChannel('com.ngoma/account');
   Future<BridgeBatch<Map<String, dynamic>>> load({bool more = false}) async {
     final raw = await _channel.invokeMapMethod<String, dynamic>(
       more ? 'loadMoreAddresses' : 'loadAddresses',

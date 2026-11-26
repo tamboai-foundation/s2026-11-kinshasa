@@ -1,9 +1,9 @@
-import 'package:ngoma/core/widgets/wouanda_draggable_sheet.dart';
-import 'package:ngoma/core/widgets/wouanda_conversation.dart';
-import 'package:ngoma/core/widgets/wouanda_loading_state.dart';
+import 'package:ngoma/core/widgets/ngoma_draggable_sheet.dart';
+import 'package:ngoma/core/widgets/ngoma_conversation.dart';
+import 'package:ngoma/core/widgets/ngoma_loading_state.dart';
 import 'dart:async';
 import 'package:ngoma/core/platform/messaging/messaging_visibility.dart';
-import 'package:ngoma/core/widgets/wouanda_chip_rail.dart';
+import 'package:ngoma/core/widgets/ngoma_chip_rail.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +16,7 @@ import 'package:ngoma/core/platform/messaging/messaging_bridge.dart';
 import 'package:ngoma/core/platform/messaging/messaging_bridge_provider.dart';
 import 'package:ngoma/core/providers/messaging_provider.dart';
 import 'package:ngoma/core/theme.dart';
-import 'package:ngoma/core/widgets/wouanda_platform_widgets.dart';
+import 'package:ngoma/core/widgets/ngoma_platform_widgets.dart';
 import 'package:ngoma/features/messaging/buzz_viewer_screen.dart';
 import 'package:ngoma/features/messaging/call_screen.dart';
 import 'package:ngoma/features/messaging/conversation_actions.dart';
@@ -29,7 +29,7 @@ import 'package:ngoma/features/messaging/messaging_service_style.dart';
 import 'package:ngoma/features/messaging/poll_post_parts.dart';
 import 'package:ngoma/features/messaging/voice_recorder_bar.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 
 class UnifiedConversationScreen extends ConsumerStatefulWidget {
   final UnifiedConversationDto conversation;
@@ -160,7 +160,7 @@ class _UnifiedConversationScreenState
           child: InkWell(
             key: const ValueKey('messaging-conversation-header'),
             onTap: () => _openDetails(conversation, allows, status),
-            borderRadius: BorderRadius.circular(WouandaSpacing.radiusMedium),
+            borderRadius: BorderRadius.circular(NgomaSpacing.radiusMedium),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               child: Row(
@@ -196,9 +196,9 @@ class _UnifiedConversationScreenState
                           ],
                         ),
                         AnimatedSwitcher(
-                          duration: WouandaMotion.duration(
+                          duration: NgomaMotion.duration(
                             context,
-                            WouandaMotion.fast,
+                            NgomaMotion.fast,
                           ),
                           child: Text(
                             typing
@@ -279,9 +279,9 @@ class _UnifiedConversationScreenState
                   bottom: 12,
                   child: AnimatedScale(
                     scale: _showJump ? 1 : 0,
-                    duration: WouandaMotion.duration(
+                    duration: NgomaMotion.duration(
                       context,
-                      WouandaMotion.fast,
+                      NgomaMotion.fast,
                     ),
                     child: FloatingActionButton.small(
                       key: const ValueKey('messaging-jump-latest'),
@@ -301,13 +301,13 @@ class _UnifiedConversationScreenState
           if (conversation.canSend &&
               !conversation.isBlocked &&
               conversation.quickReplies.isNotEmpty)
-            WouandaChipRail<String>(
+            NgomaChipRail<String>(
               key: const ValueKey('messaging-quick-replies'),
               // Codes from the source (go v1.17), words in the reader's
               // language; the message sent is those words.
               chips: [
                 for (final code in conversation.quickReplies)
-                  WouandaChip(
+                  NgomaChip(
                     value: code,
                     label: messagingQuickReplyLabel(
                       context.l10n,
@@ -357,12 +357,12 @@ class _UnifiedConversationScreenState
     required bool showTyping,
   }) {
     if (state.isLoading && messages.isEmpty) {
-      return const WouandaLoadingState();
+      return const NgomaLoadingState();
     }
     if (state.error != null && messages.isEmpty) {
-      return WouandaEmptyState(
+      return NgomaEmptyState(
         icon: LucideIcons.messageCircleWarning,
-        art: WouandaArt.messages,
+        art: NgomaArt.messages,
         title: 'Messages indisponibles',
         message: 'Vérifiez la connexion puis réessayez.',
         actionLabel: 'Réessayer',
@@ -370,9 +370,9 @@ class _UnifiedConversationScreenState
       );
     }
     if (messages.isEmpty) {
-      return WouandaEmptyState(
+      return NgomaEmptyState(
         icon: LucideIcons.messageCircle,
-        art: WouandaArt.messages,
+        art: NgomaArt.messages,
         title: 'Aucun message',
         message: conversation.canSend
             ? 'Envoyez un premier message.'
@@ -484,7 +484,7 @@ class _UnifiedConversationScreenState
         if (index == entries.length) {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: 12),
-            child: Center(child: WouandaBusyBar(size: 22)),
+            child: Center(child: NgomaBusyBar(size: 22)),
           );
         }
         return entries[entries.length - 1 - index];
@@ -554,7 +554,7 @@ class _UnifiedConversationScreenState
                 },
               )
             else
-              WouandaConversationComposer(
+              NgomaConversationComposer(
                 controller: _controller,
                 maxLength: conversation.maxTextLength,
                 focusNode: _focus,
@@ -716,7 +716,7 @@ class _UnifiedConversationScreenState
         ref.read(messagingBridgeProvider) is MessagingInteractiveBridge;
     bool allows(MessagingFeature feature) =>
         interactive && messagingAllows(capabilities, conversation, feature);
-    final choice = await showWouandaSheet<Object>(
+    final choice = await showNgomaSheet<Object>(
       context,
       showDragHandle: true,
       builder: (sheetContext) => SafeArea(
@@ -984,7 +984,7 @@ class _UnifiedConversationScreenState
         TextButton(
           key: const ValueKey('messaging-confirm'),
           onPressed: () => Navigator.pop(dialogContext, true),
-          style: TextButton.styleFrom(foregroundColor: WouandaColors.negative),
+          style: TextButton.styleFrom(foregroundColor: NgomaColors.negative),
           child: Text(action),
         ),
       ],
@@ -1023,8 +1023,8 @@ class _UnifiedConversationScreenState
     if (!_scroll.hasClients) return;
     _scroll.animateTo(
       0,
-      duration: WouandaMotion.duration(context, WouandaMotion.standard),
-      curve: WouandaMotion.enterCurve,
+      duration: NgomaMotion.duration(context, NgomaMotion.standard),
+      curve: NgomaMotion.enterCurve,
     );
   }
 
@@ -1040,7 +1040,7 @@ class _UnifiedConversationScreenState
       await _notifier.loadOlder();
     }
     if (!mounted) return;
-    final motion = WouandaMotion.duration(context, WouandaMotion.standard);
+    final motion = NgomaMotion.duration(context, NgomaMotion.standard);
     await WidgetsBinding.instance.endOfFrame;
     var target = _keys[messageId]?.currentContext;
     if (target == null && _scroll.hasClients) {
@@ -1055,7 +1055,7 @@ class _UnifiedConversationScreenState
       await _scroll.animateTo(
         _scroll.position.maxScrollExtent * ratio,
         duration: motion,
-        curve: WouandaMotion.enterCurve,
+        curve: NgomaMotion.enterCurve,
       );
       await WidgetsBinding.instance.endOfFrame;
       target = _keys[messageId]?.currentContext;
@@ -1198,9 +1198,9 @@ class _ReadOnlyFooter extends StatelessWidget {
         constraints: const BoxConstraints(minHeight: 60),
         padding: const EdgeInsets.fromLTRB(20, 8, 12, 8),
         decoration: BoxDecoration(
-          color: WouandaColors.surface(brightness),
+          color: NgomaColors.surface(brightness),
           border: Border(
-            top: BorderSide(color: WouandaColors.border(brightness)),
+            top: BorderSide(color: NgomaColors.border(brightness)),
           ),
         ),
         child: Row(
@@ -1210,15 +1210,15 @@ class _ReadOnlyFooter extends StatelessWidget {
               icon,
               size: 18,
               color: blocked
-                  ? WouandaColors.negative
-                  : WouandaColors.textSecondary(brightness),
+                  ? NgomaColors.negative
+                  : NgomaColors.textSecondary(brightness),
             ),
             const SizedBox(width: 10),
             Flexible(
               child: Text(
                 text,
                 style: AppTheme.bodySm(
-                  color: WouandaColors.textSecondary(brightness),
+                  color: NgomaColors.textSecondary(brightness),
                 ),
               ),
             ),
@@ -1277,8 +1277,8 @@ class _InputToolsRail extends StatelessWidget {
 /// v5: message kinds offered next to the media, when the conversation
 /// allows them.
 enum _ExtraTool {
-  poll('Sondage', LucideIcons.listChecks, AppTheme.wouandaStay),
-  post('Buzz', LucideIcons.flame, AppTheme.wouandaEvents);
+  poll('Sondage', LucideIcons.listChecks, AppTheme.ngomaStay),
+  post('Buzz', LucideIcons.flame, AppTheme.ngomaEvents);
 
   const _ExtraTool(this.label, this.icon, this.color);
   final String label;
@@ -1300,7 +1300,7 @@ class _PostModeBanner extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 6, 4, 6),
       decoration: BoxDecoration(
         color: accent.withValues(alpha: .08),
-        borderRadius: BorderRadius.circular(WouandaSpacing.radiusMedium),
+        borderRadius: BorderRadius.circular(NgomaSpacing.radiusMedium),
       ),
       child: Row(
         children: [
@@ -1365,7 +1365,7 @@ class _ToolButton extends StatelessWidget {
       child: InkWell(
         key: ValueKey('messaging-attach-$id'),
         onTap: onTap,
-        borderRadius: BorderRadius.circular(WouandaSpacing.radiusLarge),
+        borderRadius: BorderRadius.circular(NgomaSpacing.radiusLarge),
         child: SizedBox(
           width: 78,
           child: Column(
@@ -1397,11 +1397,11 @@ class _ToolButton extends StatelessWidget {
 
 /// Each kind has its own colour, so the eye finds it before reading.
 Color _inputMethodColor(MessageInputMethod method) => switch (method) {
-  MessageInputMethod.camera => AppTheme.wouandaShop,
-  MessageInputMethod.gallery => AppTheme.wouandaLove,
-  MessageInputMethod.document => AppTheme.wouandaGo,
+  MessageInputMethod.camera => AppTheme.ngomaShop,
+  MessageInputMethod.gallery => AppTheme.ngomaLove,
+  MessageInputMethod.document => AppTheme.ngomaGo,
   MessageInputMethod.location => AppTheme.success,
-  MessageInputMethod.voice => AppTheme.wouandaEvents,
+  MessageInputMethod.voice => AppTheme.ngomaEvents,
 };
 
 class _DraftAttachmentPreview extends StatelessWidget {
@@ -1422,9 +1422,9 @@ class _DraftAttachmentPreview extends StatelessWidget {
     return Container(
       width: visual ? 112 : 172,
       decoration: BoxDecoration(
-        color: WouandaColors.surface(brightness),
-        borderRadius: BorderRadius.circular(WouandaSpacing.radiusMedium),
-        border: Border.all(color: WouandaColors.border(brightness)),
+        color: NgomaColors.surface(brightness),
+        borderRadius: BorderRadius.circular(NgomaSpacing.radiusMedium),
+        border: Border.all(color: NgomaColors.border(brightness)),
       ),
       clipBehavior: Clip.antiAlias,
       child: Stack(
@@ -1478,7 +1478,7 @@ class _AttachmentLabel extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: AppTheme.caption(
-                color: WouandaColors.textPrimary(brightness),
+                color: NgomaColors.textPrimary(brightness),
               ),
             ),
           ),

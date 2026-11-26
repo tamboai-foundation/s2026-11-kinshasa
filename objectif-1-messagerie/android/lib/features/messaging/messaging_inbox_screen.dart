@@ -1,12 +1,12 @@
-import 'package:ngoma/core/widgets/wouanda_draggable_sheet.dart';
-import 'package:ngoma/core/widgets/wouanda_search_input.dart';
+import 'package:ngoma/core/widgets/ngoma_draggable_sheet.dart';
+import 'package:ngoma/core/widgets/ngoma_search_input.dart';
 import 'dart:async';
-import 'package:ngoma/core/widgets/wouanda_list.dart';
-import 'package:ngoma/core/widgets/wouanda_loading_state.dart';
+import 'package:ngoma/core/widgets/ngoma_list.dart';
+import 'package:ngoma/core/widgets/ngoma_loading_state.dart';
 
 import 'package:flutter/material.dart';
-import 'package:ngoma/core/widgets/wouanda_segmented_control.dart';
-import 'package:ngoma/core/widgets/wouanda_image.dart';
+import 'package:ngoma/core/widgets/ngoma_segmented_control.dart';
+import 'package:ngoma/core/widgets/ngoma_image.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -16,9 +16,9 @@ import 'package:ngoma/core/platform/messaging/messaging_models.dart';
 import 'package:ngoma/core/providers/messaging_provider.dart';
 import 'package:ngoma/core/theme.dart';
 import 'package:ngoma/features/messaging/messaging_service_style.dart';
-import 'package:wouanda_design/wouanda_design.dart';
-import 'package:ngoma/core/widgets/wouanda_chip_rail.dart';
-import 'package:ngoma/core/widgets/wouanda_platform_widgets.dart';
+import 'package:ngoma_design/ngoma_design.dart';
+import 'package:ngoma/core/widgets/ngoma_chip_rail.dart';
+import 'package:ngoma/core/widgets/ngoma_platform_widgets.dart';
 
 class MessagingInboxScreen extends ConsumerStatefulWidget {
   final MessagingService? initialService;
@@ -120,7 +120,7 @@ class _MessagingInboxScreenState extends ConsumerState<MessagingInboxScreen> {
           toolbarHeight: 64,
           titleSpacing: archived || Navigator.of(context).canPop()
               ? 0
-              : WouandaSpacing.pageGutter,
+              : NgomaSpacing.pageGutter,
           title: Text(
             archived ? 'Archivées' : 'Messages',
             style: archived
@@ -155,7 +155,7 @@ class _MessagingInboxScreenState extends ConsumerState<MessagingInboxScreen> {
             if (!archived)
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 4, 16, 10),
-                child: WouandaSegmentedControl(
+                child: NgomaSegmentedControl(
                   key: const ValueKey('messaging-kinds'),
                   segments: const ['Privées', 'Groupes', 'Canaux'],
                   // A segment not shown still says it has news.
@@ -168,7 +168,7 @@ class _MessagingInboxScreenState extends ConsumerState<MessagingInboxScreen> {
               ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-              child: WouandaSearchInput(
+              child: NgomaSearchInput(
                 key: const ValueKey('messaging-inbox-search'),
                 controller: _search,
                 onChanged: _onSearch,
@@ -178,13 +178,13 @@ class _MessagingInboxScreenState extends ConsumerState<MessagingInboxScreen> {
             ),
             if (!archived)
               // Within the kind: everything, the unread ones, a service.
-              WouandaChipRail<String>(
+              NgomaChipRail<String>(
                 key: const ValueKey('messaging-filters'),
                 chips: [
-                  const WouandaChip(value: 'all', label: 'Tout'),
-                  const WouandaChip(value: 'unread', label: 'Non lus'),
+                  const NgomaChip(value: 'all', label: 'Tout'),
+                  const NgomaChip(value: 'unread', label: 'Non lus'),
                   for (final service in MessagingService.values)
-                    WouandaChip(
+                    NgomaChip(
                       value: service.name,
                       label: messagingServiceLabel(service),
                     ),
@@ -200,7 +200,7 @@ class _MessagingInboxScreenState extends ConsumerState<MessagingInboxScreen> {
                 ),
               ),
             if (state.error != null && state.conversations.isNotEmpty)
-              WouandaListRow(
+              NgomaListRow(
                 leading: const Icon(LucideIcons.cloudOff),
                 title: 'Messages incomplets',
                 trailing: IconButton(
@@ -221,12 +221,12 @@ class _MessagingInboxScreenState extends ConsumerState<MessagingInboxScreen> {
     MessagingCapabilitiesDto capabilities,
   ) {
     if (state.isLoading && state.conversations.isEmpty) {
-      return const WouandaLoadingState();
+      return const NgomaLoadingState();
     }
     if (state.error != null && state.conversations.isEmpty) {
-      return WouandaEmptyState(
+      return NgomaEmptyState(
         icon: LucideIcons.messagesSquare,
-        art: WouandaArt.messages,
+        art: NgomaArt.messages,
         title: 'Messages indisponibles',
         message: 'Impossible de charger vos conversations.',
         actionLabel: 'Réessayer',
@@ -241,9 +241,9 @@ class _MessagingInboxScreenState extends ConsumerState<MessagingInboxScreen> {
       return Column(
         children: [
           Expanded(
-            child: WouandaEmptyState(
+            child: NgomaEmptyState(
               icon: LucideIcons.messagesSquare,
-              art: WouandaArt.messages,
+              art: NgomaArt.messages,
               title: state.archived
                   ? 'Aucune conversation archivée'
                   : state.unreadOnly
@@ -280,7 +280,7 @@ class _MessagingInboxScreenState extends ConsumerState<MessagingInboxScreen> {
           if (i >= state.conversations.length) {
             return const Padding(
               padding: EdgeInsets.all(16),
-              child: WouandaLoadingState(),
+              child: NgomaLoadingState(),
             );
           }
           final item = state.conversations[i];
@@ -393,7 +393,7 @@ class _MessagingInboxScreenState extends ConsumerState<MessagingInboxScreen> {
         ),
     ];
     if (entries.isEmpty) return;
-    final chosen = await showWouandaSheet<Future<void> Function()>(
+    final chosen = await showNgomaSheet<Future<void> Function()>(
       context,
       showDragHandle: true,
       builder: (sheetContext) => SafeArea(
@@ -481,7 +481,7 @@ class _SwipeActions extends StatelessWidget {
         : DismissDirection.endToStart;
     Widget background(bool start) {
       final read = start;
-      final color = read ? context.palette.accent : WouandaColors.ochre;
+      final color = read ? context.palette.accent : NgomaColors.ochre;
       return Container(
         color: color,
         alignment: start ? Alignment.centerLeft : Alignment.centerRight,
@@ -552,7 +552,7 @@ class _ConversationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     final unread = item.isUnread;
-    final secondary = WouandaColors.textSecondary(brightness);
+    final secondary = NgomaColors.textSecondary(brightness);
     final context_ = item.contextLabel;
     final hasContext = context_ != null && RegExp(r'\d').hasMatch(context_);
     final preview = item.lastMessage ?? item.subtitle;
@@ -582,7 +582,7 @@ class _ConversationCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style:
                                 AppTheme.bodyMd(
-                                  color: WouandaColors.textPrimary(brightness),
+                                  color: NgomaColors.textPrimary(brightness),
                                 ).copyWith(
                                   fontWeight: unread
                                       ? FontWeight.w700
@@ -619,14 +619,14 @@ class _ConversationCard extends StatelessWidget {
                                   TextSpan(
                                     text: 'Brouillon : ',
                                     style: AppTheme.bodySm(
-                                      color: WouandaColors.negative,
+                                      color: NgomaColors.negative,
                                     ).copyWith(fontWeight: FontWeight.w600),
                                   )
                                 else if (hasContext)
                                   TextSpan(
                                     text: '$context_ · ',
                                     style: AppTheme.bodySm(
-                                      color: WouandaColors.textPrimary(
+                                      color: NgomaColors.textPrimary(
                                         brightness,
                                       ),
                                     ),
@@ -638,7 +638,7 @@ class _ConversationCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTheme.bodySm(
                               color: unread
-                                  ? WouandaColors.textPrimary(brightness)
+                                  ? NgomaColors.textPrimary(brightness)
                                   : secondary,
                             ),
                           ),
@@ -704,7 +704,7 @@ class _InboxTick extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = WouandaColors.textSecondary(Theme.of(context).brightness);
+    final color = NgomaColors.textSecondary(Theme.of(context).brightness);
     return switch (delivery) {
       MessageDelivery.sending => Icon(
         LucideIcons.clock3,
@@ -730,7 +730,7 @@ class _InboxTick extends StatelessWidget {
       MessageDelivery.failed => const Icon(
         LucideIcons.circleAlert,
         size: 15,
-        color: WouandaColors.negative,
+        color: NgomaColors.negative,
       ),
     };
   }
@@ -758,7 +758,7 @@ Future<void> _startConversation(
   BuildContext context,
   MessagingInboxNotifier inboxNotifier,
 ) async {
-  final conversation = await showWouandaSheet<UnifiedConversationDto>(
+  final conversation = await showNgomaSheet<UnifiedConversationDto>(
     context,
     showDragHandle: true,
     builder: (_) => const _RecipientsSheet(),
@@ -791,7 +791,7 @@ class _RecipientsSheet extends ConsumerWidget {
             children: [
               Text('Nouvelle conversation', style: AppTheme.h2()),
               const SizedBox(height: 14),
-              WouandaSearchInput(
+              NgomaSearchInput(
                 autofocus: true,
                 onChanged: notifier.search,
                 hintText: 'Rechercher une personne',
@@ -809,11 +809,11 @@ class _RecipientsSheet extends ConsumerWidget {
                 ),
               Expanded(
                 child: state.isLoading && state.recipients.isEmpty
-                    ? const WouandaLoadingState()
+                    ? const NgomaLoadingState()
                     : state.recipients.isEmpty && state.error == null
-                    ? const WouandaEmptyState(
+                    ? const NgomaEmptyState(
                         icon: LucideIcons.search,
-                        art: WouandaArt.search,
+                        art: NgomaArt.search,
                         title: 'Personne trouvée',
                         message: 'Essayez avec un autre nom.',
                       )
@@ -822,7 +822,7 @@ class _RecipientsSheet extends ConsumerWidget {
                         itemBuilder: (context, index) {
                           final recipient = state.recipients[index];
                           return ListTile(
-                            leading: WouandaPersonAvatar(
+                            leading: NgomaPersonAvatar(
                               name: recipient.displayName,
                               photoUrl: recipient.avatarUrl,
                             ),
@@ -831,7 +831,7 @@ class _RecipientsSheet extends ConsumerWidget {
                                 ? null
                                 : Text(recipient.subtitle!),
                             trailing: state.isOpening
-                                ? const WouandaBusyBar(size: 18)
+                                ? const NgomaBusyBar(size: 18)
                                 : const Icon(LucideIcons.chevronRight),
                             onTap: state.isOpening
                                 ? null
