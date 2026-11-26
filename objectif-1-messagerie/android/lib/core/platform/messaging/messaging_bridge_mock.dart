@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'messaging_bridge.dart';
 import 'messaging_models.dart';
-import 'package:ngoma/core/platform/wouanda_error_code.dart';
+import 'package:ngoma/core/platform/ngoma_error_code.dart';
 
 class MessagingBridgeMock
     implements
@@ -53,17 +53,27 @@ class MessagingBridgeMock
     MessagingRecipientDto(
       id: 101,
       displayName: 'Aïcha Nguema',
-      subtitle: 'Douala · membre Wouanda',
+      subtitle: 'Douala · membre NGoma',
     ),
     MessagingRecipientDto(
       id: 102,
       displayName: 'Moussa Diallo',
-      subtitle: 'Yaoundé · membre Wouanda',
+      subtitle: 'Yaoundé · membre NGoma',
     ),
     MessagingRecipientDto(
       id: 103,
       displayName: 'Grace Mballa',
-      subtitle: 'Douala · membre Wouanda',
+      subtitle: 'Douala · membre NGoma',
+    ),
+    MessagingRecipientDto(
+      id: 104,
+      displayName: 'Kofi Mensah',
+      subtitle: 'Accra · membre NGoma',
+    ),
+    MessagingRecipientDto(
+      id: 105,
+      displayName: 'Fatou Diop',
+      subtitle: 'Dakar · membre NGoma',
     ),
   ];
   final Map<int, List<UnifiedMessageDto>> _messages = {};
@@ -346,7 +356,7 @@ class MessagingBridgeMock
       MessagingService.love,
       'Amina',
       'Match',
-      'Wouanda Love',
+      'NGoma Love',
       [
         message(
           love,
@@ -492,11 +502,11 @@ class MessagingBridgeMock
       4,
       kind: ConversationKind.group,
     );
-    const channel = 'channel-wouanda-news';
+    const channel = 'channel-ngoma-news';
     add(
       channel,
       MessagingService.support,
-      'Wouanda Actualités',
+      'NGoma Actualités',
       'Canal officiel',
       'Canal',
       [
@@ -505,7 +515,7 @@ class MessagingBridgeMock
           '$channel-1',
           'Découvrez les nouveautés de la semaine.',
           25,
-          sender: 'Wouanda',
+          sender: 'NGoma',
         ),
       ],
       1,
@@ -719,7 +729,7 @@ class MessagingBridgeMock
         if (option.trim().isNotEmpty) option.trim(),
     ];
     if (question.trim().isEmpty || labels.length < 2 || labels.length > 4) {
-      throw PlatformException(code: WouandaErrorCode.validationFailed);
+      throw PlatformException(code: NgomaErrorCode.validationFailed);
     }
     return _append(
       UnifiedMessageDto(
@@ -751,10 +761,10 @@ class MessagingBridgeMock
     final message = _message(conversationId, messageId);
     final poll = message.poll;
     if (message.type != 'poll' || poll == null) {
-      throw PlatformException(code: WouandaErrorCode.validationFailed);
+      throw PlatformException(code: NgomaErrorCode.validationFailed);
     }
     if (option < 0 || option >= poll.options.length) {
-      throw PlatformException(code: WouandaErrorCode.validationFailed);
+      throw PlatformException(code: NgomaErrorCode.validationFailed);
     }
     final votes = _votes.putIfAbsent(messageId, () => {});
     if (votes.containsKey('me')) return _project(message);
@@ -781,7 +791,7 @@ class MessagingBridgeMock
     }
     final clean = text.trim();
     if (clean.isEmpty && attachmentIds.isEmpty) {
-      throw PlatformException(code: WouandaErrorCode.validationFailed);
+      throw PlatformException(code: NgomaErrorCode.validationFailed);
     }
     final drafts = _draftAttachments[conversationId] ?? const {};
     final attachments = <MessageAttachmentDto>[];
@@ -820,7 +830,7 @@ class MessagingBridgeMock
     await _ensureConversation(conversationId);
     final message = _message(conversationId, messageId);
     if (message.type != 'post') {
-      throw PlatformException(code: WouandaErrorCode.validationFailed);
+      throw PlatformException(code: NgomaErrorCode.validationFailed);
     }
     final known = _spaces[messageId];
     if (known != null && _conversations.any((item) => item.id == known)) {
@@ -900,7 +910,7 @@ class MessagingBridgeMock
       if (previous != null) return _project(previous);
     }
     if (draft.title.trim().isEmpty || draft.refId.trim().isEmpty) {
-      throw PlatformException(code: WouandaErrorCode.validationFailed);
+      throw PlatformException(code: NgomaErrorCode.validationFailed);
     }
     final answerable = _answerable(draft.kind);
     final message = UnifiedMessageDto(
@@ -1093,7 +1103,7 @@ class MessagingBridgeMock
       throw PlatformException(code: 'MESSAGING_SEND_FORBIDDEN');
     }
     if (sourceUri.trim().isEmpty || label.trim().isEmpty) {
-      throw PlatformException(code: WouandaErrorCode.validationFailed);
+      throw PlatformException(code: NgomaErrorCode.validationFailed);
     }
     if ((sizeBytes ?? 0) > 25 * 1024 * 1024) {
       throw PlatformException(code: 'MESSAGING_ATTACHMENT_TOO_LARGE');
@@ -1107,7 +1117,7 @@ class MessagingBridgeMock
       'location',
     };
     if (!supportedTypes.contains(type)) {
-      throw PlatformException(code: WouandaErrorCode.validationFailed);
+      throw PlatformException(code: NgomaErrorCode.validationFailed);
     }
     final source = Uri.tryParse(sourceUri);
     final remote = source?.scheme == 'http' || source?.scheme == 'https';
@@ -1168,7 +1178,7 @@ class MessagingBridgeMock
     }
     final clean = text.trim();
     if (clean.isEmpty && attachmentIds.isEmpty) {
-      throw PlatformException(code: WouandaErrorCode.validationFailed);
+      throw PlatformException(code: NgomaErrorCode.validationFailed);
     }
     if (replyToId != null) {
       _require(conversation, MessagingFeature.reply);
@@ -1437,7 +1447,7 @@ class MessagingBridgeMock
     await _ensureConversation(conversationId);
     _require(_conversation(conversationId), MessagingFeature.report);
     if (!reportReasons.contains(reason)) {
-      throw PlatformException(code: WouandaErrorCode.validationFailed);
+      throw PlatformException(code: NgomaErrorCode.validationFailed);
     }
     if (messageId != null) _message(conversationId, messageId);
     reports.add({
@@ -1509,13 +1519,13 @@ class MessagingBridgeMock
     final message = _message(conversationId, messageId);
     final clean = text.trim();
     if (clean.isEmpty) {
-      throw PlatformException(code: WouandaErrorCode.validationFailed);
+      throw PlatformException(code: NgomaErrorCode.validationFailed);
     }
     if (!_project(message).canEdit) {
       throw PlatformException(
         code: message.isMine
             ? 'MESSAGING_EDIT_WINDOW_EXPIRED'
-            : WouandaErrorCode.forbidden,
+            : NgomaErrorCode.forbidden,
       );
     }
     final edited = message.copyWith(content: clean, editedAt: _clock());
@@ -1540,7 +1550,7 @@ class MessagingBridgeMock
     if (forEveryone) {
       _require(conversation, MessagingFeature.deleteForEveryone);
       if (!_project(message).canDeleteForEveryone) {
-        throw PlatformException(code: WouandaErrorCode.forbidden);
+        throw PlatformException(code: NgomaErrorCode.forbidden);
       }
       _replaceMessage(
         message.copyWith(
@@ -1572,13 +1582,13 @@ class MessagingBridgeMock
     _require(_conversation(conversationId), MessagingFeature.react);
     final message = _message(conversationId, messageId);
     if (message.isDeleted || message.isSystem) {
-      throw PlatformException(code: WouandaErrorCode.forbidden);
+      throw PlatformException(code: NgomaErrorCode.forbidden);
     }
     // Any emoji typed on the phone, one symbol at most.
     if (key != null &&
         !reactionKeys.contains(key) &&
         key.characters.length != 1) {
-      throw PlatformException(code: WouandaErrorCode.validationFailed);
+      throw PlatformException(code: NgomaErrorCode.validationFailed);
     }
     final reactors = _reactions.putIfAbsent(messageId, () => {});
     key == null ? reactors.remove('me') : reactors['me'] = key;
@@ -1597,7 +1607,7 @@ class MessagingBridgeMock
     _require(_conversation(conversationId), MessagingFeature.forward);
     final source = _message(conversationId, messageId);
     if (source.isDeleted || source.isSystem || targetConversationIds.isEmpty) {
-      throw PlatformException(code: WouandaErrorCode.validationFailed);
+      throw PlatformException(code: NgomaErrorCode.validationFailed);
     }
     for (final target in targetConversationIds) {
       await _ensureConversation(target);
@@ -1822,7 +1832,7 @@ class MessagingBridgeMock
       kind: ConversationKind.direct,
       peerId: recipient.id,
       title: recipient.displayName,
-      subtitle: recipient.subtitle ?? 'Membre Wouanda',
+      subtitle: recipient.subtitle ?? 'Membre NGoma',
       avatar: recipient.avatar,
       canSend: true,
       features: featuresFor(ConversationKind.direct, MessagingService.account),
@@ -1855,7 +1865,7 @@ class MessagingBridgeMock
       'go' => (
         MessagingService.go,
         'Votre chauffeur',
-        'Course Wouanda Go',
+        'Course NGoma Go',
         'Course',
       ),
       'shop' => (
@@ -2045,7 +2055,7 @@ class MessagingBridgeMock
 
   Future<void> _ensureConversation(int id) async {
     if (externalGo && (_mockReferences[id]?.startsWith('go-trip-') ?? false)) {
-      throw PlatformException(code: WouandaErrorCode.forbidden);
+      throw PlatformException(code: NgomaErrorCode.forbidden);
     }
     await _ensureReady();
     if (!_conversations.any((item) => item.id == id)) {

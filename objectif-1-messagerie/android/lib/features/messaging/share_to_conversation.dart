@@ -6,11 +6,11 @@ import 'package:ngoma/core/platform/messaging/messaging_bridge.dart';
 import 'package:ngoma/core/platform/messaging/messaging_bridge_provider.dart';
 import 'package:ngoma/core/platform/messaging/messaging_models.dart';
 import 'package:ngoma/core/theme.dart';
-import 'package:ngoma/core/widgets/wouanda_draggable_sheet.dart';
-import 'package:ngoma/core/widgets/wouanda_list.dart';
-import 'package:ngoma/core/widgets/wouanda_loader.dart';
-import 'package:ngoma/core/widgets/wouanda_search_input.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma/core/widgets/ngoma_draggable_sheet.dart';
+import 'package:ngoma/core/widgets/ngoma_list.dart';
+import 'package:ngoma/core/widgets/ngoma_loader.dart';
+import 'package:ngoma/core/widgets/ngoma_search_input.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 
 import 'message_card_view.dart';
 import 'messaging_service_style.dart';
@@ -27,7 +27,7 @@ Future<bool> shareToConversation(
   required MessageCardDraft draft,
   VoidCallback? onOtherApps,
 }) async {
-  final sent = await showWouandaSheet<bool>(
+  final sent = await showNgomaSheet<bool>(
     context,
     builder: (_) => _ShareSheet(draft: draft, onOtherApps: onOtherApps),
   );
@@ -129,21 +129,21 @@ class _ShareSheetState extends ConsumerState<_ShareSheet> {
             c.subtitle.toLowerCase().contains(q))
           c,
     ];
-    return WouandaSheetSurface(
+    return NgomaSheetSurface(
       child: SafeArea(
         top: false,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const WouandaSheetHeader(title: 'Envoyer dans une conversation'),
+            const NgomaSheetHeader(title: 'Envoyer dans une conversation'),
             // What is being shared, as it will look.
             Padding(
               padding: const EdgeInsets.fromLTRB(
-                WouandaSpacing.pageGutter,
+                NgomaSpacing.pageGutter,
                 0,
-                WouandaSpacing.pageGutter,
-                WouandaSpacing.sm,
+                NgomaSpacing.pageGutter,
+                NgomaSpacing.sm,
               ),
               child: Row(
                 children: [
@@ -168,21 +168,21 @@ class _ShareSheetState extends ConsumerState<_ShareSheet> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: WouandaSpacing.pageGutter,
+                horizontal: NgomaSpacing.pageGutter,
               ),
-              child: WouandaSearchInput(
+              child: NgomaSearchInput(
                 key: const ValueKey('share-search'),
                 hintText: 'Rechercher une conversation',
                 pill: true,
                 onChanged: (value) => setState(() => _query = value),
               ),
             ),
-            const SizedBox(height: WouandaSpacing.xs),
+            const SizedBox(height: NgomaSpacing.xs),
             Flexible(
               child: _conversations == null && !_failed
                   ? const Padding(
-                      padding: EdgeInsets.all(WouandaSpacing.pageGutter),
-                      child: WouandaSkeletonRows(
+                      padding: EdgeInsets.all(NgomaSpacing.pageGutter),
+                      child: NgomaSkeletonRows(
                         rows: 4,
                         label: 'Chargement des conversations',
                       ),
@@ -191,7 +191,7 @@ class _ShareSheetState extends ConsumerState<_ShareSheet> {
                       shrinkWrap: true,
                       children: [
                         if (_failed)
-                          WouandaListRow(
+                          NgomaListRow(
                             icon: LucideIcons.cloudOff,
                             title: 'Conversations indisponibles',
                             trailing: IconButton(
@@ -206,7 +206,7 @@ class _ShareSheetState extends ConsumerState<_ShareSheet> {
                         else if (shown.isEmpty)
                           Padding(
                             padding: const EdgeInsets.all(
-                              WouandaSpacing.pageGutter,
+                              NgomaSpacing.pageGutter,
                             ),
                             child: Text(
                               q.isEmpty
@@ -237,7 +237,7 @@ class _ShareSheetState extends ConsumerState<_ShareSheet> {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                             trailing: _sending == c.id
-                                ? const WouandaLoader(size: 20, strokeWidth: 2)
+                                ? const NgomaLoader(size: 20, strokeWidth: 2)
                                 : Icon(
                                     LucideIcons.send,
                                     size: 20,
@@ -246,7 +246,7 @@ class _ShareSheetState extends ConsumerState<_ShareSheet> {
                             onTap: _sending == null ? () => _send(c) : null,
                           ),
                         if (widget.onOtherApps != null)
-                          WouandaListRow(
+                          NgomaListRow(
                             key: const ValueKey('share-other-apps'),
                             icon: LucideIcons.share2,
                             title: 'Autres applications',

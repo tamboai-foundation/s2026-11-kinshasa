@@ -2,71 +2,71 @@ import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 
-/// Wouanda theme — built only from the design tokens of `wouanda_design`
-/// (charte « moderne chaleureux africain », docs/design/CHARTE_WOUANDA.md).
+/// NGoma theme — built only from the design tokens of `ngoma_design`
+/// (charte « moderne chaleureux africain », docs/design/CHARTE_NGOMA.md).
 ///
 /// The names below are kept for the existing screens; their values now all
 /// come from the tokens, so every screen follows the same charter.
 class AppTheme {
   // ─── Shape ──────────────────────────────────────────────────────────────
-  static const double radiusSmall = WouandaSpacing.radiusSmall;
-  static const double radiusMedium = WouandaSpacing.radiusMedium;
-  static const double radiusLarge = WouandaSpacing.radiusLarge;
-  static const double radiusSheet = WouandaSpacing.radiusSheet;
+  static const double radiusSmall = NgomaSpacing.radiusSmall;
+  static const double radiusMedium = NgomaSpacing.radiusMedium;
+  static const double radiusLarge = NgomaSpacing.radiusLarge;
+  static const double radiusSheet = NgomaSpacing.radiusSheet;
 
   // ─── Surfaces ───────────────────────────────────────────────────────────
-  static const Color darkBackground = WouandaColors.backgroundDark;
-  static const Color darkSurface = WouandaColors.surfaceDark;
-  static const Color darkCard = WouandaColors.surfaceDark;
-  static const Color darkBorder = WouandaColors.borderDark;
+  static const Color darkBackground = NgomaColors.backgroundDark;
+  static const Color darkSurface = NgomaColors.surfaceDark;
+  static const Color darkCard = NgomaColors.surfaceDark;
+  static const Color darkBorder = NgomaColors.borderDark;
 
-  static const Color lightBackground = WouandaColors.backgroundLight;
-  static const Color lightSurface = WouandaColors.surfaceLight;
-  static const Color lightCard = WouandaColors.surfaceLight;
-  static const Color lightBorder = WouandaColors.borderLight;
+  static const Color lightBackground = NgomaColors.backgroundLight;
+  static const Color lightSurface = NgomaColors.surfaceLight;
+  static const Color lightCard = NgomaColors.surfaceLight;
+  static const Color lightBorder = NgomaColors.borderLight;
 
   // Legacy "obsidian" names, now mapped to the dark tokens.
-  static const Color obsidianBlack = WouandaColors.backgroundDark;
-  static const Color obsidianSurface = WouandaColors.surfaceDark;
-  static const Color obsidianCard = WouandaColors.elevatedDark;
-  static const Color obsidianBorder = WouandaColors.borderDark;
+  static const Color obsidianBlack = NgomaColors.backgroundDark;
+  static const Color obsidianSurface = NgomaColors.surfaceDark;
+  static const Color obsidianCard = NgomaColors.elevatedDark;
+  static const Color obsidianBorder = NgomaColors.borderDark;
 
   // ─── Brand ──────────────────────────────────────────────────────────────
-  static const Color primary = WouandaColors.brand;
-  static const Color darkPrimary = WouandaColors.brand400;
-  static const Color secondary = WouandaColors.textSecondaryLight;
-  static const Color accent = WouandaColors.ochre;
+  static const Color primary = NgomaColors.brand;
+  static const Color darkPrimary = NgomaColors.brand400;
+  static const Color secondary = NgomaColors.textSecondaryLight;
+  static const Color accent = NgomaColors.ochre;
 
   // ─── Services (icon and thin accent only) ───────────────────────────────
-  static const Color wouandaGo = WouandaColors.go;
-  static const Color wouandaGoLight = WouandaColors.goContainer;
-  static const Color wouandaShop = WouandaColors.shop;
-  static const Color wouandaShopLight = WouandaColors.shopContainer;
-  static const Color wouandaEvents = WouandaColors.events;
-  static const Color wouandaEventsLight = WouandaColors.eventsContainer;
-  static const Color wouandaLove = WouandaColors.love;
-  static const Color wouandaLoveLight = WouandaColors.loveContainer;
-  static const Color wouandaStay = WouandaColors.stay;
-  static const Color wouandaStayLight = WouandaColors.stayContainer;
+  static const Color ngomaGo = NgomaColors.go;
+  static const Color ngomaGoLight = NgomaColors.goContainer;
+  static const Color ngomaShop = NgomaColors.shop;
+  static const Color ngomaShopLight = NgomaColors.shopContainer;
+  static const Color ngomaEvents = NgomaColors.events;
+  static const Color ngomaEventsLight = NgomaColors.eventsContainer;
+  static const Color ngomaLove = NgomaColors.love;
+  static const Color ngomaLoveLight = NgomaColors.loveContainer;
+  static const Color ngomaStay = NgomaColors.stay;
+  static const Color ngomaStayLight = NgomaColors.stayContainer;
 
   // ─── Gradients — only the brand one is used for heroes ──────────────────
   static const LinearGradient brandGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [WouandaColors.brand, WouandaColors.brand800],
+    colors: [NgomaColors.brand, NgomaColors.brand800],
   );
   static const LinearGradient goGradient = brandGradient;
   static const LinearGradient shopGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [WouandaColors.shop, WouandaColors.earth],
+    colors: [NgomaColors.shop, NgomaColors.earth],
   );
   static const LinearGradient obsidianGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [WouandaColors.brand800, WouandaColors.brand900],
+    colors: [NgomaColors.brand800, NgomaColors.brand900],
   );
   static const LinearGradient glassGradient = LinearGradient(
     begin: Alignment.topLeft,
@@ -76,19 +76,19 @@ class AppTheme {
   static const LinearGradient stayGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [WouandaColors.stay, Color(0xFF0B6B5F)],
+    colors: [NgomaColors.stay, Color(0xFF0B6B5F)],
   );
 
-  // ─── Typography — one family, one scale (WouandaType) ───────────────────
-  static String globalFontFamily = WouandaType.fontFamily;
+  // ─── Typography — one family, one scale (NgomaType) ───────────────────
+  static String globalFontFamily = NgomaType.fontFamily;
 
   /// « Apple moderne » type rules, applied to EVERY text of the app because
-  /// every style goes through [font] (docs/design/CHARTE_WOUANDA.md):
+  /// every style goes through [font] (docs/design/CHARTE_NGOMA.md):
   /// - nothing under 12 px;
   /// - every size snaps to [typeScale] (12 … 30);
   ///   so no screen invents its own size;
   /// - weights stop at extra-bold: 900 becomes 800.
-  /// The ONE type scale of Wouanda (charter §16). Any size written in a
+  /// The ONE type scale of NGoma (charter §16). Any size written in a
   /// screen lands on the nearest step: the whole app shares the same
   /// typographic rhythm, whatever the screen asked for.
   static const typeScale = <double>[12, 13, 14, 16, 19, 22, 24, 30];
@@ -144,7 +144,7 @@ class AppTheme {
   }
 
   static TextStyle _token(
-    WouandaTextToken token, {
+    NgomaTextToken token, {
     Color? color,
     FontWeight? fontWeight,
     double? height,
@@ -156,28 +156,28 @@ class AppTheme {
   );
 
   static TextStyle displayXL({Color? color}) =>
-      _token(WouandaType.display, color: color);
+      _token(NgomaType.display, color: color);
   static TextStyle displayLg({Color? color}) =>
-      _token(WouandaType.headline, color: color);
+      _token(NgomaType.headline, color: color);
 
   static TextStyle h1({Color? color, FontWeight? fontWeight}) =>
-      _token(WouandaType.title, color: color, fontWeight: fontWeight);
+      _token(NgomaType.title, color: color, fontWeight: fontWeight);
   static TextStyle h2({Color? color, FontWeight? fontWeight}) =>
-      _token(WouandaType.title, color: color, fontWeight: fontWeight);
+      _token(NgomaType.title, color: color, fontWeight: fontWeight);
   static TextStyle h3({Color? color, FontWeight? fontWeight}) =>
-      _token(WouandaType.subtitle, color: color, fontWeight: fontWeight);
+      _token(NgomaType.subtitle, color: color, fontWeight: fontWeight);
 
   static TextStyle titleLg({Color? color, FontWeight? fontWeight}) =>
-      _token(WouandaType.subtitle, color: color, fontWeight: fontWeight);
+      _token(NgomaType.subtitle, color: color, fontWeight: fontWeight);
   static TextStyle titleMd({Color? color, FontWeight? fontWeight}) =>
-      _token(WouandaType.label, color: color, fontWeight: fontWeight);
+      _token(NgomaType.label, color: color, fontWeight: fontWeight);
 
   static TextStyle bodyLg({
     Color? color,
     double? height,
     FontWeight? fontWeight,
   }) => _token(
-    WouandaType.body,
+    NgomaType.body,
     color: color,
     height: height,
     fontWeight: fontWeight,
@@ -187,7 +187,7 @@ class AppTheme {
     double? height,
     FontWeight? fontWeight,
   }) => _token(
-    WouandaType.body,
+    NgomaType.body,
     color: color,
     height: height,
     fontWeight: fontWeight,
@@ -197,41 +197,41 @@ class AppTheme {
     double? height,
     FontWeight? fontWeight,
   }) => _token(
-    WouandaType.bodySmall,
+    NgomaType.bodySmall,
     color: color,
     height: height,
     fontWeight: fontWeight,
   );
 
   static TextStyle labelLg({Color? color, FontWeight? fontWeight}) =>
-      _token(WouandaType.bodySmall, color: color, fontWeight: fontWeight);
+      _token(NgomaType.bodySmall, color: color, fontWeight: fontWeight);
   static TextStyle labelMd({Color? color, FontWeight? fontWeight}) =>
-      _token(WouandaType.caption, color: color, fontWeight: fontWeight);
+      _token(NgomaType.caption, color: color, fontWeight: fontWeight);
 
   static TextStyle btnLg({Color? color, FontWeight? fontWeight}) =>
-      _token(WouandaType.label, color: color, fontWeight: fontWeight);
+      _token(NgomaType.label, color: color, fontWeight: fontWeight);
   static TextStyle btnMd({Color? color, FontWeight? fontWeight}) => _token(
-    WouandaType.bodySmall,
+    NgomaType.bodySmall,
     color: color,
     fontWeight: fontWeight ?? FontWeight.w700,
   );
   static TextStyle btnSm({Color? color, FontWeight? fontWeight}) => _token(
-    WouandaType.caption,
+    NgomaType.caption,
     color: color,
     fontWeight: fontWeight ?? FontWeight.w700,
   );
 
   static TextStyle caption({Color? color, FontWeight? fontWeight}) =>
-      _token(WouandaType.caption, color: color, fontWeight: fontWeight);
+      _token(NgomaType.caption, color: color, fontWeight: fontWeight);
 
   /// Amounts and times use tabular figures so columns line up.
   static TextStyle amount({Color? color, FontWeight? fontWeight}) => _token(
-    WouandaType.amount,
+    NgomaType.amount,
     color: color,
     fontWeight: fontWeight,
   ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]);
   static TextStyle amountSm({Color? color, FontWeight? fontWeight}) => _token(
-    WouandaType.subtitle,
+    NgomaType.subtitle,
     color: color,
     fontWeight: fontWeight,
   ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]);
@@ -240,38 +240,38 @@ class AppTheme {
   static const double primaryActionHeight = 56;
 
   static TextStyle overline({Color? color, FontWeight? fontWeight}) => font(
-    fontSize: WouandaType.caption.size,
+    fontSize: NgomaType.caption.size,
     fontWeight: fontWeight ?? FontWeight.w800,
     letterSpacing: 0.8,
     color: color,
   );
 
   static TextTheme textTheme(TextTheme base) =>
-      WouandaType.applyTo(GoogleFonts.getTextTheme(globalFontFamily, base));
+      NgomaType.applyTo(GoogleFonts.getTextTheme(globalFontFamily, base));
 
   // ─── Status ─────────────────────────────────────────────────────────────
-  static const Color success = WouandaColors.positive;
-  static const Color successLight = WouandaColors.positiveContainer;
-  static const Color warning = WouandaColors.warning;
-  static const Color warningLight = WouandaColors.warningContainer;
+  static const Color success = NgomaColors.positive;
+  static const Color successLight = NgomaColors.positiveContainer;
+  static const Color warning = NgomaColors.warning;
+  static const Color warningLight = NgomaColors.warningContainer;
   static Color warningFor(bool isDark) =>
-      WouandaColors.warningFor(isDark ? Brightness.dark : Brightness.light);
+      NgomaColors.warningFor(isDark ? Brightness.dark : Brightness.light);
   static Color warningContainerFor(bool isDark) =>
-      WouandaColors.warningContainerFor(
+      NgomaColors.warningContainerFor(
         isDark ? Brightness.dark : Brightness.light,
       );
-  static const Color error = WouandaColors.negative;
-  static const Color errorLight = WouandaColors.negativeContainer;
-  static const Color info = WouandaColors.information;
-  static const Color infoLight = WouandaColors.informationContainer;
+  static const Color error = NgomaColors.negative;
+  static const Color errorLight = NgomaColors.negativeContainer;
+  static const Color info = NgomaColors.information;
+  static const Color infoLight = NgomaColors.informationContainer;
 
   // ─── Text ───────────────────────────────────────────────────────────────
-  static const Color textPrimary = WouandaColors.textPrimaryLight;
-  static const Color textSecondary = WouandaColors.textSecondaryLight;
-  static const Color textTertiary = WouandaColors.textTertiaryLight;
-  static const Color textDarkPrimary = WouandaColors.textPrimaryDark;
-  static const Color textDarkSecondary = WouandaColors.textSecondaryDark;
-  static const Color textDarkTertiary = WouandaColors.textTertiaryDark;
+  static const Color textPrimary = NgomaColors.textPrimaryLight;
+  static const Color textSecondary = NgomaColors.textSecondaryLight;
+  static const Color textTertiary = NgomaColors.textTertiaryLight;
+  static const Color textDarkPrimary = NgomaColors.textPrimaryDark;
+  static const Color textDarkSecondary = NgomaColors.textSecondaryDark;
+  static const Color textDarkTertiary = NgomaColors.textTertiaryDark;
 
   static ThemeData get darkTheme => _build(Brightness.dark);
   static ThemeData get lightTheme => _build(Brightness.light);
@@ -279,13 +279,13 @@ class AppTheme {
   /// One theme recipe for both modes: only the tokens change.
   static ThemeData _build(Brightness brightness) {
     final isDark = brightness == Brightness.dark;
-    final brand = WouandaColors.primary(brightness);
-    final background = WouandaColors.background(brightness);
-    final surface = WouandaColors.surface(brightness);
-    final border = WouandaColors.border(brightness);
-    final ink = WouandaColors.textPrimary(brightness);
-    final inkSoft = WouandaColors.textSecondary(brightness);
-    final inkFaint = WouandaColors.textTertiary(brightness);
+    final brand = NgomaColors.primary(brightness);
+    final background = NgomaColors.background(brightness);
+    final surface = NgomaColors.surface(brightness);
+    final border = NgomaColors.border(brightness);
+    final ink = NgomaColors.textPrimary(brightness);
+    final inkSoft = NgomaColors.textSecondary(brightness);
+    final inkFaint = NgomaColors.textTertiary(brightness);
     final base = isDark ? ThemeData.dark() : ThemeData.light();
     final medium = BorderRadius.circular(radiusMedium);
 
@@ -294,7 +294,7 @@ class AppTheme {
       fontFamily: globalFontFamily,
     ).copyWith(
       // The central theme: every screen reads context.palette.
-      extensions: [WouandaPalette.of(brightness)],
+      extensions: [NgomaPalette.of(brightness)],
       scaffoldBackgroundColor: background,
       primaryColor: brand,
       colorScheme: ColorScheme(
@@ -306,18 +306,18 @@ class AppTheme {
           surface,
         ),
         onPrimaryContainer: isDark ? Colors.white : brand,
-        secondary: WouandaColors.ochre,
+        secondary: NgomaColors.ochre,
         onSecondary: Colors.white,
-        secondaryContainer: WouandaColors.ochreContainer,
-        onSecondaryContainer: WouandaColors.textPrimaryLight,
-        tertiary: WouandaColors.earth,
+        secondaryContainer: NgomaColors.ochreContainer,
+        onSecondaryContainer: NgomaColors.textPrimaryLight,
+        tertiary: NgomaColors.earth,
         onTertiary: Colors.white,
-        error: WouandaColors.negative,
+        error: NgomaColors.negative,
         onError: Colors.white,
         surface: surface,
         onSurface: ink,
         onSurfaceVariant: inkSoft,
-        surfaceContainerHighest: WouandaColors.surfaceMuted(brightness),
+        surfaceContainerHighest: NgomaColors.surfaceMuted(brightness),
         // Every Material surface tone is one of ours: left unset, Flutter
         // derives them from a default lilac seed (menus, pickers, chips).
         surfaceContainerLowest: surface,
@@ -409,7 +409,7 @@ class AppTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: brand,
-          minimumSize: const Size(64, WouandaSpacing.minimumTouchTarget),
+          minimumSize: const Size(64, NgomaSpacing.minimumTouchTarget),
           side: BorderSide(color: border),
           shape: RoundedRectangleBorder(borderRadius: medium),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -421,12 +421,12 @@ class AppTheme {
           foregroundColor: brand,
           textStyle: btnLg(),
           // Thumb zone: no link or text action under 48 dp, anywhere.
-          minimumSize: const Size(64, WouandaSpacing.minimumTouchTarget),
+          minimumSize: const Size(64, NgomaSpacing.minimumTouchTarget),
         ),
       ),
       iconButtonTheme: IconButtonThemeData(
         style: IconButton.styleFrom(
-          minimumSize: const Size.square(WouandaSpacing.minimumTouchTarget),
+          minimumSize: const Size.square(NgomaSpacing.minimumTouchTarget),
         ),
       ),
       // Mobile ergonomics for the whole app (DESIGN_WORKFLOW « Règles
@@ -450,7 +450,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: medium),
       ),
       chipTheme: ChipThemeData(
-        backgroundColor: WouandaColors.surfaceMuted(brightness),
+        backgroundColor: NgomaColors.surfaceMuted(brightness),
         selectedColor: Color.alphaBlend(
           brand.withValues(alpha: isDark ? 0.28 : 0.12),
           surface,
@@ -458,7 +458,7 @@ class AppTheme {
         labelStyle: bodySm(color: ink),
         side: BorderSide.none,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(WouandaSpacing.radiusPill),
+          borderRadius: BorderRadius.circular(NgomaSpacing.radiusPill),
         ),
       ),
       switchTheme: SwitchThemeData(
@@ -468,8 +468,8 @@ class AppTheme {
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(color: brand),
       // Pickers and menus Flutter still draws (dates, hours, the capsule
-      // menu) wear the Wouanda surface, shape and accent. Lists of choices
-      // themselves use showWouandaChoices, never a Material menu.
+      // menu) wear the NGoma surface, shape and accent. Lists of choices
+      // themselves use showNgomaChoices, never a Material menu.
       datePickerTheme: DatePickerThemeData(
         backgroundColor: surface,
         surfaceTintColor: Colors.transparent,
@@ -487,8 +487,8 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusLarge),
         ),
-        dialBackgroundColor: WouandaColors.surfaceMuted(brightness),
-        hourMinuteColor: WouandaColors.surfaceMuted(brightness),
+        dialBackgroundColor: NgomaColors.surfaceMuted(brightness),
+        hourMinuteColor: NgomaColors.surfaceMuted(brightness),
       ),
       popupMenuTheme: PopupMenuThemeData(
         color: surface,
@@ -524,8 +524,8 @@ class AppTheme {
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         backgroundColor: isDark
-            ? WouandaColors.elevatedDark
-            : WouandaColors.textPrimaryLight,
+            ? NgomaColors.elevatedDark
+            : NgomaColors.textPrimaryLight,
         contentTextStyle: bodyMd(color: Colors.white),
         shape: RoundedRectangleBorder(borderRadius: medium),
       ),
@@ -588,7 +588,7 @@ class AppTheme {
 
   /// Quiet fill on a card or a page (chips, fields, icon wells).
   static Color getMuted(bool isDark) =>
-      isDark ? WouandaColors.surfaceMutedDark : WouandaColors.surfaceMutedLight;
+      isDark ? NgomaColors.surfaceMutedDark : NgomaColors.surfaceMutedLight;
   static Color getTextPrimary(bool isDark) =>
       isDark ? textDarkPrimary : textPrimary;
   static Color getTextSecondary(bool isDark) =>
@@ -600,30 +600,30 @@ class AppTheme {
   static Color getServiceColor(String service) {
     switch (service.toLowerCase()) {
       case 'go':
-        return wouandaGo;
+        return ngomaGo;
       case 'shop':
-        return wouandaShop;
+        return ngomaShop;
       case 'events':
-        return wouandaEvents;
+        return ngomaEvents;
       case 'love':
-        return wouandaLove;
+        return ngomaLove;
       default:
-        return wouandaGo;
+        return ngomaGo;
     }
   }
 
   static Color getServiceLightColor(String service) {
     switch (service.toLowerCase()) {
       case 'go':
-        return wouandaGoLight;
+        return ngomaGoLight;
       case 'shop':
-        return wouandaShopLight;
+        return ngomaShopLight;
       case 'events':
-        return wouandaEventsLight;
+        return ngomaEventsLight;
       case 'love':
-        return wouandaLoveLight;
+        return ngomaLoveLight;
       default:
-        return wouandaGoLight;
+        return ngomaGoLight;
     }
   }
 

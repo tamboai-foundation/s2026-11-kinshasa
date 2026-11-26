@@ -12,7 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:ngoma/core/platform/messaging/messaging_models.dart';
 import 'package:ngoma/core/theme.dart';
 import 'package:ngoma/features/messaging/messaging_media_viewer.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 
 /// What a tap on an attachment of a bubble opens, as in any native messenger:
 /// images and videos in the full-screen viewer, PDF and text in an included
@@ -101,7 +101,7 @@ Future<File> resolveAttachmentFile(
     return file;
   }
   final cache = Directory(
-    '${(await getTemporaryDirectory()).path}${Platform.pathSeparator}wouanda-attachments',
+    '${(await getTemporaryDirectory()).path}${Platform.pathSeparator}ngoma-attachments',
   );
   await cache.create(recursive: true);
   final name = attachment.label.replaceAll(RegExp(r'[\\/:*?"<>|]'), '_');
@@ -254,7 +254,7 @@ class _MessagingDocumentViewerScreenState
                 builder: (context, value, _) => Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    WouandaBusyBar(size: 44),
+                    NgomaBusyBar(size: 44),
                     const SizedBox(height: 14),
                     Text(
                       value == null
@@ -293,7 +293,7 @@ class _MessagingDocumentViewerScreenState
                         decoration: BoxDecoration(
                           color: palette.scrim,
                           borderRadius: BorderRadius.circular(
-                            WouandaSpacing.radiusPill,
+                            NgomaSpacing.radiusPill,
                           ),
                         ),
                         child: Padding(

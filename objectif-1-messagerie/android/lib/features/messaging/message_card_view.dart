@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ngoma/core/platform/messaging/messaging_models.dart';
 import 'package:ngoma/core/theme.dart';
-import 'package:ngoma/core/widgets/wouanda_image.dart';
-import 'package:ngoma/core/widgets/wouanda_loader.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma/core/widgets/ngoma_image.dart';
+import 'package:ngoma/core/widgets/ngoma_loader.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 
 /// The icon of a card kind: what the service object is, at a glance.
 IconData messageCardKindIcon(String kind) => switch (kind) {
@@ -95,7 +95,7 @@ class MessageCardView extends StatelessWidget {
   /// The action being sent, drawn as busy.
   final String? busyAction;
 
-  Color _statusColor(WouandaPalette palette) => switch (card.status) {
+  Color _statusColor(NgomaPalette palette) => switch (card.status) {
     'accepted' || 'paid' || 'confirmed' => palette.positive,
     'declined' || 'cancelled' || 'expired' || 'failed' => palette.negative,
     _ => palette.accent,
@@ -113,7 +113,7 @@ class MessageCardView extends StatelessWidget {
         if (media != null)
           AspectRatio(
             aspectRatio: 16 / 9,
-            child: WouandaImage(media.source ?? '', fit: BoxFit.cover),
+            child: NgomaImage(media.source ?? '', fit: BoxFit.cover),
           ),
         Padding(
           padding: const EdgeInsets.fromLTRB(12, 10, 12, 4),
@@ -258,7 +258,7 @@ class _CardActionButton extends StatelessWidget {
       _ => 'secondary',
     };
     final child = busy
-        ? WouandaLoader(
+        ? NgomaLoader(
             size: 16,
             strokeWidth: 2,
             color: style == 'primary' ? palette.onAccent : palette.accent,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ngoma/core/widgets/wouanda_loading_state.dart';
+import 'package:ngoma/core/widgets/ngoma_loading_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:ngoma/core/widgets/wouanda_error_state.dart';
+import 'package:ngoma/core/widgets/ngoma_error_state.dart';
 import 'package:ngoma/core/platform/messaging/messaging_bridge_provider.dart';
 import 'package:ngoma/core/platform/messaging/messaging_models.dart';
 import 'package:ngoma/features/messaging/unified_conversation_screen.dart';
@@ -40,7 +40,7 @@ class UnifiedConversationLoader extends ConsumerWidget {
     if (snapshot.hasError) {
       return Scaffold(
         appBar: AppBar(title: const Text('Messages')),
-        body: WouandaErrorState(
+        body: NgomaErrorState(
           icon: LucideIcons.messageCircleWarning,
           title: 'Conversation indisponible',
           message: 'Chargement interrompu.',
@@ -48,6 +48,6 @@ class UnifiedConversationLoader extends ConsumerWidget {
         ),
       );
     }
-    return const Scaffold(body: WouandaPageLoading());
+    return const Scaffold(body: NgomaPageLoading());
   }
 }

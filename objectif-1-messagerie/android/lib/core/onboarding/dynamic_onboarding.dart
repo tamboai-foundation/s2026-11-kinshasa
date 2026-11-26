@@ -1,6 +1,6 @@
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -31,8 +31,8 @@ class OnboardingState {
 }
 
 class OnboardingNotifier extends Notifier<OnboardingState> {
-  static const String _mainKey = 'wouanda_onboarding_main';
-  static const String _servicesKey = 'wouanda_onboarding_services';
+  static const String _mainKey = 'ngoma_onboarding_main';
+  static const String _servicesKey = 'ngoma_onboarding_services';
 
   @override
   OnboardingState build() {
@@ -134,8 +134,8 @@ class _ServiceOnboardingSheet extends StatelessWidget {
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
                 color: context.palette.surface,
-                borderRadius: BorderRadius.circular(WouandaSpacing.radiusSheet),
-                boxShadow: WouandaElevation.card(Theme.of(context).brightness),
+                borderRadius: BorderRadius.circular(NgomaSpacing.radiusSheet),
+                boxShadow: NgomaElevation.card(Theme.of(context).brightness),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -236,7 +236,7 @@ class _ServiceOnboardingSheet extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
-                            WouandaSpacing.radiusMedium,
+                            NgomaSpacing.radiusMedium,
                           ),
                           side: BorderSide(
                             color: context.palette.border.withValues(
@@ -272,21 +272,21 @@ class _ServiceOnboardingSheet extends StatelessWidget {
     switch (service) {
       case 'go':
         return _ServiceOnboardingData(
-          title: 'Wouanda Go',
+          title: 'NGoma Go',
           description: 'Votre service de mobilité intelligent.',
-          color: AppTheme.wouandaGo,
+          color: AppTheme.ngomaGo,
           icon: LucideIcons.carTaxiFront,
           features: [
             _Feature(LucideIcons.locateFixed, 'Géolocalisation en temps réel'),
-            _Feature(LucideIcons.creditCard, 'Paiement via Wouanda Pay'),
+            _Feature(LucideIcons.creditCard, 'Paiement via NGoma Pay'),
             _Feature(LucideIcons.star, 'Notez vos chauffeurs'),
           ],
         );
       case 'shop':
         return _ServiceOnboardingData(
-          title: 'Wouanda Shop',
+          title: 'NGoma Shop',
           description: 'Achetez et vendez dans votre communauté.',
-          color: AppTheme.wouandaShop,
+          color: AppTheme.ngomaShop,
           icon: LucideIcons.store,
           features: [
             _Feature(LucideIcons.layers, 'Des milliers de produits'),
@@ -296,9 +296,9 @@ class _ServiceOnboardingSheet extends StatelessWidget {
         );
       case 'events':
         return _ServiceOnboardingData(
-          title: 'Wouanda Events',
+          title: 'NGoma Events',
           description: 'Découvrez les meilleurs événements.',
-          color: AppTheme.wouandaEvents,
+          color: AppTheme.ngomaEvents,
           icon: LucideIcons.partyPopper,
           features: [
             _Feature(LucideIcons.mapPin, 'Événements près de vous'),
@@ -308,9 +308,9 @@ class _ServiceOnboardingSheet extends StatelessWidget {
         );
       case 'love':
         return _ServiceOnboardingData(
-          title: 'Wouanda Love',
+          title: 'NGoma Love',
           description: 'Rencontrez des personnes uniques.',
-          color: AppTheme.wouandaLove,
+          color: AppTheme.ngomaLove,
           icon: LucideIcons.heart,
           features: [
             _Feature(LucideIcons.search, 'Profils vérifiés'),
@@ -320,9 +320,9 @@ class _ServiceOnboardingSheet extends StatelessWidget {
         );
       default:
         return _ServiceOnboardingData(
-          title: 'Wouanda',
+          title: 'NGoma',
           description: 'Bienvenue dans l\'écosystème.',
-          color: AppTheme.wouandaGo,
+          color: AppTheme.ngomaGo,
           icon: LucideIcons.network,
           features: [],
         );

@@ -10,7 +10,7 @@ import 'package:ngoma/core/platform/messaging/messaging_bridge.dart';
 import 'package:ngoma/core/platform/messaging/messaging_bridge_provider.dart';
 import 'package:ngoma/core/platform/messaging/messaging_models.dart';
 import 'package:ngoma/core/theme.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 
 bool _isOver(MessagingCallState state) =>
     state == MessagingCallState.ended ||
@@ -180,7 +180,7 @@ class _MessagingCallScreenState extends ConsumerState<MessagingCallScreen> {
                         padding: const EdgeInsets.only(right: 20, bottom: 20),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(
-                            WouandaSpacing.radiusLarge,
+                            NgomaSpacing.radiusLarge,
                           ),
                           child: SizedBox(
                             width: 104,
@@ -209,7 +209,7 @@ class _MessagingCallScreenState extends ConsumerState<MessagingCallScreen> {
                     decoration: BoxDecoration(
                       color: palette.media.withValues(alpha: .76),
                       borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(WouandaSpacing.radiusSheet),
+                        top: Radius.circular(NgomaSpacing.radiusSheet),
                       ),
                     ),
                     child: incoming ? _incomingActions() : _liveActions(video),
@@ -416,7 +416,7 @@ class _NativeCallRenderer extends StatelessWidget {
       );
     }
     return AndroidView(
-      viewType: 'com.wouanda/messaging/call_renderer',
+      viewType: 'com.ngoma/messaging/call_renderer',
       creationParams: {'rendererId': rendererId, 'mirror': mirror},
       creationParamsCodec: const StandardMessageCodec(),
     );
@@ -451,7 +451,7 @@ class _CallAction extends StatelessWidget {
         style: IconButton.styleFrom(
           minimumSize: const Size.square(56),
           backgroundColor: destructive
-              ? WouandaColors.negative
+              ? NgomaColors.negative
               : positive
               ? context.palette.positive
               : selected

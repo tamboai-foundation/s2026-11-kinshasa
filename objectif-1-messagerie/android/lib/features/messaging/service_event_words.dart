@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ngoma/core/platform/messaging/messaging_models.dart';
-import 'package:ngoma/core/superapp/wouanda_service_registry.dart';
+import 'package:ngoma/core/superapp/ngoma_service_registry.dart';
 
 /// The words of what services tell their conversations (contract messaging
 /// v4). A bridge sends codes and parameters (protocol §3.1); this is the one
@@ -108,7 +108,7 @@ bool messageRouteAllowed(String? route) {
   if (route == null || !route.startsWith('/') || route.contains('..')) {
     return false;
   }
-  for (final service in WouandaServiceRegistry.all) {
+  for (final service in NgomaServiceRegistry.all) {
     final base = service.route;
     if (base.length > 1 && (route == base || route.startsWith('$base/'))) {
       return true;

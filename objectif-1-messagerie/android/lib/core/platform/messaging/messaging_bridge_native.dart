@@ -406,8 +406,8 @@ class MessagingBridgeNative extends MessagingBridgeChannel
 
   /// Presentation list context; never a domain identity or an offset.
   final String scope;
-  static const _methods = MethodChannel('com.wouanda/messaging');
-  static const _events = EventChannel('com.wouanda/messaging/events');
+  static const _methods = MethodChannel('com.ngoma/messaging');
+  static const _events = EventChannel('com.ngoma/messaging/events');
   static final _signals = _events.receiveBroadcastStream().cast<String>();
   @override
   Stream<String> get eventsStream => _signals;
@@ -461,7 +461,7 @@ class MessagingBridgeNative extends MessagingBridgeChannel
   Future<Map<ConversationKind, int>> getUnreadCountsByKind() async {
     final raw =
         await const MethodChannel(
-          'com.wouanda/messaging',
+          'com.ngoma/messaging',
         ).invokeMapMethod<String, Object?>('getUnreadCountsByKind') ??
         const {};
     return {

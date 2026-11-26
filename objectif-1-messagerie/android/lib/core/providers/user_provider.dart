@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ngoma/core/platform/account/account_bridge.dart';
 import 'package:ngoma/core/shared/media_dto.dart';
-import 'package:ngoma/core/superapp/wouanda_service_registry.dart';
+import 'package:ngoma/core/superapp/ngoma_service_registry.dart';
 
 enum KYCStatus { unverified, pending, verified }
 
@@ -141,7 +141,7 @@ class UserProfile {
   final List<String> permissions;
 
   /// Access decisions of the session, keyed by action code (contract
-  /// account v1.2). Read by `WouandaPermissions`, never recomputed.
+  /// account v1.2). Read by `NgomaPermissions`, never recomputed.
   final Map<String, AccountAccessDto> access;
 
   UserProfile({
@@ -290,7 +290,7 @@ class UserProfile {
     final sellerId = json['sellerId'] as String?;
     final activeServices = _stringList(json['activeServices']);
     final normalizedActiveServices = activeServices.isEmpty
-        ? WouandaServiceRegistry.defaultActiveServiceKeys
+        ? NgomaServiceRegistry.defaultActiveServiceKeys
         : activeServices;
     final serviceProfiles = _normalizeServiceProfiles(
       rawProfiles: _serviceProfilesFromJson(json['serviceProfiles']),
@@ -346,12 +346,12 @@ class UserProfile {
   /// Fully provisioned local account used only by the non-production MVP mode.
   static UserProfile mvpDemo() {
     const roles = ['seller', 'driver', 'host', 'organizer'];
-    final activeServices = WouandaServiceRegistry.defaultActiveServiceKeys;
+    final activeServices = NgomaServiceRegistry.defaultActiveServiceKeys;
     return UserProfile(
       id: 'mvp-demo-user',
       firstName: 'MVP',
       lastName: 'Demo',
-      email: 'mvp.demo@local.wouanda',
+      email: 'mvp.demo@local.ngoma',
       phone: '+00000000000',
       city: 'Demo',
       address: 'Local development',
@@ -374,7 +374,7 @@ class UserProfile {
     String? sellerId,
   }) {
     final keys = {
-      ...(activeServices ?? WouandaServiceRegistry.defaultActiveServiceKeys),
+      ...(activeServices ?? NgomaServiceRegistry.defaultActiveServiceKeys),
     };
     return {
       for (final key in keys)
@@ -629,7 +629,7 @@ Map<String, UserServiceProfile> _normalizeServiceProfiles({
   String? sellerId,
 }) {
   final normalized = Map<String, UserServiceProfile>.from(rawProfiles);
-  final validServices = WouandaServiceRegistry.allServiceKeys.toSet();
+  final validServices = NgomaServiceRegistry.allServiceKeys.toSet();
 
   normalized.removeWhere((key, _) => !validServices.contains(key));
 

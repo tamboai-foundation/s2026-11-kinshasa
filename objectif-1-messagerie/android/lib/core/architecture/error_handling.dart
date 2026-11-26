@@ -1,12 +1,12 @@
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:ngoma/core/widgets/wouanda_tappable.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma/core/widgets/ngoma_tappable.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import 'package:ngoma/core/theme.dart';
-import 'package:wouanda_foundation/wouanda_foundation.dart';
-import 'package:ngoma/core/platform/wouanda_error_code.dart';
+import 'package:ngoma_foundation/ngoma_foundation.dart';
+import 'package:ngoma/core/platform/ngoma_error_code.dart';
 
 /// Global error handler widget
 /// Wraps screens to catch and display errors gracefully
@@ -32,7 +32,7 @@ class _ErrorBoundaryState extends State<ErrorBoundary> {
           () => setState(() => _error = null),
         );
       }
-      return WouandaErrorScreen(
+      return NgomaErrorScreen(
         error: _error!,
         onRetry: () => setState(() => _error = null),
       );
@@ -42,11 +42,11 @@ class _ErrorBoundaryState extends State<ErrorBoundary> {
 }
 
 /// Premium error screen with retry capability
-class WouandaErrorScreen extends StatelessWidget {
+class NgomaErrorScreen extends StatelessWidget {
   final AppError error;
   final VoidCallback? onRetry;
 
-  const WouandaErrorScreen({super.key, required this.error, this.onRetry});
+  const NgomaErrorScreen({super.key, required this.error, this.onRetry});
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +108,7 @@ class WouandaErrorScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppTheme.getCard(isDark),
                     borderRadius: BorderRadius.circular(
-                      WouandaSpacing.radiusSmall,
+                      NgomaSpacing.radiusSmall,
                     ),
                     border: Border.all(
                       color: AppTheme.getBorder(isDark).withValues(alpha: 0.3),
@@ -139,7 +139,7 @@ class WouandaErrorScreen extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
-                            WouandaSpacing.radiusMedium,
+                            NgomaSpacing.radiusMedium,
                           ),
                           side: BorderSide(
                             color: context.palette.border.withValues(
@@ -183,15 +183,15 @@ class WouandaErrorScreen extends StatelessWidget {
         return _ErrorVisual(
           title: 'Accès refusé',
           icon: LucideIcons.lock,
-          color: AppTheme.wouandaLove,
+          color: AppTheme.ngomaLove,
         );
-      case WouandaErrorCode.notFound:
+      case NgomaErrorCode.notFound:
         return _ErrorVisual(
           title: 'Introuvable',
           icon: LucideIcons.searchX,
           color: AppTheme.info,
         );
-      case WouandaErrorCode.serverError:
+      case NgomaErrorCode.serverError:
         return _ErrorVisual(
           title: 'Erreur serveur',
           icon: LucideIcons.cloudOff,
@@ -207,7 +207,7 @@ class WouandaErrorScreen extends StatelessWidget {
         return _ErrorVisual(
           title: 'Solde insuffisant',
           icon: LucideIcons.wallet,
-          color: AppTheme.wouandaShop,
+          color: AppTheme.ngomaShop,
         );
       default:
         return _ErrorVisual(
@@ -249,7 +249,7 @@ class InlineErrorWidget extends StatelessWidget {
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: errorColor.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(WouandaSpacing.radiusMedium),
+        borderRadius: BorderRadius.circular(NgomaSpacing.radiusMedium),
         border: Border.all(color: errorColor.withValues(alpha: 0.2)),
       ),
       child: Row(
@@ -267,14 +267,14 @@ class InlineErrorWidget extends StatelessWidget {
             ),
           ),
           if (onRetry != null)
-            WouandaTappable(
+            NgomaTappable(
               onTap: onRetry,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: errorColor.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(
-                    WouandaSpacing.radiusSmall,
+                    NgomaSpacing.radiusSmall,
                   ),
                 ),
                 child: Text(
@@ -294,7 +294,7 @@ class InlineErrorWidget extends StatelessWidget {
 }
 
 /// Snackbar helper for quick error/success messages
-class WouandaSnackbar {
+class NgomaSnackbar {
   static void showError(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -317,7 +317,7 @@ class WouandaSnackbar {
         backgroundColor: AppTheme.error,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(WouandaSpacing.radiusMedium),
+          borderRadius: BorderRadius.circular(NgomaSpacing.radiusMedium),
         ),
         margin: const EdgeInsets.all(16),
         duration: Duration(seconds: 3),
@@ -347,7 +347,7 @@ class WouandaSnackbar {
         backgroundColor: AppTheme.success,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(WouandaSpacing.radiusMedium),
+          borderRadius: BorderRadius.circular(NgomaSpacing.radiusMedium),
         ),
         margin: const EdgeInsets.all(16),
         duration: Duration(seconds: 2),
@@ -373,7 +373,7 @@ class WouandaSnackbar {
         backgroundColor: AppTheme.info,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(WouandaSpacing.radiusMedium),
+          borderRadius: BorderRadius.circular(NgomaSpacing.radiusMedium),
         ),
         margin: const EdgeInsets.all(16),
         duration: Duration(seconds: 2),
@@ -403,7 +403,7 @@ class WouandaSnackbar {
         backgroundColor: AppTheme.warning,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(WouandaSpacing.radiusMedium),
+          borderRadius: BorderRadius.circular(NgomaSpacing.radiusMedium),
         ),
         margin: const EdgeInsets.all(16),
         duration: const Duration(seconds: 3),

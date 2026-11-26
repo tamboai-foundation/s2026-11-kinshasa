@@ -6,14 +6,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:video_player/video_player.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 
 import 'package:ngoma/core/platform/messaging/messaging_models.dart';
 import 'package:ngoma/core/providers/messaging_provider.dart';
 import 'package:ngoma/core/theme.dart';
-import 'package:ngoma/core/widgets/wouanda_image.dart';
-import 'package:ngoma/core/widgets/wouanda_loading_state.dart';
-import 'package:ngoma/core/widgets/wouanda_platform_widgets.dart';
+import 'package:ngoma/core/widgets/ngoma_image.dart';
+import 'package:ngoma/core/widgets/ngoma_loading_state.dart';
+import 'package:ngoma/core/widgets/ngoma_platform_widgets.dart';
 import 'package:ngoma/features/messaging/conversation_parts.dart';
 import 'package:ngoma/features/messaging/messaging_document_viewer.dart';
 import 'package:ngoma/features/messaging/messaging_media_viewer.dart';
@@ -475,7 +475,7 @@ class _Author extends StatelessWidget {
     final palette = context.palette;
     return Row(
       children: [
-        WouandaPersonAvatar(
+        NgomaPersonAvatar(
           name: name,
           radius: 18,
           backgroundColor: palette.onMedia.withValues(alpha: .18),
@@ -675,7 +675,7 @@ class _ActionBar extends StatelessWidget {
                     liked ? Icons.favorite : LucideIcons.heart,
                     key: ValueKey(liked),
                     size: 20,
-                    color: liked ? WouandaColors.negative : palette.onMedia,
+                    color: liked ? NgomaColors.negative : palette.onMedia,
                   ),
                 ),
                 const SizedBox(width: 6),
@@ -837,7 +837,7 @@ class _BurstHeart extends StatelessWidget {
         child: const Icon(
           Icons.favorite,
           size: 96,
-          color: WouandaColors.negative,
+          color: NgomaColors.negative,
         ),
       ),
     ),
@@ -929,7 +929,7 @@ class _BuzzVideoState extends State<_BuzzVideo> {
             attachment: widget.attachment,
             fit: BoxFit.contain,
           ),
-          const WouandaLoadingState(),
+          const NgomaLoadingState(),
         ],
       );
     }
@@ -1023,8 +1023,8 @@ class _BuzzCommentsState extends ConsumerState<_BuzzComments> {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    final ink = WouandaColors.textPrimary(brightness);
-    final meta = WouandaColors.textSecondary(brightness);
+    final ink = NgomaColors.textPrimary(brightness);
+    final meta = NgomaColors.textSecondary(brightness);
     final spaceId = _spaceId;
     final state = spaceId == null
         ? null
@@ -1039,7 +1039,7 @@ class _BuzzCommentsState extends ConsumerState<_BuzzComments> {
 
     Widget body;
     if (_error != null) {
-      body = WouandaEmptyState(
+      body = NgomaEmptyState(
         icon: LucideIcons.messageCircleWarning,
         title: widget.post.delivery == MessageDelivery.sent
             ? 'Commentaires indisponibles'
@@ -1049,7 +1049,7 @@ class _BuzzCommentsState extends ConsumerState<_BuzzComments> {
         onAction: _open,
       );
     } else if (comments == null || (state!.isLoading && comments.isEmpty)) {
-      body = const WouandaLoadingState();
+      body = const NgomaLoadingState();
     } else if (comments.isEmpty) {
       body = Center(
         child: Text(
@@ -1072,7 +1072,7 @@ class _BuzzCommentsState extends ConsumerState<_BuzzComments> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                WouandaPersonAvatar(name: name, radius: 16),
+                NgomaPersonAvatar(name: name, radius: 16),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Column(
@@ -1118,7 +1118,7 @@ class _BuzzCommentsState extends ConsumerState<_BuzzComments> {
       child: Container(
         height: MediaQuery.sizeOf(context).height * .68,
         decoration: BoxDecoration(
-          color: WouandaColors.surface(brightness),
+          color: NgomaColors.surface(brightness),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
@@ -1128,7 +1128,7 @@ class _BuzzCommentsState extends ConsumerState<_BuzzComments> {
               width: 36,
               height: 4,
               decoration: BoxDecoration(
-                color: WouandaColors.border(brightness),
+                color: NgomaColors.border(brightness),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -1151,7 +1151,7 @@ class _BuzzCommentsState extends ConsumerState<_BuzzComments> {
                 ],
               ),
             ),
-            Divider(height: 1, color: WouandaColors.border(brightness)),
+            Divider(height: 1, color: NgomaColors.border(brightness)),
             Expanded(child: body),
             if (canSend && _error == null)
               SafeArea(
@@ -1160,7 +1160,7 @@ class _BuzzCommentsState extends ConsumerState<_BuzzComments> {
                   padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
                   decoration: BoxDecoration(
                     border: Border(
-                      top: BorderSide(color: WouandaColors.border(brightness)),
+                      top: BorderSide(color: NgomaColors.border(brightness)),
                     ),
                   ),
                   child: Row(
@@ -1177,7 +1177,7 @@ class _BuzzCommentsState extends ConsumerState<_BuzzComments> {
                             hintText: 'Ajouter un commentaire…',
                             isDense: true,
                             filled: true,
-                            fillColor: WouandaColors.surfaceMuted(brightness),
+                            fillColor: NgomaColors.surfaceMuted(brightness),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
                               borderSide: BorderSide.none,

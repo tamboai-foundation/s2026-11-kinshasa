@@ -1,17 +1,17 @@
-import 'package:ngoma/core/widgets/wouanda_draggable_sheet.dart';
-import 'package:ngoma/core/widgets/wouanda_search_input.dart';
+import 'package:ngoma/core/widgets/ngoma_draggable_sheet.dart';
+import 'package:ngoma/core/widgets/ngoma_search_input.dart';
 import 'package:flutter/material.dart';
-import 'package:ngoma/core/widgets/wouanda_loading_state.dart';
+import 'package:ngoma/core/widgets/ngoma_loading_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ngoma/core/platform/messaging/messaging_models.dart';
 import 'package:ngoma/core/providers/messaging_provider.dart';
 import 'package:ngoma/core/theme.dart';
-import 'package:ngoma/core/widgets/wouanda_list.dart';
-import 'package:ngoma/core/widgets/wouanda_platform_widgets.dart';
+import 'package:ngoma/core/widgets/ngoma_list.dart';
+import 'package:ngoma/core/widgets/ngoma_platform_widgets.dart';
 import 'package:ngoma/features/messaging/conversation_parts.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 
 /// What the long-press menu offers. Each entry is shown only when the
 /// bridge allows it (capabilities ∩ conversation, plus message rights).
@@ -79,7 +79,7 @@ Future<MessageActionChoice?> showMessageActions(
   required bool canReact,
 }) {
   if (actions.isEmpty && !canReact) return Future.value();
-  return showWouandaSheet<MessageActionChoice>(
+  return showNgomaSheet<MessageActionChoice>(
     context,
     showDragHandle: true,
     builder: (sheetContext) => SafeArea(
@@ -143,8 +143,8 @@ class _MessageExcerpt extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: WouandaColors.surfaceMuted(brightness),
-        borderRadius: BorderRadius.circular(WouandaSpacing.radiusMedium),
+        color: NgomaColors.surfaceMuted(brightness),
+        borderRadius: BorderRadius.circular(NgomaSpacing.radiusMedium),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,7 +153,7 @@ class _MessageExcerpt extends StatelessWidget {
             '${message.isMine ? 'Vous' : message.senderLabel} · '
             '${DateFormat('d MMM, HH:mm', 'fr_FR').format(message.createdAt)}',
             style: AppTheme.caption(
-              color: WouandaColors.textSecondary(brightness),
+              color: NgomaColors.textSecondary(brightness),
             ),
           ),
           const SizedBox(height: 4),
@@ -162,7 +162,7 @@ class _MessageExcerpt extends StatelessWidget {
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: AppTheme.bodyMd(
-              color: WouandaColors.textPrimary(brightness),
+              color: NgomaColors.textPrimary(brightness),
             ),
           ),
         ],
@@ -213,16 +213,16 @@ class _ReactionPickerState extends State<_ReactionPicker> {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    final muted = WouandaColors.textSecondary(brightness);
+    final muted = NgomaColors.textSecondary(brightness);
     final selected = widget.selected;
     return Container(
       key: const ValueKey('messaging-reaction-picker'),
       constraints: const BoxConstraints(minHeight: 48),
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: WouandaColors.surface(brightness),
-        borderRadius: BorderRadius.circular(WouandaSpacing.radiusPill),
-        border: Border.all(color: WouandaColors.border(brightness)),
+        color: NgomaColors.surface(brightness),
+        borderRadius: BorderRadius.circular(NgomaSpacing.radiusPill),
+        border: Border.all(color: NgomaColors.border(brightness)),
       ),
       child: Row(
         children: [
@@ -236,7 +236,7 @@ class _ReactionPickerState extends State<_ReactionPicker> {
                     focusNode: _focus,
                     onChanged: _typed,
                     style: AppTheme.bodyMd(
-                      color: WouandaColors.textPrimary(brightness),
+                      color: NgomaColors.textPrimary(brightness),
                     ),
                     decoration: InputDecoration(
                       hintText: 'Choisissez un emoji sur votre clavier',
@@ -266,7 +266,7 @@ class _ReactionPickerState extends State<_ReactionPicker> {
               label: 'Retirer votre réaction',
               child: InkWell(
                 key: const ValueKey('messaging-react-current'),
-                borderRadius: BorderRadius.circular(WouandaSpacing.radiusPill),
+                borderRadius: BorderRadius.circular(NgomaSpacing.radiusPill),
                 onTap: () => widget.onSelected(selected),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
@@ -276,7 +276,7 @@ class _ReactionPickerState extends State<_ReactionPicker> {
                   decoration: BoxDecoration(
                     color: context.palette.accent.withValues(alpha: .14),
                     borderRadius: BorderRadius.circular(
-                      WouandaSpacing.radiusPill,
+                      NgomaSpacing.radiusPill,
                     ),
                   ),
                   child: ReactionGlyph(selected, size: 20),
@@ -302,7 +302,7 @@ class _ActionRow extends StatelessWidget {
         action == MessageAction.discard ||
         action == MessageAction.report;
     final color = destructive
-        ? WouandaColors.negative
+        ? NgomaColors.negative
         : context.palette.textPrimary;
     return ListTile(
       key: ValueKey('messaging-action-${action.name}'),
@@ -361,9 +361,9 @@ class ComposerContextBanner extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 6),
       padding: const EdgeInsets.fromLTRB(12, 8, 4, 8),
       decoration: BoxDecoration(
-        color: WouandaColors.surface(brightness),
-        borderRadius: BorderRadius.circular(WouandaSpacing.radiusMedium),
-        border: Border.all(color: WouandaColors.border(brightness)),
+        color: NgomaColors.surface(brightness),
+        borderRadius: BorderRadius.circular(NgomaSpacing.radiusMedium),
+        border: Border.all(color: NgomaColors.border(brightness)),
       ),
       child: Row(
         children: [
@@ -396,7 +396,7 @@ class ComposerContextBanner extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTheme.bodySm(
-                    color: WouandaColors.textSecondary(brightness),
+                    color: NgomaColors.textSecondary(brightness),
                   ),
                 ),
               ],
@@ -419,7 +419,7 @@ class ComposerContextBanner extends StatelessWidget {
 Future<List<int>?> showForwardSheet(
   BuildContext context, {
   required int excludeId,
-}) => showWouandaSheet<List<int>>(
+}) => showNgomaSheet<List<int>>(
   context,
   showDragHandle: true,
   builder: (_) => _ForwardSheet(excludeId: excludeId),
@@ -451,10 +451,10 @@ class _ForwardSheetState extends ConsumerState<_ForwardSheet> {
             ),
             Expanded(
               child: targets.when(
-                loading: () => const WouandaLoadingState(),
-                error: (_, _) => WouandaEmptyState(
+                loading: () => const NgomaLoadingState(),
+                error: (_, _) => NgomaEmptyState(
                   icon: LucideIcons.messagesSquare,
-                  art: WouandaArt.messages,
+                  art: NgomaArt.messages,
                   title: 'Conversations indisponibles',
                   message: 'Réessayez dans un instant.',
                   actionLabel: 'Réessayer',
@@ -467,9 +467,9 @@ class _ForwardSheetState extends ConsumerState<_ForwardSheet> {
                       if (item.id != widget.excludeId) item,
                   ];
                   if (list.isEmpty) {
-                    return const WouandaEmptyState(
+                    return const NgomaEmptyState(
                       icon: LucideIcons.messagesSquare,
-                      art: WouandaArt.messages,
+                      art: NgomaArt.messages,
                       title: 'Aucune conversation',
                       message:
                           'Aucune conversation ne peut recevoir ce message.',
@@ -537,7 +537,7 @@ const messagingReportReasons = <String, String>{
 };
 
 Future<String?> showReportSheet(BuildContext context, {bool message = false}) =>
-    showWouandaSheet<String>(
+    showNgomaSheet<String>(
       context,
       showDragHandle: true,
       builder: (sheetContext) => SafeArea(
@@ -555,10 +555,10 @@ Future<String?> showReportSheet(BuildContext context, {bool message = false}) =>
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
               child: Text(
-                'L’équipe Wouanda examine chaque signalement. '
+                'L’équipe NGoma examine chaque signalement. '
                 'L’autre personne n’est pas prévenue.',
                 style: AppTheme.bodySm(
-                  color: WouandaColors.textSecondary(
+                  color: NgomaColors.textSecondary(
                     Theme.of(sheetContext).brightness,
                   ),
                 ),
@@ -583,7 +583,7 @@ Future<String?> showReportSheet(BuildContext context, {bool message = false}) =>
 Future<UnifiedMessageDto?> showConversationSearch(
   BuildContext context, {
   required Future<List<UnifiedMessageDto>> Function(String) search,
-}) => showWouandaSheet<UnifiedMessageDto>(
+}) => showNgomaSheet<UnifiedMessageDto>(
   context,
   showDragHandle: true,
   builder: (_) => _ConversationSearchSheet(search: search),
@@ -644,7 +644,7 @@ class _ConversationSearchSheetState extends State<_ConversationSearchSheet> {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-                child: WouandaSearchInput(
+                child: NgomaSearchInput(
                   key: const ValueKey('messaging-search-field'),
                   autofocus: true,
                   onChanged: _run,
@@ -654,18 +654,18 @@ class _ConversationSearchSheetState extends State<_ConversationSearchSheet> {
               if (_loading) const LinearProgressIndicator(minHeight: 2),
               Expanded(
                 child: _failed
-                    ? WouandaEmptyState(
+                    ? NgomaEmptyState(
                         icon: LucideIcons.search,
-                        art: WouandaArt.search,
+                        art: NgomaArt.search,
                         title: 'Recherche indisponible',
                         message: 'Vérifiez la connexion puis réessayez.',
                         actionLabel: 'Réessayer',
                         onAction: () => _run(_query),
                       )
                     : _query.trim().isNotEmpty && _results.isEmpty && !_loading
-                    ? const WouandaEmptyState(
+                    ? const NgomaEmptyState(
                         icon: LucideIcons.search,
-                        art: WouandaArt.search,
+                        art: NgomaArt.search,
                         title: 'Aucun message trouvé',
                         message: 'Essayez avec un autre mot.',
                       )
@@ -674,7 +674,7 @@ class _ConversationSearchSheetState extends State<_ConversationSearchSheet> {
                         separatorBuilder: (_, _) => const Divider(height: 1),
                         itemBuilder: (context, index) {
                           final message = _results[index];
-                          return WouandaListRow(
+                          return NgomaListRow(
                             title: message.isMine
                                 ? 'Vous'
                                 : message.senderLabel,
@@ -685,7 +685,7 @@ class _ConversationSearchSheetState extends State<_ConversationSearchSheet> {
                                 'fr_FR',
                               ).format(message.createdAt),
                               style: AppTheme.caption(
-                                color: WouandaColors.textSecondary(brightness),
+                                color: NgomaColors.textSecondary(brightness),
                               ),
                             ),
                             onTap: () => Navigator.pop(context, message),
@@ -726,7 +726,7 @@ Future<ConversationDetailAction?> showConversationDetails(
   required Color serviceColor,
   required IconData serviceIcon,
   required bool canOpenContext,
-}) => showWouandaSheet<ConversationDetailAction>(
+}) => showNgomaSheet<ConversationDetailAction>(
   context,
   showDragHandle: true,
   builder: (sheetContext) {
@@ -744,15 +744,15 @@ Future<ConversationDetailAction?> showConversationDetails(
       leading: Icon(
         icon,
         color: destructive
-            ? WouandaColors.negative
-            : WouandaColors.textPrimary(brightness),
+            ? NgomaColors.negative
+            : NgomaColors.textPrimary(brightness),
       ),
       title: Text(
         label,
         style: AppTheme.bodyMd(
           color: destructive
-              ? WouandaColors.negative
-              : WouandaColors.textPrimary(brightness),
+              ? NgomaColors.negative
+              : NgomaColors.textPrimary(brightness),
         ),
       ),
       onTap: () => pick(action),
@@ -778,7 +778,7 @@ Future<ConversationDetailAction?> showConversationDetails(
             Text(
               presence ?? conversation.subtitle,
               style: AppTheme.bodySm(
-                color: WouandaColors.textSecondary(brightness),
+                color: NgomaColors.textSecondary(brightness),
               ),
             ),
             if (conversation.contextLabel != null) ...[
@@ -786,9 +786,9 @@ Future<ConversationDetailAction?> showConversationDetails(
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Material(
-                  color: WouandaColors.surfaceMuted(brightness),
+                  color: NgomaColors.surfaceMuted(brightness),
                   borderRadius: BorderRadius.circular(
-                    WouandaSpacing.radiusMedium,
+                    NgomaSpacing.radiusMedium,
                   ),
                   child: ListTile(
                     leading: Icon(serviceIcon, color: serviceColor),
