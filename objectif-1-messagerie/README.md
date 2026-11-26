@@ -20,5 +20,6 @@ Le détail et l'état de vos tâches sont sur le site Foundation, dans « Mes t�
 - Mahaliana Fitiavana
 - Benjamin Kasereka Vinyatsi
 - Melvine Mokam
+- Joel Elangue
 - Merci-R.-BOLEBANTOU
 - Elsy CHARLES
