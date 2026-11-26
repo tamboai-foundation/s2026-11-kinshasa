@@ -2,6 +2,7 @@ package ai.tambo.foundation.ngoma.models.users
 
 import ai.tambo.tmodeler.field.advanced.TimeField
 import ai.tambo.tmodeler.field.common.TextField
+import ai.tambo.tmodeler.field.media.ImageField
 import ai.tambo.tmodeler.model.TMignore
 import ai.tambo.tmodeler.model.TModel
 import ai.tambo.tmodeler.ms.Tms
