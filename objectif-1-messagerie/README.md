@@ -21,3 +21,4 @@ Le détail et l'état de vos tâches sont sur le site Foundation, dans « Mes t�
 - Benjamin Kasereka Vinyatsi
 - Melvine Mokam
 - Merci-R.-BOLEBANTOU
+- Elsy CHARLES
