@@ -27,7 +27,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get auth_access => 'Accédez à votre écosystème';
 
   @override
-  String get auth_join => 'Rejoignez Wouanda';
+  String get auth_join => 'Rejoignez NGoma';
 
   @override
   String get auth_email => 'Email';
@@ -89,7 +89,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get logout => 'Déconnexion';
 
   @override
-  String get hub_services => 'Services Wouanda';
+  String get hub_services => 'Services NGoma';
 
   @override
   String get hub_subtitle => 'Tout ce dont vous avez besoin, en un clic.';
@@ -274,7 +274,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Découvrez les meilleurs événements près de vous.';
 
   @override
-  String get onboarding_5_title => 'Rencontres Wouanda';
+  String get onboarding_5_title => 'Rencontres NGoma';
 
   @override
   String get onboarding_5_desc =>
@@ -287,7 +287,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profile_payments => 'Moyens de paiement';
 
   @override
-  String get profile_wallet_payments => 'Wouanda Pay & Paiements';
+  String get profile_wallet_payments => 'NGoma Pay & Paiements';
 
   @override
   String get profile_promos => 'Code Promo & Coupons';
@@ -369,7 +369,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get scanner_scan_qr => 'Scannez un QR code ou code-barres';
 
   @override
-  String get scanner_pay_desc => 'Scannez pour payer via Wouanda Pay';
+  String get scanner_pay_desc => 'Scannez pour payer via NGoma Pay';
 
   @override
   String get scanner_ticket_desc => 'Validez votre ticket d\'événement';
@@ -494,7 +494,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get card_add_success => 'Carte ajoutée avec succès !';
 
   @override
-  String get appTitle => 'Wouanda';
+  String get appTitle => 'NGoma';
 
   @override
   String get homeTitle => 'Accueil';
@@ -503,7 +503,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shopTitle => 'Boutique';
 
   @override
-  String get searchHint => 'Rechercher sur Wouanda...';
+  String get searchHint => 'Rechercher sur NGoma...';
 
   @override
   String get categoryAll => 'Tout';
@@ -910,7 +910,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get cancelNoteLabel => 'Précisez en quelques mots';
 
   @override
-  String get cancelSafetyHint => 'En danger ? Prévenez Wouanda et vos proches.';
+  String get cancelSafetyHint => 'En danger ? Prévenez NGoma et vos proches.';
 
   @override
   String get cancelSafetyAction => 'Alerte';

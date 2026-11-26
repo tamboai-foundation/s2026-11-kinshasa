@@ -4,6 +4,10 @@ import 'package:ngoma/core/widgets/feature_setup_gate.dart';
 import 'package:ngoma/features/auth/auth_screen.dart';
 import 'package:ngoma/features/auth/forgot_password_screen.dart';
 import 'package:ngoma/features/messaging/messaging.dart';
+import 'package:ngoma/features/social/people_screen.dart';
+import 'package:ngoma/features/social/profile_screen.dart';
+import 'package:ngoma/features/social/social_shell.dart';
+import 'package:ngoma/features/social/videos_screen.dart';
 import 'package:ngoma/features/splash/splash_screen.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>(
@@ -33,25 +37,41 @@ final router = GoRouter(
       path: '/forgot-password',
       builder: (context, state) => ForgotPasswordScreen(),
     ),
-    GoRoute(
-      path: '/messages',
-      builder: (context, state) => const FeatureSetupGate(
-        feature: 'chat',
-        title: 'Messagerie',
-        child: MessagingInboxScreen(),
-      ),
+    // Onglets du Module 1 SI : Messages, Vidéos, Personnes, Profil (barre du bas).
+    ShellRoute(
+      builder: (context, state, child) => SocialShell(child: child),
       routes: [
         GoRoute(
-          path: ':conversationId',
-          builder: (context, state) => FeatureSetupGate(
+          path: '/messages',
+          builder: (context, state) => const FeatureSetupGate(
             feature: 'chat',
             title: 'Messagerie',
-            child: UnifiedConversationLoader(
-              conversationId: state.pathParameters['conversationId']!,
-            ),
+            child: MessagingInboxScreen(),
           ),
         ),
+        GoRoute(path: '/videos', builder: (context, state) => const VideosScreen()),
+        GoRoute(path: '/people', builder: (context, state) => const PeopleScreen()),
+        GoRoute(path: '/profile', builder: (context, state) => const ProfileScreen()),
       ],
+    ),
+    // Écrans plein écran, au-dessus de la barre d'onglets.
+    GoRoute(
+      path: '/messages/:conversationId',
+      parentNavigatorKey: rootNavigatorKey,
+      builder: (context, state) => FeatureSetupGate(
+        feature: 'chat',
+        title: 'Messagerie',
+        child: UnifiedConversationLoader(
+          conversationId: state.pathParameters['conversationId']!,
+        ),
+      ),
+    ),
+    GoRoute(
+      path: '/people/:userId',
+      parentNavigatorKey: rootNavigatorKey,
+      builder: (context, state) => UserDetailScreen(
+        userId: int.parse(state.pathParameters['userId']!),
+      ),
     ),
   ],
   errorBuilder: (context, state) => const FeatureSetupGate(

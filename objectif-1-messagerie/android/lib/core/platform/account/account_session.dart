@@ -91,10 +91,10 @@ class AccountSessionDto {
 /// Both mock Kotlin and future TModeler use the same wire contract.
 class AccountSessionChannel {
   const AccountSessionChannel();
-  static const _channel = MethodChannel('com.wouanda/account');
+  static const _channel = MethodChannel('com.ngoma/account');
 
   Future<AccountSessionDto> restoreSession() =>
-      _session('restoreSession', {'demoMode': WouandaMvpMode.enabled});
+      _session('restoreSession', {'demoMode': NgomaMvpMode.enabled});
   Future<AccountSessionDto> currentSession() =>
       _session('getSessionSnapshot', const {});
 

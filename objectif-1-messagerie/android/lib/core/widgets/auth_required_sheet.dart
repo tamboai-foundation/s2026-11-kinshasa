@@ -1,6 +1,6 @@
-import 'package:ngoma/core/widgets/wouanda_draggable_sheet.dart';
+import 'package:ngoma/core/widgets/ngoma_draggable_sheet.dart';
 import 'package:flutter/material.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
@@ -33,7 +33,7 @@ class AuthRequiredSheet extends StatelessWidget {
     String? primaryLabel,
     String? primaryRoute,
   }) {
-    return showWouandaSheet(
+    return showNgomaSheet(
       context,
       backgroundColor: Colors.transparent,
       builder: (context) => AuthRequiredSheet(
@@ -59,12 +59,12 @@ class AuthRequiredSheet extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppTheme.getSurface(isDark),
           borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(WouandaSpacing.radiusLarge),
+            top: Radius.circular(NgomaSpacing.radiusLarge),
           ),
           border: Border.all(
             color: AppTheme.getBorder(isDark).withValues(alpha: 0.45),
           ),
-          boxShadow: WouandaElevation.card(Theme.of(context).brightness),
+          boxShadow: NgomaElevation.card(Theme.of(context).brightness),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -76,7 +76,7 @@ class AuthRequiredSheet extends StatelessWidget {
                 height: 4,
                 decoration: BoxDecoration(
                   color: AppTheme.getBorder(isDark),
-                  borderRadius: BorderRadius.circular(WouandaSpacing.radiusXs),
+                  borderRadius: BorderRadius.circular(NgomaSpacing.radiusXs),
                 ),
               ),
             ),
@@ -105,7 +105,7 @@ class AuthRequiredSheet extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title ?? 'Compte Wouanda requis',
+                        title ?? 'Compte NGoma requis',
                         style: AppTheme.h2(
                           color: AppTheme.getTextPrimary(isDark),
                         ),
@@ -113,7 +113,7 @@ class AuthRequiredSheet extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         message ??
-                            'Vous pouvez explorer librement. Pour $action, connectez-vous avec votre compte unique Wouanda.',
+                            'Vous pouvez explorer librement. Pour $action, connectez-vous avec votre compte unique NGoma.',
                         style: AppTheme.bodyMd(
                           color: AppTheme.getTextSecondary(isDark),
                         ),

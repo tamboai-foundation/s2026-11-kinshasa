@@ -136,15 +136,15 @@ class NoMessagingNotifications implements MessagingNotificationSurface {
   Stream<NotificationSignal> get signals => const Stream.empty();
 }
 
-/// Contract `com.wouanda/messagingNotifications` (Android: conversation
+/// Contract `com.ngoma/messagingNotifications` (Android: conversation
 /// notification with direct reply and mark-as-read actions).
 class NativeMessagingNotifications implements MessagingNotificationSurface {
   NativeMessagingNotifications({MethodChannel? channel, EventChannel? events})
     : _channel =
-          channel ?? const MethodChannel('com.wouanda/messagingNotifications'),
+          channel ?? const MethodChannel('com.ngoma/messagingNotifications'),
       _events =
           events ??
-          const EventChannel('com.wouanda/messagingNotifications/events');
+          const EventChannel('com.ngoma/messagingNotifications/events');
 
   final MethodChannel _channel;
   final EventChannel _events;

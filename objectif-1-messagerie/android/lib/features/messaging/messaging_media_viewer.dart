@@ -1,18 +1,18 @@
 import 'dart:async';
-import 'package:ngoma/core/widgets/wouanda_loading_state.dart';
+import 'package:ngoma/core/widgets/ngoma_loading_state.dart';
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:ngoma/core/widgets/wouanda_tappable.dart';
-import 'package:ngoma/core/widgets/wouanda_image.dart';
+import 'package:ngoma/core/widgets/ngoma_tappable.dart';
+import 'package:ngoma/core/widgets/ngoma_image.dart';
 import 'package:ngoma/core/formatting/duration_format.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 import 'package:ngoma/core/platform/messaging/messaging_models.dart';
 import 'package:ngoma/core/theme.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 
 bool isVisualAttachment(MessageAttachmentDto attachment) =>
     attachment.type == 'image' || attachment.type == 'video';
@@ -50,7 +50,7 @@ class MessagingAttachmentPreview extends StatelessWidget {
   Widget _poster(Widget fallback) {
     final poster = attachment.previewUrl;
     if (poster == null || poster.trim().isEmpty) return fallback;
-    return WouandaImage(
+    return NgomaImage(
       poster,
       fit: fit,
       cacheWidth: cacheWidth,
@@ -107,7 +107,7 @@ class MessagingAttachmentPreview extends StatelessWidget {
           )
         : source == null
         ? fallback
-        : WouandaImage(
+        : NgomaImage(
             source,
             fit: fit,
             cacheWidth: cacheWidth,
@@ -325,10 +325,10 @@ class _VideoPageState extends State<_VideoPage> {
       );
     }
     if (controller == null) {
-      return const WouandaLoadingState();
+      return const NgomaLoadingState();
     }
     return Center(
-      child: WouandaTappable(
+      child: NgomaTappable(
         onTap: () => setState(() {
           controller.value.isPlaying ? controller.pause() : controller.play();
         }),
@@ -560,7 +560,7 @@ class _MessagingAudioAttachmentPlayerState
             label: 'Vitesse de lecture',
             child: InkWell(
               onTap: _cycleSpeed,
-              borderRadius: BorderRadius.circular(WouandaSpacing.radiusPill),
+              borderRadius: BorderRadius.circular(NgomaSpacing.radiusPill),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                 child: Text(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -12,7 +12,7 @@ import 'package:ngoma/core/providers/user_provider.dart';
 import 'package:ngoma/core/theme.dart';
 import 'package:ngoma/core/widgets/account_setup_progress.dart';
 import 'package:ngoma/core/widgets/language_selector.dart';
-import 'package:ngoma/core/widgets/wouanda_brand_mark.dart';
+import 'package:ngoma/core/widgets/ngoma_brand_mark.dart';
 import 'package:ngoma/core/widgets/account_provider_button.dart';
 
 class AuthScreen extends ConsumerStatefulWidget {
@@ -81,7 +81,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         ),
                         const SizedBox(width: 8),
                       ],
-                      const WouandaBrandMark(width: 42),
+                      const NgomaBrandMark(width: 42),
                     ],
                   ),
                   LanguageSelector(
@@ -136,7 +136,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   ),
                 ),
               ),
-            // The Wouanda setup runs right after the sign-in: its progress shows here.
+            // The NGoma setup runs right after the sign-in: its progress shows here.
             if (_isSubmitting && _pendingProvider == null)
               const AccountSetupProgress(),
           ],
@@ -184,7 +184,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               _AuthField(
                 controller: _nameController,
                 label: 'Nom complet',
-                hint: 'Ex. Amina Wouanda',
+                hint: 'Ex. Amina NGoma',
                 autofillHints: const [AutofillHints.name],
                 textCapitalization: TextCapitalization.words,
                 textInputAction: TextInputAction.next,
@@ -282,7 +282,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               child: ElevatedButton(
                 onPressed: _isSubmitting ? null : _submit,
                 child: _isSubmitting && _pendingProvider == null
-                    ? const WouandaBusyBar(size: 20)
+                    ? const NgomaBusyBar(size: 20)
                     : Text(
                         _isLogin
                             ? lang.t('auth_enter')
@@ -357,7 +357,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
         await notifier.requestSignupCode(email);
         if (!mounted) return;
         setState(() => _codeSent = true);
-        WouandaSnackbar.showWarning(
+        NgomaSnackbar.showWarning(
           context,
           'Un code de vérification vient d’être envoyé à $email.',
         );
@@ -377,7 +377,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       _finishNavigation();
     } catch (error) {
       if (!mounted) return;
-      WouandaSnackbar.showWarning(
+      NgomaSnackbar.showWarning(
         context,
         error is PlatformException
             ? (error.message ?? error.code)
@@ -394,13 +394,13 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     try {
       await ref.read(userProvider.notifier).requestSignupCode(email);
       if (!mounted) return;
-      WouandaSnackbar.showWarning(
+      NgomaSnackbar.showWarning(
         context,
         'Un nouveau code vient d’être envoyé à $email.',
       );
     } catch (error) {
       if (!mounted) return;
-      WouandaSnackbar.showWarning(
+      NgomaSnackbar.showWarning(
         context,
         error is PlatformException
             ? (error.message ?? error.code)
@@ -431,7 +431,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
         return;
       }
       final lang = ref.read(languageProvider);
-      WouandaSnackbar.showWarning(
+      NgomaSnackbar.showWarning(
         context,
         error is PlatformException &&
                 (error.code == 'ACCOUNT_SOCIAL_NOT_CONFIGURED' ||
@@ -469,7 +469,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       context.go('/hub');
     } catch (error) {
       if (!mounted) return;
-      WouandaSnackbar.showWarning(
+      NgomaSnackbar.showWarning(
         context,
         error is PlatformException
             ? (error.message ?? error.code)
@@ -500,10 +500,10 @@ class _BrandPane extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const WouandaBrandMark(width: 96),
+        const NgomaBrandMark(width: 96),
         const SizedBox(height: 28),
         Text(
-          'Wouanda',
+          'NGoma',
           style: AppTheme.displayXL(
             color: AppTheme.getTextPrimary(isDark),
           ).copyWith(fontSize: 44),
@@ -586,15 +586,15 @@ class _AuthField extends StatelessWidget {
               vertical: 16,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(WouandaSpacing.radiusSmall),
+              borderRadius: BorderRadius.circular(NgomaSpacing.radiusSmall),
               borderSide: BorderSide(color: AppTheme.getBorder(isDark)),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(WouandaSpacing.radiusSmall),
+              borderRadius: BorderRadius.circular(NgomaSpacing.radiusSmall),
               borderSide: BorderSide(color: AppTheme.getBorder(isDark)),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(WouandaSpacing.radiusSmall),
+              borderRadius: BorderRadius.circular(NgomaSpacing.radiusSmall),
               borderSide: BorderSide(
                 color: AppTheme.getTextPrimary(isDark),
                 width: 1.4,

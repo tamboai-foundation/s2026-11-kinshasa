@@ -137,7 +137,7 @@ abstract class AppLocalizations {
   /// No description provided for @auth_join.
   ///
   /// In fr, this message translates to:
-  /// **'Rejoignez Wouanda'**
+  /// **'Rejoignez NGoma'**
   String get auth_join;
 
   /// No description provided for @auth_email.
@@ -257,7 +257,7 @@ abstract class AppLocalizations {
   /// No description provided for @hub_services.
   ///
   /// In fr, this message translates to:
-  /// **'Services Wouanda'**
+  /// **'Services NGoma'**
   String get hub_services;
 
   /// No description provided for @hub_subtitle.
@@ -623,7 +623,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboarding_5_title.
   ///
   /// In fr, this message translates to:
-  /// **'Rencontres Wouanda'**
+  /// **'Rencontres NGoma'**
   String get onboarding_5_title;
 
   /// No description provided for @onboarding_5_desc.
@@ -647,7 +647,7 @@ abstract class AppLocalizations {
   /// No description provided for @profile_wallet_payments.
   ///
   /// In fr, this message translates to:
-  /// **'Wouanda Pay & Paiements'**
+  /// **'NGoma Pay & Paiements'**
   String get profile_wallet_payments;
 
   /// No description provided for @profile_promos.
@@ -809,7 +809,7 @@ abstract class AppLocalizations {
   /// No description provided for @scanner_pay_desc.
   ///
   /// In fr, this message translates to:
-  /// **'Scannez pour payer via Wouanda Pay'**
+  /// **'Scannez pour payer via NGoma Pay'**
   String get scanner_pay_desc;
 
   /// No description provided for @scanner_ticket_desc.
@@ -1055,7 +1055,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Wouanda'**
+  /// **'NGoma'**
   String get appTitle;
 
   /// No description provided for @homeTitle.
@@ -1073,7 +1073,7 @@ abstract class AppLocalizations {
   /// No description provided for @searchHint.
   ///
   /// In fr, this message translates to:
-  /// **'Rechercher sur Wouanda...'**
+  /// **'Rechercher sur NGoma...'**
   String get searchHint;
 
   /// No description provided for @categoryAll.
@@ -1835,7 +1835,7 @@ abstract class AppLocalizations {
   /// No description provided for @cancelSafetyHint.
   ///
   /// In fr, this message translates to:
-  /// **'En danger ? Prévenez Wouanda et vos proches.'**
+  /// **'En danger ? Prévenez NGoma et vos proches.'**
   String get cancelSafetyHint;
 
   /// No description provided for @cancelSafetyAction.

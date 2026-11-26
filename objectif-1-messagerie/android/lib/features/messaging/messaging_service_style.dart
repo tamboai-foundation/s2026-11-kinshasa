@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ngoma/core/widgets/wouanda_image.dart';
+import 'package:ngoma/core/widgets/ngoma_image.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ngoma/core/platform/messaging/messaging_models.dart';
-import 'package:ngoma/core/superapp/wouanda_service_registry.dart';
+import 'package:ngoma/core/superapp/ngoma_service_registry.dart';
 import 'package:ngoma/core/theme.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 
 /// Label, mark and tint of each service in the inbox and conversations.
 String messagingServiceLabel(MessagingService value) {
@@ -14,7 +14,7 @@ String messagingServiceLabel(MessagingService value) {
     MessagingService.support,
     MessagingService.other,
   ].contains(value)) {
-    for (final service in WouandaServiceRegistry.all) {
+    for (final service in NgomaServiceRegistry.all) {
       if (service.key == value.name) return service.label;
     }
   }
@@ -37,22 +37,22 @@ IconData messagingServiceIcon(MessagingService value) => switch (value) {
 };
 
 Color messagingServiceColor(MessagingService value) => switch (value) {
-  MessagingService.shop => AppTheme.wouandaShop,
-  MessagingService.love => AppTheme.wouandaLove,
-  MessagingService.stay => AppTheme.wouandaStay,
-  MessagingService.go => AppTheme.wouandaGo,
-  MessagingService.events => AppTheme.wouandaEvents,
-  MessagingService.support => WouandaColors.brand,
-  MessagingService.account => WouandaColors.brand,
-  MessagingService.other => WouandaColors.brand,
+  MessagingService.shop => AppTheme.ngomaShop,
+  MessagingService.love => AppTheme.ngomaLove,
+  MessagingService.stay => AppTheme.ngomaStay,
+  MessagingService.go => AppTheme.ngomaGo,
+  MessagingService.events => AppTheme.ngomaEvents,
+  MessagingService.support => NgomaColors.brand,
+  MessagingService.account => NgomaColors.brand,
+  MessagingService.other => NgomaColors.brand,
 };
 
 /// A service the messaging did not know when it was written (`other`) is
 /// named and tinted by the service registry from its open key: adding a
 /// service touches the registry, never messaging (contract messaging v4).
-WouandaServiceDefinition? _registered(UnifiedConversationDto conversation) {
+NgomaServiceDefinition? _registered(UnifiedConversationDto conversation) {
   if (conversation.service != MessagingService.other) return null;
-  for (final service in WouandaServiceRegistry.all) {
+  for (final service in NgomaServiceRegistry.all) {
     if (service.key == conversation.serviceKey) return service;
   }
   return null;
@@ -93,7 +93,7 @@ class MessagingAvatar extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          WouandaPersonAvatar(
+          NgomaPersonAvatar(
             radius: radius,
             name: conversation.title,
             photoUrl: conversation.avatarUrl,
@@ -110,11 +110,11 @@ class MessagingAvatar extends StatelessWidget {
               right: showServiceMark ? 0 : -1,
               top: showServiceMark ? 0 : null,
               bottom: showServiceMark ? null : -1,
-              child: WouandaPresenceDot(
+              child: NgomaPresenceDot(
                 key: const ValueKey('messaging-online-dot'),
                 active: true,
                 size: radius * .5,
-                ringColor: WouandaColors.surface(brightness),
+                ringColor: NgomaColors.surface(brightness),
               ),
             ),
           if (showServiceMark)
@@ -125,7 +125,7 @@ class MessagingAvatar extends StatelessWidget {
                 width: markSize,
                 height: markSize,
                 decoration: BoxDecoration(
-                  color: WouandaColors.surface(brightness),
+                  color: NgomaColors.surface(brightness),
                   shape: BoxShape.circle,
                 ),
                 padding: const EdgeInsets.all(2),

@@ -149,7 +149,7 @@ class PluginMessagingInputService implements MessagingInputService {
     if (!await _recorder.hasPermission()) return false;
     final directory = await getTemporaryDirectory();
     final path =
-        '${directory.path}${Platform.pathSeparator}wouanda-voice-${DateTime.now().microsecondsSinceEpoch}.m4a';
+        '${directory.path}${Platform.pathSeparator}ngoma-voice-${DateTime.now().microsecondsSinceEpoch}.m4a';
     _waveform.clear();
     _waveformCursor = 0;
     _voicePath = path;

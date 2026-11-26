@@ -26,7 +26,7 @@ class FeatureSetupGate extends StatefulWidget {
 }
 
 class _FeatureSetupGateState extends State<FeatureSetupGate> {
-  static const _channel = MethodChannel('com.wouanda/setup');
+  static const _channel = MethodChannel('com.ngoma/setup');
   Timer? _poll;
   bool _ready = false;
   double _progress = 0;

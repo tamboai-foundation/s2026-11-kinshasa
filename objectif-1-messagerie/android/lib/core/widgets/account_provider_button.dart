@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wouanda_design/wouanda_design.dart';
+import 'package:ngoma_design/ngoma_design.dart';
 import 'package:ngoma/core/theme.dart';
 
 /// Original provider assets. The account bridge owns authentication.
@@ -20,13 +20,13 @@ class AccountProviderButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => OutlinedButton(
     style: OutlinedButton.styleFrom(
-      backgroundColor: WouandaColors.surfaceLight,
-      foregroundColor: WouandaColors.textPrimaryLight,
-      disabledBackgroundColor: WouandaColors.surfaceLight,
-      disabledForegroundColor: WouandaColors.textSecondaryLight,
+      backgroundColor: NgomaColors.surfaceLight,
+      foregroundColor: NgomaColors.textPrimaryLight,
+      disabledBackgroundColor: NgomaColors.surfaceLight,
+      disabledForegroundColor: NgomaColors.textSecondaryLight,
       minimumSize: const Size.fromHeight(52),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      side: const BorderSide(color: WouandaColors.textSecondaryLight),
+      side: const BorderSide(color: NgomaColors.textSecondaryLight),
       textStyle: AppTheme.bodyMd(fontWeight: FontWeight.w600),
     ),
     onPressed: onPressed,
@@ -37,7 +37,7 @@ class AccountProviderButton extends StatelessWidget {
           height: 28,
           child: Center(
             child: loading
-                ? const WouandaBusyBar(size: 20)
+                ? const NgomaBusyBar(size: 20)
                 : OverflowBox(
                     maxWidth: 44,
                     maxHeight: 44,

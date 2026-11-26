@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ngoma/core/platform/account/account_bridge.dart';
 import 'package:ngoma/core/providers/user_provider.dart';
 
-import 'wouanda_service_registry.dart';
+import 'ngoma_service_registry.dart';
 
 enum ProSpaceStatus {
   available('Devenir'),
@@ -16,8 +16,8 @@ enum ProSpaceStatus {
 }
 
 class ProSpaceEntry {
-  final WouandaServiceDefinition service;
-  final WouandaProSpace space;
+  final NgomaServiceDefinition service;
+  final NgomaProSpace space;
   final ProSpaceStatus status;
 
   const ProSpaceEntry({
@@ -46,7 +46,7 @@ class ProSpacesNotifier extends StateNotifier<List<ProSpaceEntry>> {
       if (!mounted) return;
       state = [
         for (final item in resolved)
-          if (WouandaServiceRegistry.tryByKey(item.service) case final service?)
+          if (NgomaServiceRegistry.tryByKey(item.service) case final service?)
             for (final space in service.proSpaces)
               if (space.role == item.role)
                 ProSpaceEntry(
