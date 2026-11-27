@@ -1,5 +1,6 @@
 package ai.tambo.foundation.ngoma
 
+import ai.tambo.foundation.ngoma.controllers.AccountController
 import ai.tambo.foundation.ngoma.controllers.AuthController
 import ai.tambo.foundation.ngoma.controllers.Profile
 import ai.tambo.foundation.ngoma.controllers.SignInResult
@@ -64,6 +65,11 @@ class MainActivity : FlutterActivity() {
                         if (firstName.isNotBlank() && lastName.isNotBlank()) {
                             UserController.updateProfile(lastName, firstName, phone, bio)
                         }
+                        val profile = UserController.getProfile()
+                        result.success(buildSessionResponse(profile))
+                    }
+                    "deleteAccount" -> {
+                        AccountController.deleteAccount()
                         val profile = UserController.getProfile()
                         result.success(buildSessionResponse(profile))
                     }

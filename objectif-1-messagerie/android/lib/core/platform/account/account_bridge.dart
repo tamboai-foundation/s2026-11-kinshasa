@@ -53,6 +53,7 @@ abstract class AccountBridge {
   });
   Future<AccountSessionDto> socialLogin(String provider);
   Future<AccountSessionDto> updateProfile(Map<String, Object?> fields);
+  Future<AccountSessionDto> deleteAccount();
   Future<List<AccountProSpaceDto>> getProfessionalSpaces();
 
   // Account changes (contract v1.2): the authority recomputes roles,
@@ -134,6 +135,9 @@ class AccountBridgeNative implements AccountBridge, AccountSessionEventsBridge {
   @override
   Future<AccountSessionDto> updateProfile(Map<String, Object?> fields) =>
       _channel.updateProfile(fields);
+
+  @override
+  Future<AccountSessionDto> deleteAccount() => _channel.deleteAccount();
 
   @override
   Future<AccountSessionDto> activateService(

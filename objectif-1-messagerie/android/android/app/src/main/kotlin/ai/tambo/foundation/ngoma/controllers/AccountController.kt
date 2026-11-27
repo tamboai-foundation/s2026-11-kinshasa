@@ -54,4 +54,14 @@ object AccountController {
         AuthSession.signOut()
         return ActionResult.Success
     }
+
+    context(_: TmsScope)
+    fun deleteAccount(): ActionResult {
+        val user = AuthSession.currentUser() ?: return ActionResult.NotSignedIn
+        val login = AuthSession.loginOf(user)
+        login?.delete()
+        user.delete()
+        AuthSession.signOut()
+        return ActionResult.Success
+    }
 }

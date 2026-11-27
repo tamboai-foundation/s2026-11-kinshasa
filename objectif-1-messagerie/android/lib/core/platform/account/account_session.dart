@@ -135,6 +135,8 @@ class AccountSessionChannel {
   Future<AccountSessionDto> updateProfile(Map<String, Object?> fields) =>
       _session('updateProfile', {'fields': fields});
 
+  Future<AccountSessionDto> deleteAccount() => _session('deleteAccount', const {});
+
   // ─── Account changes (contract v1.2): each returns the whole session ───
 
   Future<AccountSessionDto> activateService(
