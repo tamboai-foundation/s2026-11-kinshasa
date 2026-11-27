@@ -12,3 +12,6 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+
+# Réglage Java personnel (généré par Gradle)
+/gradle/gradle-daemon-jvm.properties
