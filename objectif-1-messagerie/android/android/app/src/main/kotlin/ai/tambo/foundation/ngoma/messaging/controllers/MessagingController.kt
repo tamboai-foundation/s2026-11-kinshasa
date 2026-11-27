@@ -147,7 +147,7 @@ object MessagingController {
     fun openDirectConversation(recipientId: Long): Map<String, Any?> {
         val me = me()
         val recipient = userById(recipientId)
-        if (recipient == null || recipient.deletedAt_ != null || localId(recipient) == localId(me)) {
+        if (recipient == null || isDeleted(recipient) || localId(recipient) == localId(me)) {
             throw MessagingException(MessagingException.RECIPIENT_NOT_FOUND, "Destinataire introuvable")
         }
         val existing = myParticipations(me)
@@ -336,8 +336,8 @@ object MessagingController {
     private fun me(): User {
         val s = Session.tms.lambda
         val session = Session.tms.with(s).lazy().order(-s._id).sub(1, 0).build().toList().firstOrNull()
-        val user: User? = if (session != null && session.currentUser.available()) session.currentUser_ else null
-        if (user == null || user.deletedAt_ != null) {
+        val user: User? = if (session != null && session.currentUser.available()) orNull { session.currentUser_ } else null
+        if (user == null || isDeleted(user)) {
             throw MessagingException(MessagingException.NOT_AUTHENTICATED, "Aucun utilisateur connecté")
         }
         return user
@@ -409,7 +409,7 @@ object MessagingController {
             .toList()
             .firstOrNull()
             ?: throw MessagingException(MessagingException.MESSAGE_NOT_FOUND, "Message introuvable")
-        if (localId(message.sender_) != localId(me) || message.deletedAt_ != null) {
+        if (localId(message.sender_) != localId(me) || orNull { message.deletedAt_ } != null) {
             throw MessagingException(MessagingException.ACTION_NOT_ALLOWED, "Seul l'auteur modifie ou supprime son message")
         }
         return message
@@ -417,7 +417,7 @@ object MessagingController {
 
     context(_: TmsScope)
     private fun unreadCount(conversation: Conversation, me: User): Long {
-        val lastReadAt = participationOf(conversation, me)?.lastReadAt_
+        val lastReadAt = participationOf(conversation, me)?.let { orNull { it.lastReadAt_ } }
         val m = Message.tms.lambda
         var condition = (m.conversation eq conversation) and (m.sender ne me) and (m.deletedAt eq null)
         if (lastReadAt != null) condition = condition and (m.sentAt gt lastReadAt)
@@ -437,7 +437,7 @@ object MessagingController {
         if (participationOf(conversation, me) == null) return false
         if (conversation.kind_ != Conversation.Kind.DIRECT) return true
         val other = otherParticipants(conversation, me).firstOrNull()?.user_ ?: return false
-        return other.deletedAt_ == null
+        return !isDeleted(other)
     }
 
     // ─── Données envoyées à l'écran ────────────────────────────────────────
@@ -454,7 +454,7 @@ object MessagingController {
         }
         val subtitle = when {
             isGroup -> "${others.size + 1} participants"
-            peer == null || peer.deletedAt_ != null -> ""
+            peer == null || isDeleted(peer) -> ""
             else -> peer.bio_
         }
         val last = lastMessage(conversation)
@@ -467,7 +467,7 @@ object MessagingController {
             "title" to title,
             "subtitle" to subtitle,
             "avatar" to null,
-            "lastMessage" to last?.let { if (it.deletedAt_ != null) "Message supprimé" else it.content_ },
+            "lastMessage" to last?.let { if (orNull { it.deletedAt_ } != null) "Message supprimé" else it.content_ },
             "lastMessageAt" to last?.let { iso(it.sentAt_) },
             "lastMessageIsMine" to lastIsMine,
             "lastMessageDelivery" to if (lastIsMine) "sent" else null,
@@ -491,7 +491,7 @@ object MessagingController {
     private fun messageDto(message: Message, me: User): Map<String, Any?> {
         val sender = message.sender_
         val isMine = localId(sender) == localId(me)
-        val isDeleted = message.deletedAt_ != null
+        val isDeleted = orNull { message.deletedAt_ } != null
         val clientId = message.clientMessageId_
         return mapOf(
             "id" to localId(message),
@@ -502,7 +502,7 @@ object MessagingController {
             "senderLabel" to displayName(sender),
             "isMine" to isMine,
             "createdAt" to iso(message.sentAt_),
-            "editedAt" to message.editedAt_?.let { iso(it) },
+            "editedAt" to orNull { message.editedAt_ }?.let { iso(it) },
             "isDeleted" to isDeleted,
             "isForwarded" to false,
             "delivery" to "sent",
@@ -517,8 +517,17 @@ object MessagingController {
 
     // ─── Outils ─────────────────────────────────────────────────────────────
 
+    private inline fun <T> orNull(read: () -> T?): T? =
+        try {
+            read()
+        } catch (e: NullPointerException) {
+            null
+        }
+
+    private fun isDeleted(user: User): Boolean = orNull { user.deletedAt_ } != null
+
     private fun displayName(user: User): String =
-        if (user.deletedAt_ != null) "Compte supprimé" else user.name_
+        if (isDeleted(user)) "Compte supprimé" else user.name_
 
     private fun validText(text: String): String {
         val content = text.trim()

@@ -10,6 +10,7 @@ import ai.tambo.foundation.ngoma.messaging.controllers.MessagingException
 import ai.tambo.foundation.ngoma.messaging.controllers.MessagingSignals
 import ai.tambo.tmodeler.scheduler.TGate
 import ai.tambo.tmodeler.scheduler.TmsScope
+import android.util.Log
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
@@ -19,6 +20,7 @@ object MessagingMethodChannel {
 
     private const val METHODS = "com.ngoma/messaging"
     private const val EVENTS = "com.ngoma/messaging/events"
+    private const val TAG = "NGomaMessaging"
 
     private var sink: EventChannel.EventSink? = null
 
@@ -45,7 +47,7 @@ object MessagingMethodChannel {
             "getCapabilities" -> result.success(MessagingController.capabilities())
 
             // Historique des conversations
-            "loadConversations" -> data(result) {
+            "loadConversations" -> data(call, result) {
                 MessagingController.loadConversations(
                     scope,
                     ConversationFilter(
@@ -57,32 +59,32 @@ object MessagingMethodChannel {
                     ),
                 )
             }
-            "loadMoreConversations" -> data(result) { MessagingController.loadMoreConversations(scope) }
-            "getUnreadCount" -> data(result) { MessagingController.getUnreadCount() }
-            "getUnreadCountsByKind" -> data(result) { MessagingController.getUnreadCountsByKind() }
+            "loadMoreConversations" -> data(call, result) { MessagingController.loadMoreConversations(scope) }
+            "getUnreadCount" -> data(call, result) { MessagingController.getUnreadCount() }
+            "getUnreadCountsByKind" -> data(call, result) { MessagingController.getUnreadCountsByKind() }
 
             // Création / ouverture de conversations
-            "openConversation" -> data(result) {
+            "openConversation" -> data(call, result) {
                 MessagingController.openConversation(required(call, "conversationId"))
             }
-            "resolveConversation" -> data(result) {
+            "resolveConversation" -> data(call, result) {
                 MessagingController.resolveConversation(call.argString("reference") ?: "")
             }
-            "openDirectConversation" -> data(result) {
+            "openDirectConversation" -> data(call, result) {
                 MessagingController.openDirectConversation(required(call, "recipientId"))
             }
-            "searchRecipients" -> data(result) {
+            "searchRecipients" -> data(call, result) {
                 MessagingController.searchRecipients(call.argString("query") ?: "")
             }
 
             // Messages : réception, envoi, modification, suppression
-            "loadMessages" -> data(result) {
+            "loadMessages" -> data(call, result) {
                 MessagingController.loadMessages(scope, required(call, "conversationId"))
             }
-            "loadMoreMessages" -> data(result) {
+            "loadMoreMessages" -> data(call, result) {
                 MessagingController.loadMoreMessages(scope, required(call, "conversationId"))
             }
-            "sendMessage" -> data(result) {
+            "sendMessage" -> data(call, result) {
                 MessagingController.sendMessage(
                     conversationId = required(call, "conversationId"),
                     text = call.argString("text") ?: "",
@@ -91,14 +93,14 @@ object MessagingMethodChannel {
                     attachmentIds = call.argLongList("attachmentIds"),
                 )
             }
-            "editMessage" -> data(result) {
+            "editMessage" -> data(call, result) {
                 MessagingController.editMessage(
                     conversationId = required(call, "conversationId"),
                     messageId = required(call, "messageId"),
                     text = call.argString("text") ?: "",
                 )
             }
-            "deleteMessage" -> data(result) {
+            "deleteMessage" -> data(call, result) {
                 MessagingController.deleteMessage(
                     conversationId = required(call, "conversationId"),
                     messageId = required(call, "messageId"),
@@ -106,7 +108,7 @@ object MessagingMethodChannel {
                 )
                 null
             }
-            "markConversationRead" -> data(result) {
+            "markConversationRead" -> data(call, result) {
                 MessagingController.markConversationRead(required(call, "conversationId"))
                 null
             }
@@ -135,7 +137,7 @@ object MessagingMethodChannel {
     private fun required(call: MethodCall, key: String): Long =
         call.argLong(key) ?: throw MessagingException(MessagingException.INVALID_ARGS, "$key manquant")
 
-    private fun data(result: MethodChannel.Result, block: context(TmsScope) () -> Any?) {
+    private fun data(call: MethodCall, result: MethodChannel.Result, block: context(TmsScope) () -> Any?) {
         TGate.data {
             val outcome = runCatching { block() }
             TGate.main {
@@ -143,8 +145,10 @@ object MessagingMethodChannel {
                     onSuccess = { value -> result.success(value) },
                     onFailure = { e ->
                         if (e is MessagingException) {
+                            Log.w(TAG, "${call.method} -> ${e.code} : ${e.message}")
                             result.error(e.code, e.message, null)
                         } else {
+                            Log.e(TAG, "${call.method} -> MESSAGING_ERROR", e)
                             result.error("MESSAGING_ERROR", e.message ?: e.javaClass.simpleName, null)
                         }
                     },
