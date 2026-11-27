@@ -32,7 +32,12 @@ class MainActivity : FlutterActivity() {
                                 val profile = UserController.getProfile()
                                 result.success(buildSessionResponse(profile))
                             }
-                            else -> result.error("AUTH_FAILED", "Invalid credentials", null)
+                            SignInResult.InvalidCredentials -> {
+                                result.error("INVALID_CREDENTIALS", "Email ou mot de passe incorrect.", null)
+                            }
+                            SignInResult.AccountDisabled -> {
+                                result.error("ACCOUNT_DISABLED", "Ce compte a été désactivé ou supprimé.", null)
+                            }
                         }
                     }
                     "register" -> {
@@ -49,7 +54,9 @@ class MainActivity : FlutterActivity() {
                                 val profile = UserController.getProfile()
                                 result.success(buildSessionResponse(profile))
                             }
-                            else -> result.error("SIGNUP_FAILED", "Could not register", null)
+                            is SignUpResult.EmailAlreadyUsed -> {
+                                result.error("EMAIL_ALREADY_USED", "Cet email est déjà utilisé par un autre compte.", null)
+                            }
                         }
                     }
                     "logout" -> {
