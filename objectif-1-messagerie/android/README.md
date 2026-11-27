@@ -19,7 +19,7 @@ Code des nouveaux écrans : `lib/features/social/` ; modèles et ponts : `lib/co
 
 ## Mocks (niveau ui-bridge-TModeler)
 - Compte : `lib/core/platform/account/account_bridge_mock.dart` (tout identifiant/mot de passe connecte ; session dans SharedPreferences).
-- Messagerie : `lib/core/platform/messaging/messaging_bridge_mock.dart` (activé dans `messaging_bridge_provider.dart`).
+- Messagerie : branchée sur TModeler. `messaging_bridge_provider.dart` renvoie `MessagingBridgeNative` (canal `com.ngoma/messaging`, code Kotlin dans `android/app/src/main/kotlin/ai/tambo/foundation/ngoma/messaging/`). Le mock `messaging_bridge_mock.dart` reste disponible.
 
 Pour passer à TModeler : implémenter `AccountBridge` / `MessagingBridge` avec TModeler et changer les providers.
 - Utilisateurs et vidéos : `lib/core/platform/social/social_bridge.dart` (`UsersBridge`, `VideoBridge`, providers `usersBridgeProvider` / `videoBridgeProvider`), mocks dans `social_bridge_mock.dart`.
