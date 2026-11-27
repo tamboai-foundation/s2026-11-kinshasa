@@ -5,7 +5,6 @@ import ai.tambo.foundation.ngoma.utils.AuthSession
 import ai.tambo.foundation.ngoma.utils.now
 import ai.tambo.tmodeler.field.operation.eq
 import ai.tambo.tmodeler.field.operation.like
-import ai.tambo.tmodeler.field.operation.ne
 import ai.tambo.tmodeler.field.operation.unaryPlus
 import ai.tambo.tmodeler.ms.ext.filter
 import ai.tambo.tmodeler.ms.ext.lazy
@@ -43,13 +42,5 @@ object UserController {
             .sub(limit, offset)
             .build()
             .map { UserSummary(it._id_, "${it.firstName_} ${it.lastName_}") }
-    }
-
-    context(_: TmsScope)
-    internal fun isDisabled(user: User): Boolean {
-        val u = User.tms.lambda
-        return User.tms.with(u).lazy()
-            .filter((u._id eq user._id_) and (u.deletedAt ne null))
-            .build().isNotEmpty()
     }
 }

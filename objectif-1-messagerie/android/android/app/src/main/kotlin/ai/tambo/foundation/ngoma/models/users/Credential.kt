@@ -6,7 +6,7 @@ import ai.tambo.tmodeler.model.TMignore
 import ai.tambo.tmodeler.model.TModel
 import ai.tambo.tmodeler.ms.Tms
 
-class Login : TModel<Login>() {
+class Credential : TModel<Credential>() {
 
     var email        = TextField().unique().notNull()
     var passwordHash = TextField().notNull()
@@ -20,7 +20,7 @@ class Login : TModel<Login>() {
     var user_         by user
 
     companion object{
-        val tms by lazy { Tms(Login::class) }
+        val tms by lazy { Tms(Credential::class) }
     }
 
 }

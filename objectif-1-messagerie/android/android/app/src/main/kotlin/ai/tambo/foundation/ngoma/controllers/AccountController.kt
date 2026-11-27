@@ -1,6 +1,6 @@
 package ai.tambo.foundation.ngoma.controllers
 
-import ai.tambo.foundation.ngoma.models.users.Login
+import ai.tambo.foundation.ngoma.models.users.Credential
 import ai.tambo.foundation.ngoma.utils.AuthSession
 import ai.tambo.foundation.ngoma.utils.PasswordHasher
 import ai.tambo.foundation.ngoma.utils.now
@@ -33,8 +33,8 @@ object AccountController {
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches()) return ActionResult.InvalidInput
         if (mail == login.email_) return ActionResult.Success
 
-        val l = Login.tms.lambda
-        if (Login.tms.with(l).lazy().filter(l.email eq mail).build().isNotEmpty())
+        val l = Credential.tms.lambda
+        if (Credential.tms.with(l).lazy().filter(l.email eq mail).build().isNotEmpty())
             return ActionResult.EmailAlreadyUsed
 
         login.email_ = mail

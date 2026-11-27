@@ -1,6 +1,7 @@
 package ai.tambo.foundation.ngoma
 
-import ai.tambo.foundation.ngoma.models.users.Login
+import ai.tambo.foundation.ngoma.models.users.Credential
+import ai.tambo.foundation.ngoma.models.users.Session
 import ai.tambo.foundation.ngoma.models.users.User
 import ai.tambo.tmodeler.db.Tcontext
 import ai.tambo.tmodeler.db.Tdb
@@ -35,6 +36,7 @@ object NGomaTm {
             )
 
         User.tms.commit()
-        Login.tms.commit()
+        Credential.tms.commit()
+        Session.tms.commit()
     }
 }

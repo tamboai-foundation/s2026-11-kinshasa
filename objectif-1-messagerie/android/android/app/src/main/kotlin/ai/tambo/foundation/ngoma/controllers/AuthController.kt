@@ -1,24 +1,23 @@
 package ai.tambo.foundation.ngoma.controllers
 
-import ai.tambo.foundation.ngoma.controllers.UserController.isDisabled
-import ai.tambo.foundation.ngoma.models.users.Login
+import ai.tambo.foundation.ngoma.models.users.Credential
 import ai.tambo.foundation.ngoma.models.users.User
 import ai.tambo.foundation.ngoma.utils.AuthSession
 import ai.tambo.foundation.ngoma.utils.PasswordHasher
+import ai.tambo.foundation.ngoma.utils.normalizeEmail
 import ai.tambo.foundation.ngoma.utils.now
 import ai.tambo.tmodeler.field.operation.eq
 import ai.tambo.tmodeler.ms.ext.filter
 import ai.tambo.tmodeler.ms.ext.lazy
 import ai.tambo.tmodeler.scheduler.TmsScope
-import android.util.Log
 
 
 object AuthController {
     context(_: TmsScope)
     fun signUp(last: String, first: String, mail: String, password: String): SignUpResult {
         // 1) email unique : on vérifie avant d'écrire
-        val l = Login.tms.lambda
-        val found = Login.tms.with(l).lazy().filter(l.email eq mail.trim()).build()
+        val l = Credential.tms.lambda
+        val found = Credential.tms.with(l).lazy().filter(l.email eq normalizeEmail(mail)).build()
         if (found.isNotEmpty()) return SignUpResult.EmailAlreadyUsed(mail)
 
         // 2) création de l'utilisateur
@@ -30,8 +29,8 @@ object AuthController {
         }
         val passwordHash = PasswordHasher.hash(password)
         // 3) création du login
-        val login = Login().also {
-            it.email_        = mail.trim()
+        val credential = Credential().also {
+            it.email_        = normalizeEmail(mail)
             it.passwordHash_ = passwordHash
             it.user_         = user
             it.save()
@@ -41,20 +40,17 @@ object AuthController {
 
     context(_: TmsScope)
     fun signIn(mail: String, password: String): SignInResult {
-        val l = Login.tms.lambda
-        val login = Login.tms.with(l)
-            .filter(l.email eq mail.trim().lowercase()).build().firstOrNull()
+        val l = Credential.tms.lambda
+        val credential = Credential.tms.with(l).lazy()
+            .filter(l.email eq normalizeEmail(mail)).build().firstOrNull()
             ?: return SignInResult.InvalidCredentials
 
-        Log.d("NGOMA", "Login ID: ${login._id_}")
-        Log.d("NGOMA", "Email: ${login.email_}")
-
         // Même réponse pour « email inconnu » et « mauvais mot de passe »
-        if (!PasswordHasher.verify(password, login.passwordHash_)) return SignInResult.InvalidCredentials
-//        if (!login.user.available()) return SignInResult.InvalidCredentials
+        if (!PasswordHasher.verify(password, credential.passwordHash_)) return SignInResult.InvalidCredentials
+        if (!credential.user.available()) return SignInResult.InvalidCredentials
 
-        val user = login.user_
-        if (isDisabled(user)) return SignInResult.AccountDisabled
+        val user = credential.user_
+        if( user.deletedAt.exists()) return SignInResult.AccountDisabled
 
         AuthSession.signIn(user)
         return SignInResult.Success(user._id_)
