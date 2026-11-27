@@ -196,7 +196,7 @@ class AccountBridgeNative implements AccountBridge, AccountSessionEventsBridge {
 }
 
 final accountBridgeProvider = Provider<AccountBridge>(
-  (ref) => AccountBridgeMock(),
+  (ref) => AccountBridgeNative(),
 );
 
 /// Account address wire port. IDs and pagination are allocated by Kotlin.
