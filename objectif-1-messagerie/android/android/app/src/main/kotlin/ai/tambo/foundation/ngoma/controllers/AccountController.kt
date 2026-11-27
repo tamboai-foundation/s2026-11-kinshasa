@@ -1,8 +1,10 @@
 package ai.tambo.foundation.ngoma.controllers
 
 import ai.tambo.foundation.ngoma.models.users.Credential
+import ai.tambo.foundation.ngoma.models.users.UserStatus
 import ai.tambo.foundation.ngoma.utils.AuthSession
 import ai.tambo.foundation.ngoma.utils.PasswordHasher
+import ai.tambo.foundation.ngoma.utils.UserStatusHelper
 import ai.tambo.foundation.ngoma.utils.now
 import ai.tambo.tmodeler.field.operation.eq
 import ai.tambo.tmodeler.ms.ext.filter
@@ -43,13 +45,13 @@ object AccountController {
         return ActionResult.Success
     }
 
-    // compte désactivé
+    // compte désactivé / suspendu
     context(_: TmsScope)
     fun deactivate(password: String): ActionResult {
         val user  = AuthSession.currentUser() ?: return ActionResult.NotSignedIn
         val login = AuthSession.loginOf(user) ?: return ActionResult.NotSignedIn
         if (!PasswordHasher.verify(password, login.passwordHash_)) return ActionResult.WrongPassword
-        user.deletedAt_ = now()
+        UserStatusHelper.setStatus(user, UserStatus.SUSPENDED)
         user.update()
         AuthSession.signOut()
         return ActionResult.Success
@@ -58,9 +60,7 @@ object AccountController {
     context(_: TmsScope)
     fun deleteAccount(): ActionResult {
         val user = AuthSession.currentUser() ?: return ActionResult.NotSignedIn
-        val login = AuthSession.loginOf(user)
-        login?.delete()
-        user.delete()
+        UserStatusHelper.setStatus(user, UserStatus.DELETED)
         AuthSession.signOut()
         return ActionResult.Success
     }

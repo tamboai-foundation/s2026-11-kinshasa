@@ -8,6 +8,9 @@ sealed class SignUpResult {
 sealed class SignInResult {
     data class Success(val userId: Long) : SignInResult()
     object InvalidCredentials : SignInResult()
+    object AccountBlocked : SignInResult()
+    object AccountSuspended : SignInResult()
+    object AccountDeleted : SignInResult()
     object AccountDisabled : SignInResult()
 }
 

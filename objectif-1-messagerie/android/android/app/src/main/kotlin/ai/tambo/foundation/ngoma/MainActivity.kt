@@ -35,8 +35,17 @@ class MainActivity : FlutterActivity() {
                             SignInResult.InvalidCredentials -> {
                                 result.error("INVALID_CREDENTIALS", "Email ou mot de passe incorrect.", null)
                             }
+                            SignInResult.AccountBlocked -> {
+                                result.error("ACCOUNT_BLOCKED", "Votre compte a été bloqué.", null)
+                            }
+                            SignInResult.AccountSuspended -> {
+                                result.error("ACCOUNT_SUSPENDED", "Votre compte est temporairement suspendu.", null)
+                            }
+                            SignInResult.AccountDeleted -> {
+                                result.error("ACCOUNT_DELETED", "Ce compte a été supprimé.", null)
+                            }
                             SignInResult.AccountDisabled -> {
-                                result.error("ACCOUNT_DISABLED", "Ce compte a été désactivé ou supprimé.", null)
+                                result.error("ACCOUNT_DISABLED", "Ce compte est désactivé.", null)
                             }
                         }
                     }

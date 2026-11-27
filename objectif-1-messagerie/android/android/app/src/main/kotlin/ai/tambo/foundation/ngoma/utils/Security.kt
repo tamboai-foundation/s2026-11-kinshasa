@@ -3,6 +3,7 @@ package ai.tambo.foundation.ngoma.utils
 import ai.tambo.foundation.ngoma.models.users.Credential
 import ai.tambo.foundation.ngoma.models.users.Session
 import ai.tambo.foundation.ngoma.models.users.User
+import ai.tambo.foundation.ngoma.models.users.UserStatus
 import ai.tambo.tmodeler.field.operation.eq
 import ai.tambo.tmodeler.ms.ext.all
 import ai.tambo.tmodeler.ms.ext.filter
@@ -44,6 +45,38 @@ object PasswordHasher {
     private fun dec(s: String) = Base64.decode(s, Base64.NO_WRAP)
 }
 
+object UserStatusHelper {
+    context(_: TmsScope)
+    fun getStatus(user: User): String {
+        val s = UserStatus.tms.lambda
+        val statusObj = UserStatus.tms.with(s).lazy().filter(s.user eq user).build().firstOrNull()
+        return statusObj?.status_ ?: UserStatus.ACTIVE
+    }
+
+    context(_: TmsScope)
+    fun setStatus(user: User, statusValue: String) {
+        val s = UserStatus.tms.lambda
+        val statusObj = UserStatus.tms.with(s).lazy().filter(s.user eq user).build().firstOrNull()
+        if (statusObj == null) {
+            UserStatus().also {
+                it.user_ = user
+                it.status_ = statusValue
+                it.createdAt_ = now()
+                it.save()
+            }
+        } else {
+            statusObj.status_ = statusValue
+            statusObj.updatedAt_ = now()
+            statusObj.update()
+        }
+    }
+
+    context(_: TmsScope)
+    fun isUserActive(user: User): Boolean {
+        return getStatus(user) == UserStatus.ACTIVE
+    }
+}
+
 object AuthSession {
     context(_: TmsScope)
     private fun session(): Session =
@@ -54,7 +87,7 @@ object AuthSession {
         val s = session()
         if (!s.currentUser.available()) return null       // personne n'est connecté
         val user = s.currentUser_ ?: return null
-        return if (user.deletedAt.exists()) null else user      // compte désactivé
+        return if (UserStatusHelper.isUserActive(user)) user else null      // vérification statut
     }
 
 

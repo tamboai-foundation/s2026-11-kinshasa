@@ -2,8 +2,8 @@ package ai.tambo.foundation.ngoma.controllers
 
 import ai.tambo.foundation.ngoma.models.users.User
 import ai.tambo.foundation.ngoma.utils.AuthSession
+import ai.tambo.foundation.ngoma.utils.UserStatusHelper
 import ai.tambo.foundation.ngoma.utils.now
-import ai.tambo.tmodeler.field.operation.eq
 import ai.tambo.tmodeler.field.operation.like
 import ai.tambo.tmodeler.field.operation.unaryPlus
 import ai.tambo.tmodeler.ms.ext.filter
@@ -39,10 +39,11 @@ object UserController {
         val p = "%$q%"
         val u = User.tms.lambda
         return User.tms.with(u).lazy()
-            .filter(((u.lastName like p) or (u.firstName like p)) and (u.deletedAt eq null))
+            .filter((u.lastName like p) or (u.firstName like p))
             .order(+u.lastName)
             .sub(limit, offset)
             .build()
+            .filter { UserStatusHelper.isUserActive(it) }
             .map { UserSummary(it._id_, "${it.firstName_} ${it.lastName_}") }
     }
 }

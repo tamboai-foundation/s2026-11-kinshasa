@@ -2,8 +2,10 @@ package ai.tambo.foundation.ngoma.controllers
 
 import ai.tambo.foundation.ngoma.models.users.Credential
 import ai.tambo.foundation.ngoma.models.users.User
+import ai.tambo.foundation.ngoma.models.users.UserStatus
 import ai.tambo.foundation.ngoma.utils.AuthSession
 import ai.tambo.foundation.ngoma.utils.PasswordHasher
+import ai.tambo.foundation.ngoma.utils.UserStatusHelper
 import ai.tambo.foundation.ngoma.utils.normalizeEmail
 import ai.tambo.foundation.ngoma.utils.now
 import ai.tambo.tmodeler.field.operation.eq
@@ -28,6 +30,8 @@ object AuthController {
             it.createdAt_    = now()
             it.save()
         }
+        UserStatusHelper.setStatus(user, UserStatus.ACTIVE)
+
         val passwordHash = PasswordHasher.hash(password)
         // 3) création du login
         val credential = Credential().also {
@@ -46,12 +50,18 @@ object AuthController {
             .filter(l.email eq normalizeEmail(mail)).build().firstOrNull()
             ?: return SignInResult.InvalidCredentials
 
+        val user = credential.user_
+        when (UserStatusHelper.getStatus(user)) {
+            UserStatus.DELETED -> return SignInResult.AccountDeleted
+            UserStatus.BLOCKED -> return SignInResult.AccountBlocked
+            UserStatus.SUSPENDED -> return SignInResult.AccountSuspended
+            UserStatus.ACTIVE -> { /* Compte actif */ }
+            else -> return SignInResult.AccountDisabled
+        }
+
         // Même réponse pour « email inconnu » et « mauvais mot de passe »
         if (!PasswordHasher.verify(password, credential.passwordHash_)) return SignInResult.InvalidCredentials
         if (!credential.user.available()) return SignInResult.InvalidCredentials
-
-        val user = credential.user_
-        if( user.deletedAt.exists()) return SignInResult.AccountDisabled
 
         AuthSession.signIn(user)
         return SignInResult.Success(user._id_)
