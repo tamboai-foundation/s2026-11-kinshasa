@@ -1,6 +1,9 @@
 package ai.tambo.foundation.ngoma
 
-import ai.tambo.foundation.ngoma.models.Note
+import ai.tambo.foundation.ngoma.models.users.Credential
+import ai.tambo.foundation.ngoma.models.users.Session
+import ai.tambo.foundation.ngoma.models.users.User
+import ai.tambo.foundation.ngoma.models.users.UserStatus
 import ai.tambo.tmodeler.db.Tcontext
 import ai.tambo.tmodeler.db.Tdb
 import ai.tambo.tmodeler.modeler.TModeler
@@ -12,7 +15,7 @@ import android.app.Application
  */
 object NGomaTm {
     /** Increment to restart every device from an empty database. */
-    const val DB_VERSION = 1
+    const val DB_VERSION = 2
 
     private var started = false
 
@@ -29,10 +32,13 @@ object NGomaTm {
                     .context(Tcontext(app))
                     .dbDir("db/")
                     .dbName("ngoma-$DB_VERSION")
-                    .accept(Note().clazz().getPackage())
+                    .accept(User().clazz().getPackage())
                     .start()!!
             )
 
-        Note.tms.commit()
+        User.tms.commit()
+        Credential.tms.commit()
+        Session.tms.commit()
+        UserStatus.tms.commit()
     }
 }

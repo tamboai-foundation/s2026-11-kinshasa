@@ -130,6 +130,15 @@ class AccountBridgeMock implements AccountBridge, AccountSessionEventsBridge {
   }
 
   @override
+  Future<AccountSessionDto> deleteAccount() async {
+    _user = null;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_key);
+    _events.add('session');
+    return _session();
+  }
+
+  @override
   Future<List<AccountProSpaceDto>> getProfessionalSpaces() async => const [];
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ngoma/core/platform/account/account_bridge.dart';
 import 'package:ngoma/core/platform/social/social_bridge.dart';
 import 'package:ngoma/core/providers/user_provider.dart';
 import 'package:ngoma_design/ngoma_design.dart';
@@ -53,6 +54,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       ),
     );
     if (ok != true) return;
+    try {
+      await ref.read(accountBridgeProvider).deleteAccount();
+    } catch (_) {}
     await ref.read(usersBridgeProvider).deleteAccount();
     await _logout();
   }

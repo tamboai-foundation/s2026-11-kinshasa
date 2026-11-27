@@ -53,6 +53,7 @@ abstract class AccountBridge {
   });
   Future<AccountSessionDto> socialLogin(String provider);
   Future<AccountSessionDto> updateProfile(Map<String, Object?> fields);
+  Future<AccountSessionDto> deleteAccount();
   Future<List<AccountProSpaceDto>> getProfessionalSpaces();
 
   // Account changes (contract v1.2): the authority recomputes roles,
@@ -136,6 +137,9 @@ class AccountBridgeNative implements AccountBridge, AccountSessionEventsBridge {
       _channel.updateProfile(fields);
 
   @override
+  Future<AccountSessionDto> deleteAccount() => _channel.deleteAccount();
+
+  @override
   Future<AccountSessionDto> activateService(
     String service, {
     List<String> roles = const [],
@@ -196,7 +200,7 @@ class AccountBridgeNative implements AccountBridge, AccountSessionEventsBridge {
 }
 
 final accountBridgeProvider = Provider<AccountBridge>(
-  (ref) => AccountBridgeMock(),
+  (ref) => AccountBridgeNative(),
 );
 
 /// Account address wire port. IDs and pagination are allocated by Kotlin.
