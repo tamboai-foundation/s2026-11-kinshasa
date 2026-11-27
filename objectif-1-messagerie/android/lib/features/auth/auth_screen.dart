@@ -200,7 +200,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 keyboardType: TextInputType.emailAddress,
                 autofillHints: const [AutofillHints.email],
                 textInputAction: TextInputAction.next,
-                enabled: !_codeSent,
                 validator: (value) =>
                     RegExp(
                       r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
@@ -232,9 +231,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 _isLogin ? AutofillHints.password : AutofillHints.newPassword,
               ],
               // The last field: the keyboard key sends the form.
-              textInputAction: !_isLogin && _codeSent
-                  ? TextInputAction.next
-                  : TextInputAction.done,
+              // textInputAction: !_isLogin && _codeSent
+              //     ? TextInputAction.next
+              //     : TextInputAction.done,
+              textInputAction: TextInputAction.done,
               onSubmitted: _isSubmitting ? null : _submit,
               suffix: IconButton(
                 tooltip: lang.t(_obscurePassword ? 'auth_show' : 'auth_hide'),
@@ -253,29 +253,29 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 return null;
               },
             ),
-            if (!_isLogin && _codeSent) ...[
-              const SizedBox(height: 14),
-              _AuthField(
-                controller: _codeController,
-                label: 'Code de vérification',
-                hint: '6 chiffres reçus par email',
-                keyboardType: TextInputType.number,
-                autofillHints: const [AutofillHints.oneTimeCode],
-                textInputAction: TextInputAction.done,
-                onSubmitted: _isSubmitting ? null : _submit,
-                validator: (value) =>
-                    RegExp(r'^\d{6}$').hasMatch((value ?? '').trim())
-                    ? null
-                    : 'Entrez le code à 6 chiffres',
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: _isSubmitting ? null : _sendCode,
-                  child: const Text('Renvoyer le code'),
-                ),
-              ),
-            ],
+            // if (!_isLogin && _codeSent) ...[
+            //   const SizedBox(height: 14),
+            //   _AuthField(
+            //     controller: _codeController,
+            //     label: 'Code de vérification',
+            //     hint: '6 chiffres reçus par email',
+            //     keyboardType: TextInputType.number,
+            //     autofillHints: const [AutofillHints.oneTimeCode],
+            //     textInputAction: TextInputAction.done,
+            //     onSubmitted: _isSubmitting ? null : _submit,
+            //     validator: (value) =>
+            //         RegExp(r'^\d{6}$').hasMatch((value ?? '').trim())
+            //         ? null
+            //         : 'Entrez le code à 6 chiffres',
+            //   ),
+            //   Align(
+            //     alignment: Alignment.centerRight,
+            //     child: TextButton(
+            //       onPressed: _isSubmitting ? null : _sendCode,
+            //       child: const Text('Renvoyer le code'),
+            //     ),
+            //   ),
+            // ],
             const SizedBox(height: 16),
             SizedBox(
               height: 54,
@@ -286,9 +286,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     : Text(
                         _isLogin
                             ? lang.t('auth_enter')
-                            : _codeSent
-                            ? lang.t('auth_create')
-                            : 'Recevoir le code',
+                            : lang.t('auth_create'),
                       ),
               ),
             ),
@@ -352,29 +350,41 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           _passwordController.text,
           rememberMe: true,
         );
-      } else if (!_codeSent) {
-        final email = _emailController.text.trim();
-        await notifier.requestSignupCode(email);
         if (!mounted) return;
-        setState(() => _codeSent = true);
-        NgomaSnackbar.showWarning(
-          context,
-          'Un code de vérification vient d’être envoyé à $email.',
-        );
-        return;
+        // ancien code navigation login :
+        // await ref.read(onboardingStateProvider.notifier).completeMainOnboarding();
+        // if (!mounted) return;
+        // _finishNavigation();
+        await ref.read(onboardingStateProvider.notifier).completeMainOnboarding();
+        if (!mounted) return;
+        _finishNavigation();
       } else {
         await notifier.register(
           fullName: _nameController.text.trim(),
           email: _emailController.text.trim(),
           phone: _phoneController.text.trim(),
           password: _passwordController.text,
-          code: _codeController.text.trim(),
+          code: '0000',
         );
+        if (!mounted) return;
+        // Rediriger vers la page de login après inscription réussie
+        final registeredEmail = _emailController.text.trim();
+        setState(() {
+          _isLogin = true;
+          _identifierController.text = registeredEmail;
+          _passwordController.clear();
+        });
+        NgomaSnackbar.showWarning(
+          context,
+          'Compte créé avec succès. Veuillez vous connecter.',
+        );
+        return;
       }
-      if (!mounted) return;
-      await ref.read(onboardingStateProvider.notifier).completeMainOnboarding();
-      if (!mounted) return;
-      _finishNavigation();
+      // ancien code navigation global après soumission :
+      // if (!mounted) return;
+      // await ref.read(onboardingStateProvider.notifier).completeMainOnboarding();
+      // if (!mounted) return;
+      // _finishNavigation();
     } catch (error) {
       if (!mounted) return;
       NgomaSnackbar.showWarning(
