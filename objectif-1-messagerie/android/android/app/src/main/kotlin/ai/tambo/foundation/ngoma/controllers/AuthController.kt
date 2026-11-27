@@ -50,6 +50,10 @@ object AuthController {
             .filter(l.email eq normalizeEmail(mail)).build().firstOrNull()
             ?: return SignInResult.InvalidCredentials
 
+        // Même réponse pour « email inconnu » et « mauvais mot de passe »
+        if (!PasswordHasher.verify(password, credential.passwordHash_)) return SignInResult.InvalidCredentials
+        if (!credential.user.available()) return SignInResult.InvalidCredentials
+
         val user = credential.user_
         when (UserStatusHelper.getStatus(user)) {
             UserStatus.DELETED -> return SignInResult.AccountDeleted
@@ -58,10 +62,6 @@ object AuthController {
             UserStatus.ACTIVE -> { /* Compte actif */ }
             else -> return SignInResult.AccountDisabled
         }
-
-        // Même réponse pour « email inconnu » et « mauvais mot de passe »
-        if (!PasswordHasher.verify(password, credential.passwordHash_)) return SignInResult.InvalidCredentials
-        if (!credential.user.available()) return SignInResult.InvalidCredentials
 
         AuthSession.signIn(user)
         return SignInResult.Success(user._id_)
