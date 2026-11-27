@@ -419,9 +419,10 @@ object MessagingController {
     private fun unreadCount(conversation: Conversation, me: User): Long {
         val lastReadAt = participationOf(conversation, me)?.let { orNull { it.lastReadAt_ } }
         val m = Message.tms.lambda
-        var condition = (m.conversation eq conversation) and (m.sender ne me) and (m.deletedAt eq null)
-        if (lastReadAt != null) condition = condition and (m.sentAt gt lastReadAt)
-        return Message.tms.with(m).lazy().filter(condition).build().toList().size.toLong()
+        val condition = (m.conversation eq conversation) and (m.sender ne me) and (m.deletedAt eq null)
+        val messages = Message.tms.with(m).lazy().filter(condition).build().toList()
+        return if (lastReadAt == null) messages.size.toLong()
+        else messages.count { it.sentAt_ > lastReadAt }.toLong()
     }
 
     context(_: TmsScope)
