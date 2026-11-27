@@ -15,7 +15,7 @@ import android.app.Application
  */
 object NGomaTm {
     /** Increment to restart every device from an empty database. */
-    const val DB_VERSION = 1
+    const val DB_VERSION = 2
 
     private var started = false
 
