@@ -1,6 +1,5 @@
 package ai.tambo.foundation.ngoma.utils
 
-import ai.tambo.foundation.ngoma.controllers.UserController.isDisabled
 import ai.tambo.foundation.ngoma.models.users.Credential
 import ai.tambo.foundation.ngoma.models.users.Session
 import ai.tambo.foundation.ngoma.models.users.User
@@ -55,7 +54,7 @@ object AuthSession {
         val s = session()
         if (!s.currentUser.available()) return null       // personne n'est connecté
         val user = s.currentUser_ ?: return null
-        return if (isDisabled(user)) null else user      // compte désactivé
+        return if (user.deletedAt.exists()) null else user      // compte désactivé
     }
 
 

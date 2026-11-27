@@ -16,15 +16,17 @@ object UserController {
     fun getProfile(): Profile? {
         val user = AuthSession.currentUser() ?: return null
         val login = AuthSession.loginOf(user) ?: return null
-        return Profile(user._id_, user.lastName_, user.firstName_, login.email_, user.createdAt_.toString())
+        return Profile(user._id_, user.lastName_, user.firstName_, login.email_, user.phone_, user.bio_, user.createdAt_.toString())
     }
 
     context(_: TmsScope)
-    fun updateProfile(last: String, first: String): ActionResult {
+    fun updateProfile(last: String, first: String, phone: String? = null, bio: String? = null): ActionResult {
         val user = AuthSession.currentUser() ?: return ActionResult.NotSignedIn
         if (last.isBlank() || first.isBlank()) return ActionResult.InvalidInput
         user.lastName_  = last.trim()
         user.firstName_ = first.trim()
+        if (phone != null) user.phone_ = phone.trim()
+        if (bio != null) user.bio_ = bio.trim()
         user.updatedAt_ = now()
         user.update()
         return ActionResult.Success

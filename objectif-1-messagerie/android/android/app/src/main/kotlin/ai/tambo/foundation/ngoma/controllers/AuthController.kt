@@ -14,7 +14,7 @@ import ai.tambo.tmodeler.scheduler.TmsScope
 
 object AuthController {
     context(_: TmsScope)
-    fun signUp(last: String, first: String, mail: String, password: String): SignUpResult {
+    fun signUp(last: String, first: String, mail: String, phone: String, password: String): SignUpResult {
         // 1) email unique : on vérifie avant d'écrire
         val l = Credential.tms.lambda
         val found = Credential.tms.with(l).lazy().filter(l.email eq normalizeEmail(mail)).build()
@@ -24,6 +24,7 @@ object AuthController {
         val user = User().also {
             it.lastName_     = last.trim()
             it.firstName_    = first.trim()
+            it.phone_        = phone.trim()
             it.createdAt_    = now()
             it.save()
         }

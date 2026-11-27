@@ -24,6 +24,8 @@ data class Profile(
     val lastName: String,
     val firstName: String,
     val email: String,
+    val phone: String,
+    val bio: String,
     val createdAt: String
 )
 
